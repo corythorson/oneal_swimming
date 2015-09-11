@@ -1,0 +1,105 @@
+<section class="admin-section">
+  <div class="container">
+    <h3>My Dashboard</h3>
+
+    <%= render '/shared/flash_messages' unless flash.empty? %>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            You have <strong><%= current_user.time_slots.scheduled.count %></strong> scheduled lessons
+          </div>
+          <div class="panel-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Date/Time</th>
+                <th>Learner</th>
+                <th>Teacher</th>
+                <th></th>
+              </tr>
+              <thead>
+              <tbody>
+              <% current_user.time_slots.where('start_at > ?', Time.now).order('start_at asc').each do |ts| %>
+              <tr>
+                <td><%= ts.start_at.strftime('%a %m/%d/%Y %I:%M %p') %></td>
+                <td><%= ts.student.first_name %></td>
+                <td><%= ts.instructor.first_name %></td>
+                <td><%= link_to '<i class="fa fa-calendar"></i>'.html_safe, scheduler_path(date: ts.start_at.strftime('%F')) %></td>
+              </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="alert alert-info">
+          <%= link_to 'Buy Lessons', our_lessons_path, class: 'btn btn-xs btn-primary pull-right' %>
+          You have <strong><%= @user.lessons.unassigned.count %></strong> unscheduled lessons
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <%= link_to 'Add Learner', new_student_path, class: 'btn btn-xs btn-success pull-right' %>
+            My Learners
+          </div>
+          <div class="panel-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>&nbsp;</th>
+                <th>Name</th>
+                <th>Birthdate</th>
+                <th># Completed</th>
+                <th># Scheduled</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @user.students.each do |student| %>
+              <tr>
+                <td style="vertical-align: middle;"><%= image_tag(student.avatar.thumb.url, class: 'img-circle img-responsive', style: 'max-width: 36px;') %></td>
+                <td style="vertical-align: middle;"><%= student.first_name %></td>
+                <td style="vertical-align: middle;"><%= student.dob.try(:strftime, '%m/%d/%Y') %></td>
+                <td style="vertical-align: middle;"><%= student.past_time_slots.count %></td>
+                <td style="vertical-align: middle;"><%= student.future_time_slots.count %></td>
+              </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <%= link_to 'Buy Lessons', our_lessons_path, class: 'btn btn-xs btn-success pull-right' %>
+            My Purchases
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>Date</th>
+                <th>Service</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-right">Cost</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% current_user.orders.order('created_at asc').each do |order| %>
+              <tr>
+                <td><%= order.created_at.strftime('%m/%d/%Y') %></td>
+                <td>Swimming Lesson</td>
+                <td class="text-center"><%= order.quantity %></td>
+                <td class="text-right"><%= number_to_currency order.total %></td>
+              </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,16 @@
+<div class="container">
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'form-signin chunky-form' }) do |f| %>
+    <h2 class="form-signin-heading">Password Reset Request</h2>
+
+    <%= devise_error_messages! %>
+
+    <h5 class="text-center" style="margin-top: 30px;">Enter your registered email address</h5>
+    <p>
+      <%= f.email_field :email, class: 'form-control input-lg', placeholder: 'Email Address' %>
+    </p>
+    <p>
+      <%= f.submit 'Request', class: 'btn btn-lg btn-info pull-right' %>
+      <%= link_to 'Nevermind. I remember now', new_session_path(resource_name) %>
+    </p>
+  <% end %>
+</div>

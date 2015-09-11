@@ -1,0 +1,45 @@
+<div class="container">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-signin chunky-form' }) do |f| %>
+    <h2 class="form-signin-heading">Sign Up</h2>
+
+    <%= devise_error_messages! %>
+
+    <!--
+    <div class="row">
+      <div class="col-sm-12">
+        <%= link_to omniauth_authorize_path(resource, :facebook), class: 'btn btn-lg btn-primary btn-block' do %>
+          <i class="fa fa-facebook-square fa-lg"></i> Register with Facebook
+        <% end %>
+      </div>
+    </div>
+    <h5 class="text-center" style="margin-top: 30px;">or register below</h5>
+    -->
+
+    <p>
+      <div class="row">
+        <div class="col-sm-6">
+          <%= f.text_field :first_name, autofocus: true, class: 'form-control input-lg', placeholder: 'First Name' %>
+        </div>
+        <div class="col-sm-6">
+          <%= f.text_field :last_name, class: 'form-control input-lg', placeholder: 'Last Name' %>
+        </div>
+      </div>
+    </p>
+    <p>
+      <%= f.email_field :email, class: 'form-control input-lg', placeholder: 'Email Address' %>
+    </p>
+    <p>
+      <%= f.text_field :phone, class: 'form-control input-lg mask-phone', placeholder: 'Phone Number' %>
+    </p>
+    <p>
+      <%= f.password_field :password, autocomplete: 'off', class: 'form-control input-lg', placeholder: 'Password' %>
+    </p>
+    <p>
+      <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control input-lg', placeholder: 'Confirm Password' %>
+    </p>
+    <p>
+      <%= f.submit 'Register', class: 'btn btn-lg btn-info pull-right' %>
+      <%= render "devise/shared/links" %>
+    </p>
+  <% end %>
+</div>

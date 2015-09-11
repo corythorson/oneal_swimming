@@ -1,0 +1,75 @@
+.time-slot-off {
+  background-color: #dcdcdc;
+}
+.time-slot-my-student {
+  background-color: #f3ff83 !important;
+}
+.time-column {
+  width: 10%;
+  text-align: center;
+}
+.cancel-link {
+  font-size: 0.9em;
+  display: block;
+  margin-top: 15px;
+  cursor: pointer;
+}
+.Scheduler {
+  tr:hover {
+    td.time-slot-time {
+      background-color: #f3ff83;
+    }
+    .time-slot-off {
+      background-color: #cacaca;
+    }
+  }
+  td {
+    position: relative;
+    padding-top: 25px;
+    .time-label {
+      font-size: 0.6em;
+      color: #aaa;
+      text-align: left;
+      background-color: #fff;
+      border-bottom-right-radius: 5px;
+      border-right: 1px solid #aaa;
+      border-bottom: 1px solid #aaa;
+      position: absolute;
+      padding: 2px 5px;
+      top: 0;
+      left: 0;
+    }
+    .status-bar {
+      border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+      margin-bottom: 5px;
+      position: relative;
+      height: 20px;
+      font-size: 0.9em !important;
+      color: 1px solid rgba(0,0,0,0.4);
+      .handle {
+        color: rgba(0,0,0,0.5);
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+      .cancel-btn {
+        position: absolute;
+        left: 0;
+        top: 0;
+        cursor: pointer;
+      }
+      .fa-info-circle {
+        position: absolute;
+        left: 14px;
+        top: 0;
+      }
+    }
+  }
+
+  .draggable {
+    z-index: 500;
+    .handle {
+      cursor: move;
+    }
+  }
+}

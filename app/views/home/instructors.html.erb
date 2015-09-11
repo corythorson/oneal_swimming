@@ -1,0 +1,50 @@
+<% content_for(:title) do %>Meet Our Instructors<% end %>
+
+<section class="title-bar">
+  <h1>Meet Our Instructors</h1>
+  <h4 style="color: #fff; font-weight: 300;">We think they're the best in the biz!</h4>
+</section>
+
+<div class="container">
+  <% @instructors.each do |instructor| %>
+    <div class="row">
+      <div class="col-sm-3">
+        <%= image_tag instructor.avatar.medium.url, class: 'img-responsive img-thumbnail' %>
+        <h4 class="text-center"><%= instructor.full_name %></h4>
+      </div>
+      <div class="col-sm-9">
+        <div class="instructor-tabs">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#profile-<%= instructor.id %>" aria-controls="home" role="tab" data-toggle="tab">About</a></li>
+            <li role="presentation"><a href="#schedule-<%= instructor.id %>" aria-controls="profile" role="tab" data-toggle="tab">Schedule</a></li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="profile-<%= instructor.id %>">
+              <div style="padding-top: 15px;">
+                <%= simple_format instructor.profile %>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="schedule-<%= instructor.id %>">
+              <div style="padding-top: 15px;">
+                Coming soon...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  init.push(function() {
+    $('#instructor-tabs a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+    });
+  });
+</script>

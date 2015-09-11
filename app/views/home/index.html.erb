@@ -1,0 +1,88 @@
+<% content_for(:title) do %>Offering year-round private swimming lessons<% end %>
+
+<div class="full-page-photo" style="background-image: url(<%= asset_path("floating-hero.jpg") %>">
+  <div class="container">
+    <div class="flexslider-container">
+      <div class="carousel-caption show">
+        <h1 class="skincolored">it's <strong>never too early</strong>
+          to <strong>learn</strong> to <strong>swim</strong>!</h1>
+        <p class="lead">Year-round private lessons starting at $15</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="call_to_action">
+  <div class="container">
+    <h3>AQUATICS ACADEMY</h3>
+    <h4>Offering year-round private swimming lessons</h4>
+    <%= link_to 'Buy Lessons!', our_lessons_path, class: 'btn btn-primary btn-lg' %>
+
+    <br/><br/>
+
+    <div class="fb-like" data-href="https://www.facebook.com/Oneal.Aquatics.Utah" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+  </div>
+</section>
+
+<section class="what_we_do">
+  <div class="container">
+    <p class="text-left">Aquatics Academy offers year-round private swimming lessons in Highland, Utah. We teach children, teens, and adults in a private setting. We work with all ages and skill levels, from beginners to advanced swimmers, and from 3-month-old infants to adults.</p>
+    <p class="text-left">Each lesson is $18 for 20 minutes of one-on-one instruction. We start with survival skills and build to competitive swimming strokes.</p>
+    <p class="text-left">Triathletes, boy scouts, or adults can also do a group lesson for $18 for the whole group. We offer Swimming and Lifesaving merit badge pass offs, as well as thorough explanations of workout techniques.</p>
+  </div>
+</section>
+
+<section class="features_teasers_wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="feature_teaser col-sm-4 col-md-4">
+        <%= image_tag '350x150-2.jpg', class: 'img-responsive' %>
+        <h3>Infant Lessons</h3>
+        <p>Infant lessons are designed to introduce babies to the water, and begin life saving skills. Infant survival skills begin with holding their breath, grabbing and holding onto walls, flipping to their back and floating. <a href="#">more&#8230</a></p>
+      </div>
+      <div class="feature_teaser col-sm-4 col-md-4">
+        <%= image_tag '350x150-1.jpg', class: 'img-responsive' %>
+        <h3>Toddler Lessons</h3>
+        <p>Toddler lessons are great for little swimmers who are just starting out and need to get adjusted to water. We will work pretty quickly in getting them adjusted and comfortable with the water. <a href="#">more&#8230</a></p>
+      </div>
+      <div class="feature_teaser col-sm-4 col-md-4">
+        <%= image_tag '350x150-3.jpg', class: 'img-responsive' %>
+        <h3>Regular Lessons</h3>
+        <p>Regular lessons are for those who are comfortable in the water and can blow bubbles. In this level, we focus on freestyle and backstroke. We will teach drills for front and backstroke. <a href="#">more&#8230</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials_wrapper">
+  <div class="container">
+    <h2 class="section_header elegant centered">Testimonials<small>all of them are satisfied</small></h2>
+    <div class="flexslider">
+      <ul class="slides">
+        <% Testimonial.all.order('RANDOM()').each do |testimonial| %>
+        <li>
+          <blockquote>
+            <%= testimonial.body %>
+            <cite>&mdash; <%= testimonial.name %></cite>
+          </blockquote>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="custom-navigation">
+      <a href="#" class="flex-prev">Prev</a>
+      <div class="custom-controls-container"></div>
+      <a href="#" class="flex-next">Next</a>
+    </div>
+  </div>
+</section>
+
+<script type="text/javascript" charset="utf-8">
+  init.push(function() {
+    $('.flexslider').flexslider({
+      animation: "slide",
+      controlsContainer: $(".custom-controls-container"),
+      customDirectionNav: $(".custom-navigation a")
+    });
+  });
+</script>

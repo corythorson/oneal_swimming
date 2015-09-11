@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>Aquatics Academy | <%= yield(:title).present? ? yield(:title) : 'Welcome' %></title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <script>var init = [];</script>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=1622083224714510";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- Static navbar -->
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to image_tag('logo.png', style: 'max-height: 67px; margin-top: -5px;', class: 'img-responsive'), root_path %>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to 'Our Lessons', our_lessons_path, class: (controller_name == 'home' && action_name == 'our_lessons') ? 'active top' : 'top' %></li>
+        <li><%= link_to 'Instructors', instructors_path, class: (controller_name == 'home' && action_name == 'instructors') ? 'active top' : 'top' %></li>
+        <li>
+          <%= link_to scheduler_path, class: (controller_name == 'home' && action_name == 'schedule') ? 'active top' : 'top' do %>
+            <% if current_user && current_user.future_time_slots > 0 %>
+              Schedule <span class="badge badge-sm"><%= current_user.future_time_slots %></span>
+            <% else %>
+              Schedule
+            <% end %>
+          <% end %>
+         </li>
+        <% if current_user %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle top" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <%= image_tag(current_user.avatar.url, class: 'img-circle img-xs') if current_user.avatar? %>
+              <%= current_user.full_name %> <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'My Dashboard', profile_path %></li>
+              <% if current_user.customer? %>
+                <li><%= link_to 'My Learners', students_path %></li>
+                <li><%= link_to 'Add Learner', new_student_path %></li>
+              <% end %>
+              <% if current_user.admin? %>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Admin Tools</li>
+                <li><%= link_to 'Manage Users', admin_users_path %></li>
+                <li><%= link_to 'Manage Products', admin_products_path %></li>
+                <li><%= link_to 'Manage Testimonials', admin_testimonials_path %></li>
+                <li><%= link_to 'Manage Schedule', admin_schedule_path %></li>
+              <% end %>
+              <% if session[:original_user_id].present? %>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to raw("&laquo; Back to Admin"), return_to_admin_path %></li>
+              <% end %>
+              <li role="separator" class="divider"></li>
+              <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+            </ul>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to 'Login/Signup', new_user_session_path, class: %w[ registrations sessions ].include?(controller_name) ? 'active top' : 'top' %>
+          </li>
+        <% end %>
+        <li><%= link_to contact_path do %><i class="fa fa-lg fa-phone-square" style="color: #57A4CC;"></i><% end %></li>
+        <li><%= link_to 'https://www.facebook.com/Oneal.Aquatics.Utah', target: '_blank' do %><i class="fa fa-lg fa-facebook-square" style="color: #415f9b;"></i><% end %></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+
+<%= yield %>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        Copyright &copy; <%= Time.now.year %> Aquatics Academy. All rights reserved.
+      </div>
+      <div class="col-sm-6 text-right">
+        Developed with <i class="fa fa-heart"></i> by Adisyn's dad
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  for (var i = 0; i < init.length; i++) { init[i](); }
+</script>
+
+<div class="modal fade" id="global-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body"></div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript" charset="utf-8">
+  $('a[data-trigger="remote-modal"]').click(function(e) {
+    e.preventDefault();
+    var name = $(this).data('title');
+    var url = $(this).data('url') || '';
+    $.get(url, function(html) {
+      var modal = $('#global-modal');
+      modal.find('.modal-title').html(name);
+      modal.find('.modal-body').html(html);
+      modal.modal();
+    }.bind(this));
+  });
+</script>
+
+<% if Rails.env.production? %>
+  <!--Start of Zopim Live Chat Script-->
+  <script type="text/javascript">
+    window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+      d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+      _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+      $.src="//v2.zopim.com/?3Ic3feDWFZWhzny0UJnkiFADM6O1MmEm";z.t=+new Date;$.
+        type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+  </script>
+  <!--End of Zopim Live Chat Script-->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-66932445-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+<% end %>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+.event {
+  border: 0;
+  height: 32px;
+  &.event-filled {
+    background-color: #0089ec;
+  }
+  &.event-empty {
+    background-color: #0089ec;
+  }
+}
+
+.Scheduler {
+  margin-top: 15px;
+  margin-bottom: 25px;
+  &__Header {
+    &__Title {
+      font-size: 1.8em;
+      padding-bottom: 10px;
+    }
+    .btn-rm {
+      margin-right: 4px;
+    }
+    .btn.picker-switch {
+      display: none;
+    }
+    #dateTimeField-wrapper {
+      max-width: 150px;
+      float: right;
+      margin-left: 4px;
+    }
+  }
+  &__Grid {
+    background-color: white;
+    margin-top: 5px;
+
+    .table {
+      margin-bottom: 0;
+    }
+
+    .Instructor {
+      height: 42px;
+      padding: 0;
+      margin: 0;
+      img {
+        width: 32px;
+        height: 32px;
+        float: left;
+        margin: 5px 10px 0 5px;
+      }
+      span {
+        float: left;
+        line-height: 42px;
+      }
+    }
+
+    .TimeSlot {
+      padding: 0;
+      margin: 0;
+      a {
+        font-size: 0.9em;
+        display: block;
+        padding: 3px 5px;
+        height: 42px !important;
+        width: 90px !important;
+        overflow: hidden !important;
+      }
+      &--Empty {
+        background-color: #EFEFEF;
+      }
+      &--Unavailable {
+        a {
+          background-color: #57bade;
+          text-align: center;
+          color: #fff;
+          text-decoration: none;
+          overflow: hidden !important;
+        }
+      }
+      &--Available {
+        background: #57bade asset-url("icon-add.png") top center no-repeat;
+        background-size: 42px 42px;
+        cursor: pointer;
+      }
+      &--MyStudent {
+        a {
+          background-color: #f3ff83;
+          text-align: center;
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+          overflow: hidden !important;
+        }
+      }
+    }
+  }
+}
+
+.StudentButtonContainer {
+  //display:                 flex;
+  //display:                 -webkit-flex; /* Safari */
+  //flex-wrap:               wrap;
+  //-webkit-flex-wrap:       wrap;         /* Safari */
+  //justify-content:         center;
+  //-webkit-justify-content: center;       /* Safari */
+}
+
+.StudentButton {
+  //width:              120px;
+  //height:             120px;
+  ////background-color:   #cccccc;
+  //margin:             10px;
+  //text-align: center;
+}
+
+.ReactModal__Overlay {
+  -webkit-perspective: 600;
+  perspective: 600;
+  opacity: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 5000;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+  transition: opacity 150ms ease-out;
+}
+
+.ReactModal__Content {
+  -webkit-transform: scale(0.5) rotateX(-30deg);
+}
+
+.ReactModal__Content--after-open {
+  -webkit-transform: scale(1) rotateX(0deg);
+  transition: all 150ms ease-in;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+.ReactModal__Content--before-close {
+  -webkit-transform: scale(0.5) rotateX(30deg);
+  transition: all 150ms ease-in;
+}
+
+.ReactModal__Content.modal-dialog {
+  border: none;
+  background-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .Scheduler {
+    &__Header {
+      &__Title {
+        font-size: 1.3em;
+        line-height: 1.8em;
+      }
+    }
+  }
+}

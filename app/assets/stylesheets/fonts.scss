@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'American Typewriter';
+  src: asset-url('american_typewriter-webfont.eot');
+  src: asset-url('american_typewriter-webfont.eot?#iefix') format('embedded-opentype'),
+       asset-url('american_typewriter-webfont.woff2') format('woff2'),
+       asset-url('american_typewriter-webfont.woff') format('woff'),
+       asset-url('american_typewriter-webfont.ttf') format('truetype'),
+       asset-url('american_typewriter-webfont.svg#amertype_md_btmedium') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

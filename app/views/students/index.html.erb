@@ -1,0 +1,7 @@
+<section class="admin-section">
+  <div class="container">
+    <h3>My Learners</h3>
+    <%= render '/shared/flash_messages' unless flash.empty? %>
+    <%= render partial: 'students', locals: { students: @students } %>
+  </div>
+</section>

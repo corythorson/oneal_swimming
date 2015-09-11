@@ -1,0 +1,11 @@
+<div>
+  <h4 class="text-center">You have <%= @remaining_lessons.count %> lessons remaining</h4>
+
+  <p class="text-center">The following time slot is assigned to <strong><%= @time_slot.student.first_name %></strong></p>
+  <div class="alert alert-warning text-center" role="alert"><%= @time_slot.start_at.strftime('%b %d, %Y at %I:%M %p') %></div>
+
+  <div class="StudentButtonContainer">
+    <%= link_to "Unassign #{@time_slot.student.first_name} from this time slot", perform_unassign_time_slot_path(@time_slot), class: 'btn btn-lg btn-danger btn-block', method: :post %>
+  </div>
+  <button type="button" class="btn btn-link btn-block" data-dismiss="modal">cancel</button>
+</div>

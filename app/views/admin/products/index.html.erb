@@ -1,0 +1,46 @@
+<section class="admin-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>Products</h3>
+      </div>
+      <div class="col-sm-6">
+        <%= link_to 'Add Product', new_admin_product_path, class: 'btn btn-primary header-button pull-right' %>
+      </div>
+    </div>
+
+    <%= render '/shared/flash_messages' unless flash.empty? %>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Found <%= pluralize(@products.count, 'product') %> for sale</div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Paypal Button</th>
+              <th>Active?</th>
+              <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @products.each do |product| %>
+              <tr>
+                <td><%= product.name %></td>
+                <td><%= number_to_currency product.price %></td>
+                <td><%= product.quantity %></td>
+                <td><%= product.paypal_button(current_user.id) %></td>
+                <td><%= product.active? ? 'Yes' : 'No' %></td>
+                <td class="text-right"><%= link_to 'Edit', edit_admin_product_path(product) %></td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

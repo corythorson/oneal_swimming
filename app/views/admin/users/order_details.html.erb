@@ -1,0 +1,60 @@
+<table class="table table-striped">
+  <tbody>
+  <tr>
+    <th>Order ID</th>
+    <td><%= @order.id %></td>
+  </tr>
+  <tr>
+    <th>Date/Time</th>
+    <td><%= @order.created_at.strftime('%m/%d/%Y at %I:%M %p') %></td>
+  </tr>
+  <tr>
+    <th># Lessons</th>
+    <td><%= @order.quantity %></td>
+  </tr>
+  <tr>
+    <th>Cost</th>
+    <td><%= number_to_currency @order.total %></td>
+  </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<%= form_tag delete_lessons_admin_user_path(@user) do %>
+  <h4>Lessons</h4>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Status</th>
+      <th>Scheduled</th>
+      <th>Expires</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @lessons.each do |lesson| %>
+      <tr>
+        <td>
+          <% if current_user.admin? && lesson.status == 'unscheduled' %>
+            <input type="checkbox" name="lesson_id[]" value="<%= lesson.id %>" />
+          <% else %>
+            <%= lesson.id %>
+          <% end %>
+        </td>
+        <td><%= lesson.status.humanize.titleize %></td>
+        <td><%= lesson.time_slot ? lesson.time_slot.start_at.strftime('%m/%d/%Y at %I:%M %p') : '-' %></td>
+        <td><%= lesson.status == 'completed' ? '' : lesson.expires_at.strftime('%m/%d/%Y at %I:%M %p') %></td>
+        <td><%= lesson.time_slot_id %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <% if @order.lessons.unassigned.count > 0 %>
+    <button type="submit" class="btn btn-block btn-danger">Delete Selected Lessons</button>
+  <% end %>
+<% end %>
+
+<% if current_user.admin? && @order.deleteable? %>
+  <%= link_to 'Delete Order and Lessons', delete_order_admin_user_path(@user, order_id: @order.id), class: 'btn btn-block btn-danger', style: 'margin-top: 10px;', method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>

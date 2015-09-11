@@ -1,0 +1,18 @@
+<% students.each do |student| %>
+  <div class="btn-box">
+    <div class="text-center">
+      <%= image_tag(student.avatar.medium.url, class: 'img-md img-circle') %>
+    </div>
+    <h4 class="text-center" style="margin-bottom: 0;"><%= student.first_name %></h4>
+    <div class="text-center">
+      <small><%= link_to 'Edit', edit_student_path(student) %></small>
+    </div>
+  </div>
+<% end %>
+
+<div class="btn-box">
+  <div class="text-center">
+    <%= link_to image_tag("add-profile.png", class: 'img-md img-circle'), new_student_path %>
+  </div>
+  <h4 class="text-center">Add New Learners</h4>
+</div>

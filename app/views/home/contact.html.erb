@@ -1,0 +1,52 @@
+<% content_for(:title) do %>Contact Us<% end %>
+
+<div class="full-page-photo" style="background-image: url(<%= asset_path("jod-baby.jpg") %>"></div>
+
+<div style="margin: 45px 0;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <%= render '/shared/flash_messages' unless flash.empty? %>
+
+        <h2>Contact Us</h2>
+        <%= form_tag submit_contact_path, method: :post do %>
+          <div class="row">
+            <div class="col-sm-6">
+              <%= text_field_tag :name, params[:name], class: 'form-control input-lg', placeholder: 'Name' %>
+            </div>
+            <div class="col-sm-6">
+              <%= text_field_tag :email, params[:email], class: 'form-control input-lg', placeholder: 'Email' %>
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="col-xs-12">
+              <%= text_area_tag :message, params[:message], rows: 13, class: 'form-control input-lg', placeholder: 'Message' %>
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="col-xs-12 text-right">
+              <input type="submit" class="btn btn-primary btn-lg" value="Submit" />
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-sm-6">
+        <div style="border-left: 1px solid #efefef; padding-left: 25px;">
+          <h4 style="line-height: 1.5em;">
+            <strong>Aquatics Academy</strong><br/>
+            10196 North Hidden Pond Dr<br/>
+            Highland, UT 84003<br/>
+            <%= mail_to "info@utaquaticsacademy.com" %><br/>
+            <%= link_to "(801) 636-2708", "tel:8016362708" %>
+          </h4>
+
+          <div class="google-maps">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.617167093533!2d-111.811968!3d40.417331!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x874d805f005f1e8f%3A0xb4e01ef458da4f5b!2s10196+Hidden+Pond+Dr%2C+Highland%2C+UT+84003!5e0!3m2!1sen!2sus!4v1441654616705" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

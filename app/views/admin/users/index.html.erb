@@ -1,0 +1,71 @@
+<section class="admin-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>Users</h3>
+      </div>
+      <div class="col-sm-6">
+        <%= link_to 'Add User', new_admin_user_path, class: 'btn btn-primary header-button pull-right' %>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <span class="panel-title">
+          <div class="row">
+            <div class="col-sm-6">
+              <%= form_tag admin_users_path, method: :get do %>
+                <div class="input-group">
+                  <%= search_field_tag :q, params[:q], class: 'form-control', placeholder: 'Search for name or email' %>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Search</button>
+                  </span>
+                </div>
+              <% end %>
+            </div>
+            <div class="col-sm-6 text-right text-center-xs">
+              <% if params[:q].present?  %>
+                <%= link_to 'Show All Users', admin_users_path, class: 'btn btn-default' %>
+              <% else %>
+                <%= will_paginate @users, renderer: BootstrapPagination::Rails, :outer_window => 0, :inner_window => 1, class: 'pagination-sm pagination pagination-panel' %>
+              <% end %>
+            </div>
+          </div>
+        </span>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th class="text-center">Avatar</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th># Lessons</th>
+              <th>Last Sign In</th>
+              <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td class="text-center"><%= image_tag(user.avatar.url, class: 'img-xs img-circle') if user.avatar? %></td>
+                <td><%= user.first_name %> <strong><%= user.last_name %></strong></td>
+                <td nowrap="nowrap"><%= number_to_phone user.phone, area_code: true %></td>
+                <td><%= user.email %></td>
+                <td><%= user.lessons_count %></td>
+                <td><%= user.last_sign_in_at.try(:strftime, '%b %d, %Y at %I:%M %p') %></td>
+                <td class="text-right">
+                  <%= link_to 'View', [:admin, user], class: 'btn btn-xs btn-default' %>
+                  <%= link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-xs btn-default' %>
+                  <%= link_to 'Login', login_as_admin_user_path(user), class: 'btn btn-xs btn-warning' %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

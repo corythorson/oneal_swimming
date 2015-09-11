@@ -1,0 +1,142 @@
+<section class="admin-section" style="padding: 20px;">
+
+  <%= render '/shared/flash_messages' unless flash.empty? %>
+
+  <div class="Scheduler__Header">
+    <div class="row">
+      <div class="col-sm-6 text-center-xs Scheduler__Header__Title">
+        <%= @date.strftime('%A, %b %d, %Y') %>
+      </div>
+      <div class="col-sm-6 text-right">
+        <%= link_to 'Today', scheduler_path, class: 'btn btn-default btn-rm' %>
+        <div id="dateTimeField-wrapper">
+          <div class="form-group">
+            <div class='input-group date' id='datetimepicker'>
+              <input type='text' class="form-control" />
+              <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group" role="group">
+          <%= link_to '<i class="fa fa-arrow-left"></i>'.html_safe, scheduler_path(date: @date - 1.day), class: 'btn btn-default' %>
+          <%= link_to '<i class="fa fa-arrow-right"></i>'.html_safe, scheduler_path(date: @date + 1.day), class: 'btn btn-default' %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="scheduler-content" class="table-responsive" style="background-color: #fff; margin-top: 5px;">
+    <table class="table table-condensed table-striped table-bordered Scheduler" style="margin-top: 0;">
+      <thead>
+      <tr>
+        <th class="time-column">Time Slot</th>
+        <% @instructors.each do |instructor| %>
+          <th class="text-center" style="width: <%= 90.0 / @instructors.count.to_f %>%;"><%= instructor.first_name %></th>
+        <% end %>
+      </tr>
+      </thead>
+      <tbody>
+        <% (@start_time.to_i..@end_time.to_i).step(1200).each do |time| %>
+          <tr>
+            <td class="text-center time-slot-time"><%= Time.at(time).utc.strftime('%I:%M %p') %></td>
+            <% @instructors.each do |instructor|
+               time_slot = TimeSlot.where(instructor_id: instructor.id).for_time(Time.at(time).utc).first
+               td_class = time_slot ? time_slot.td_class(current_user.try(:id)) : 'time-slot-off'
+               student = nil
+               is_draggable = false
+               if current_user.present?
+                 if time_slot
+                   if time_slot.student.present? && time_slot.student.first_name != 'Break'
+                     student = time_slot.student
+                     if current_user.admin? || current_user.id == student.user_id
+                       is_draggable = true
+                       td_class = "#{td_class} draggable"
+                     end
+                   elsif time_slot.available?
+                     td_class = "#{td_class} droppable"
+                   end
+                 end
+               end
+            %>
+              <td class="text-center <%= td_class %>" data-time_slot_id="<%= time_slot.try(:id) %>" data-student_id="<%= student.try(:id) %>">
+                <% if time_slot %>
+                  <% if time_slot.available? %>
+                    <a data-trigger="remote-modal"
+                       class="btn btn-info btn-block btn-sm"
+                       data-url="<%= assign_time_slot_path(time_slot.id) %>"
+                       data-title="Assign Time Slot">
+                      <i class="fa fa-plus"></i>&nbsp;&nbsp;Schedule
+                    </a>
+                  <% else %>
+                    <% student = time_slot.student %>
+                    <% if student.present? && (current_user.try(:admin?) || (student.user_id == current_user.try(:id))) %>
+                      <div class="status-bar">
+                        <% if current_user.try(:admin?) || time_slot.cancelable? %>
+                          <a data-trigger="remote-modal"
+                             data-url="<%= unassign_time_slot_path(time_slot.id) %>"
+                             data-title="Cancel Time Slot"
+                             data-toggle="tooltip"
+                             data-placement="top"
+                             title="Cancel Time Slot">
+                            <i class="cancel-btn fa fa-ban"></i>
+                          </a>
+                        <% end %>
+                        <% if current_user.admin? %>
+                          <%= link_to '<i class="fa fa-info-circle"></i>'.html_safe, [:admin, student.user], class: 'jump' %>
+                        <% end %>
+                        <span class=time"><%= time_slot.start_at.strftime('%I:%M %p') %></span>
+                        <% if is_draggable %>
+                          <i class="handle fa fa-arrows"></i>
+                        <% end %>
+                      </div>
+                      <strong><%= student.first_name %></strong><br/><%= student.user.last_name %>
+                    <% elsif student.present? && student.first_name != 'Break' %>
+                      <strong><%= student.first_name %></strong><br/><%= student.user.last_name %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<%= form_tag switch_time_slot_times_path, id: 'switch-time-form' do %>
+  <input type="hidden" id="form_student_id" name="student_id" value="" />
+  <input type="hidden" id="form_old_time_slot_id" name="old_time_slot_id" value="" />
+  <input type="hidden" id="form_new_time_slot_id" name="new_time_slot_id" value="" />
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  init.push(function() {
+    $( ".draggable" ).draggable({ handle: ".handle", revert: "invalid" });
+    $( ".droppable" ).droppable({
+      activeClass: "ui-state-default",
+      hoverClass: "ui-state-hover",
+      drop: function( event, ui ) {
+        var studentId = $(ui.draggable).data('student_id');
+        var oldTimeSlotId = $(ui.draggable).data('time_slot_id');
+        var newTimeSlotId = $(event.target).data('time_slot_id');
+        $('#form_student_id').val(studentId);
+        $('#form_old_time_slot_id').val(oldTimeSlotId);
+        $('#form_new_time_slot_id').val(newTimeSlotId);
+        $('#switch-time-form').submit();
+      }
+    });
+
+    $('#datetimepicker').datetimepicker({
+      daysOfWeekDisabled: [0],
+      format: 'YYYY-MM-DD',
+      defaultDate: '<%= @date.strftime('%m/%d/%Y') %>',
+      viewMode: 'days',
+      enabledHours: false
+    });
+    $('#datetimepicker').on('dp.change', function (e) {
+      var newDate = e.date.format('YYYY-MM-DD');
+      window.location = '/scheduler?date=' + newDate;
+    });
+  });
+</script>

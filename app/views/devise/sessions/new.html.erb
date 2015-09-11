@@ -1,0 +1,26 @@
+<div class="container">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-signin chunky-form' }) do |f| %>
+    <h2 class="form-signin-heading">Login</h2>
+
+    <!--
+    <div class="row">
+      <div class="col-sm-12">
+        <%= link_to omniauth_authorize_path(resource, :facebook), class: 'btn btn-lg btn-primary btn-block' do %>
+          <i class="fa fa-facebook-square fa-lg"></i> Login with Facebook
+        <% end %>
+      </div>
+    </div>
+    <h5 class="text-center" style="margin-top: 30px;">or using your email and password below</h5>
+    -->
+    <p>
+      <%= f.email_field :email, autofocus: true, class: 'form-control input-lg', placeholder: 'Email Address' %>
+    </p>
+    <p>
+      <%= f.password_field :password, autocomplete: 'off', class: 'form-control input-lg', placeholder: 'Password' %>
+    </p>
+    <p>
+      <%= f.submit 'Login', class: 'btn btn-lg btn-info pull-right' %>
+      <%= render "devise/shared/links" %>
+    </p>
+  <% end %>
+</div>

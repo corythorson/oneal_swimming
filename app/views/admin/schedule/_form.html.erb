@@ -1,0 +1,68 @@
+<div id="schedule-form-inner-wrapper">
+  <h3 class="page-header text-center-not-sm" style="margin-top: 0;"><%= date.strftime('%b %d, %Y') %></h3>
+
+  <%= form_tag admin_update_schedule_path, id: 'schedule-form' do %>
+    <input type="hidden" name="date" value="<%= date.strftime('%F') %>" />
+
+    <div class="panel-group" id="instructor-accordian" role="tablist">
+      <% User.instructor.includes(:time_slots).order('first_name').each do |instructor|
+        time_slots = TimeSlot.by_instructor(instructor.id).by_date_range(@date, @date).count
+        %>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+              <a role="button" data-toggle="collapse" data-parent="#instructor-accordian" href="#instructor-<%= instructor.id %>">
+                <% if time_slots > 0 %>
+                  <span class="badge label-primary pull-right"><%= time_slots %></span>
+                <% end %>
+                <%= instructor.full_name %>
+              </a>
+            </h4>
+          </div>
+          <div id="instructor-<%= instructor.id %>" class="panel-collapse collapse" role="tabpanel">
+            <div class="panel-body">
+              <% (@t1.to_datetime.to_i..(@t2.to_datetime.to_i - (20 * 60))).step(20.minutes).each do |i|
+                d = Time.at(i).utc
+                ts = TimeSlot.where(start_at: d).by_instructor(instructor.id).first
+              %>
+                <label class="btn btn-xs">
+                  <% if ts && ts.student_id.present? %>
+                    <i class="fa fa-lock"></i>&nbsp;<span><%= d.strftime('%H:%M') %></span>
+                  <% else %>
+                    <%= check_box_tag "instructors[#{instructor.id}][times][]", d.strftime('%FT%T%Z'), ts.present?, class: 'chkbox' %>&nbsp;<span><%= d.strftime('%H:%M') %></span>
+                  <% end %>
+                </label>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="text-center">
+      <button id="save-changes" type="submit" class="btn btn-lg btn-primary">Save Changes</button>
+    </div>
+  <% end %>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  init.push(function() {
+    var lastChecked = null;
+    var $chkboxes = $('.chkbox');
+    $chkboxes.click(function(e) {
+      console.log("CLICKED");
+      if(!lastChecked) {
+        lastChecked = this;
+        return;
+      }
+      if (e.shiftKey) {
+        var start = $chkboxes.index(this);
+        var end = $chkboxes.index(lastChecked);
+        $chkboxes.slice(Math.min(start,end), Math.max(start,end)+ 1).prop('checked', lastChecked.checked);
+      }
+      lastChecked = this;
+    });
+  });
+</script>
+
+

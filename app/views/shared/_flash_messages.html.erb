@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-xs-12">
+    <% flash.each do |key, value| %>
+      <% if %w(success notice).include? key %>
+        <div class="alert alert-success alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <%= value.html_safe %>
+        </div>
+      <% elsif key == 'info' %>
+        <div class="alert alert-info alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <%= value.html_safe %>
+        </div>
+      <% elsif key == 'warning' %>
+        <div class="alert alert-warning alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <%= value.html_safe %>
+        </div>
+      <% elsif %w(error alert).include? key %>
+        <div class="alert alert-danger alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <%= value.html_safe %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

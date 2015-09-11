@@ -1,0 +1,40 @@
+<section class="admin-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>Testimonials</h3>
+      </div>
+      <div class="col-sm-6">
+        <%= link_to 'Add Testimonial', new_admin_testimonial_path, class: 'btn btn-primary header-button pull-right' %>
+      </div>
+    </div>
+
+    <%= render '/shared/flash_messages' unless flash.empty? %>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Found <%= pluralize(@testimonials.count, 'testimonial') %></div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Body</th>
+              <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @testimonials.each do |testimonial| %>
+              <tr>
+                <td><%= testimonial.name %></td>
+                <td><%= truncate(testimonial.body, length: 80) %></td>
+                <td class="text-right"><%= link_to 'Edit', edit_admin_testimonial_path(testimonial) %></td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
