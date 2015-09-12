@@ -60,6 +60,7 @@
               <% if current_user.admin? %>
                 <li role="separator" class="divider"></li>
                 <li class="dropdown-header">Admin Tools</li>
+                <li><%= link_to 'Statistics', admin_reports_lessons_path %></li>
                 <li><%= link_to 'Manage Users', admin_users_path %></li>
                 <li><%= link_to 'Manage Products', admin_products_path %></li>
                 <li><%= link_to 'Manage Testimonials', admin_testimonials_path %></li>

@@ -5,7 +5,11 @@ class ProfileController < ApplicationController
     if params[:paypal] == '1'
       flash.now[:notice] = 'Payment has been successfully received. Lesson(s) have been added to your account'
     end
+
     @user = current_user
+    if params[:user_id] && current_user.admin?
+      @user = user.find(params[:user_id])
+    end
 
     respond_to do |format|
       format.html

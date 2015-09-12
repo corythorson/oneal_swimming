@@ -81,6 +81,8 @@ GEM
       json (>= 1.7)
       mime-types (>= 1.16)
     certifi (2015.08.10)
+    chartjs-ror (2.2.0)
+      rails (>= 3.1)
     chronic (0.10.2)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -391,6 +393,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.1.1)
   capistrano-rbenv!
   carrierwave
+  chartjs-ror
   chronic
   coffee-rails (~> 4.1.0)
   devise

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  namespace :admin do
+  get 'reports/lessons'
+  end
+
   get 'schedule/index'
 
   devise_for :users, :controllers => { :registrations => 'registrations' }
@@ -26,6 +30,7 @@ Rails.application.routes.draw do
   post '/schedule/unassign.json' => 'schedule#unassign'
 
   get '/profile' => 'profile#show', as: :profile
+  get '/profile/show/:id' => 'profile#show', as: :view_profile
   get '/profile/edit' => 'profile#edit', as: :edit_profile
   match '/profile/edit' => 'profile#update', as: :update_profile, via: [:put, :patch]
 
@@ -40,6 +45,9 @@ Rails.application.routes.draw do
   resources :students, :path => "learners"
 
   namespace :admin do
+    namespace :reports do
+      get :lessons
+    end
     resources :users do
       collection do
         get :search

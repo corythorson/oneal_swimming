@@ -12,6 +12,7 @@ class Admin::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    render template: '/profile/show'
   end
 
   def new

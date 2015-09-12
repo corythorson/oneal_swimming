@@ -26,3 +26,5 @@
 //= require moment
 //= require bootstrap-datetimepicker
 //= require global
+//= require Chart
+//= require excanvas

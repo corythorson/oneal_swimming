@@ -12,24 +12,24 @@
             <table class="table" style="margin: 0;">
               <tr>
                 <th>Name</th>
-                <td><%= @user.full_name %></td>
+                <td><%= user.full_name %></td>
               </tr>
               <tr>
                 <th>Phone</th>
-                <td><%= number_to_phone @user.phone, area_code: true %></td>
+                <td><%= number_to_phone user.phone, area_code: true %></td>
               </tr>
               <tr>
                 <th>Email</th>
-                <td><%= @user.email %></td>
+                <td><%= user.email %></td>
               </tr>
               <tr>
                 <th>Last Login</th>
-                <td><%= @user.last_sign_in_at.try(:strftime, '%b %d, %Y at %I:%M %p') || 'Never' %></td>
+                <td><%= user.last_sign_in_at.try(:strftime, '%b %d, %Y at %I:%M %p') || 'Never' %></td>
               </tr>
-              <% if current_user.admin? && current_user.id != @user.id %>
+              <% if current_user.admin? && current_user.id != user.id %>
                 <tr>
                   <th>Login</th>
-                  <td><%= link_to "Login as #{user.full_name}", login_as_admin_user_path(@user), class: 'btn btn-xs btn-warning' %></td>
+                  <td><%= link_to "Login as #{user.full_name}", login_as_admin_user_path(user), class: 'btn btn-xs btn-warning' %></td>
                 </tr>
               <% end %>
             </table>
@@ -37,7 +37,7 @@
         </div>
         <div class="panel panel-default">
           <div class="panel-heading">
-            You have <strong><%= @user.time_slots.scheduled.count %></strong> scheduled lessons
+            You have <strong><%= user.time_slots.scheduled.count %></strong> scheduled lessons
           </div>
           <div class="panel-body">
             <table class="table">
@@ -50,7 +50,7 @@
               </tr>
               <thead>
               <tbody>
-              <% @user.time_slots.order('start_at asc').each do |ts| %>
+              <% user.time_slots.order('start_at asc').each do |ts| %>
                 <tr>
                   <td><%= ts.start_at.strftime('%a %m/%d/%Y %I:%M %p') %></td>
                   <td><%= ts.student.first_name %></td>
@@ -69,13 +69,13 @@
             <% if current_user.admin? %>
               <a href="#"
                  data-trigger="remote-modal"
-                 data-url="<%= add_lessons_admin_user_path(@user) %>"
+                 data-url="<%= add_lessons_admin_user_path(user) %>"
                  data-title="Add Lessons" data-toggle="modal"
                  class="btn btn-xs btn-danger pull-right" style="margin-left: 5px;">Add Lessons</a>
             <% else %>
               <%= link_to 'Buy Lessons', our_lessons_path, class: 'btn btn-xs btn-primary pull-right' %>
             <% end %>
-            You have <strong><%= @user.lessons.unassigned.count %></strong> of <strong><%= @user.lessons.count %></strong> unscheduled lesson remaining
+            You have <strong><%= user.lessons.unassigned.count %></strong> of <strong><%= user.lessons.count %></strong> unscheduled lesson remaining
           </div>
         </div>
 
@@ -96,7 +96,7 @@
               </tr>
               </thead>
               <tbody>
-              <% @user.students.each do |student| %>
+              <% user.students.each do |student| %>
                 <tr>
                   <td style="vertical-align: middle;"><%= image_tag(student.avatar.thumb.url, class: 'img-circle img-responsive', style: 'max-width: 36px;') %></td>
                   <td style="vertical-align: middle;"><%= student.first_name %></td>
@@ -127,7 +127,7 @@
               </tr>
               </thead>
               <tbody>
-              <% @user.orders.order('created_at asc').each do |order| %>
+              <% user.orders.order('created_at asc').each do |order| %>
                 <tr>
                   <td><%= order.created_at.strftime('%m/%d/%Y') %></td>
                   <td>Swimming Lesson</td>
@@ -136,7 +136,7 @@
                   <td class="text-right">
                     <a href="#"
                        data-trigger="remote-modal"
-                       data-url="<%= order_details_admin_user_path(@user, order_id: order.id) %>"
+                       data-url="<%= order_details_admin_user_path(user, order_id: order.id) %>"
                        data-title="Order Details" data-toggle="modal"><i class="fa fa-info-circle"></i></a>
                   </td>
                 </tr>

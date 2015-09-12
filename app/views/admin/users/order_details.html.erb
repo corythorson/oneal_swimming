@@ -45,6 +45,7 @@
         <td><%= lesson.status.humanize.titleize %></td>
         <td><%= lesson.time_slot ? lesson.time_slot.start_at.strftime('%m/%d/%Y at %I:%M %p') : '-' %></td>
         <td><%= lesson.status == 'completed' ? '' : lesson.expires_at.strftime('%m/%d/%Y at %I:%M %p') %></td>
+        <td><%= lesson.id %></td>
       </tr>
     <% end %>
     </tbody>

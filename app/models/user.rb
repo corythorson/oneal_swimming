@@ -53,6 +53,10 @@ class User < ActiveRecord::Base
     cnt
   end
 
+  def discrepancy?
+    lessons.count != orders.sum(:quantity)
+  end
+
   def to_scheduler
     {
       id: id,
