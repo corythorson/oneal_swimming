@@ -38,7 +38,7 @@
       <tbody>
         <% (@start_time.to_i..@end_time.to_i).step(1200).each do |time| %>
           <tr>
-            <td class="text-center time-slot-time"><%= Time.at(time).utc.strftime('%I:%M %p') %></td>
+            <td class="text-center time-slot-time"><%= Time.at(time).strftime('%I:%M %p') %></td>
             <% @instructors.each do |instructor|
                time_slot = TimeSlot.where(instructor_id: instructor.id).for_time(Time.at(time).utc).first
                td_class = time_slot ? time_slot.td_class(current_user.try(:id)) : 'time-slot-off'

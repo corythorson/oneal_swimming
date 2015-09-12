@@ -21,7 +21,7 @@
               </tr>
               <thead>
               <tbody>
-              <% current_user.time_slots.where('start_at > ?', Time.now).order('start_at asc').each do |ts| %>
+              <% current_user.time_slots.where('start_at > ?', Time.current).order('start_at asc').each do |ts| %>
               <tr>
                 <td><%= ts.start_at.strftime('%a %m/%d/%Y %I:%M %p') %></td>
                 <td><%= ts.student.first_name %></td>

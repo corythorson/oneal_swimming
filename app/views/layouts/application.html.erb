@@ -38,7 +38,7 @@
         <li><%= link_to 'Our Lessons', our_lessons_path, class: (controller_name == 'home' && action_name == 'our_lessons') ? 'active top' : 'top' %></li>
         <li><%= link_to 'Instructors', instructors_path, class: (controller_name == 'home' && action_name == 'instructors') ? 'active top' : 'top' %></li>
         <li>
-          <%= link_to scheduler_path, class: (controller_name == 'home' && action_name == 'schedule') ? 'active top' : 'top' do %>
+          <%= link_to scheduler_path, class: (controller_name == 'schedule') ? 'active top' : 'top' do %>
             <% if current_user && current_user.future_time_slots > 0 %>
               Schedule <span class="badge badge-sm"><%= current_user.future_time_slots %></span>
             <% else %>
@@ -91,7 +91,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-6">
-        Copyright &copy; <%= Time.now.year %> Aquatics Academy. All rights reserved.
+        Copyright &copy; <%= Time.current.year %> Aquatics Academy. All rights reserved.
       </div>
       <div class="col-sm-6 text-right">
         Developed with <i class="fa fa-heart"></i> by Adisyn's dad

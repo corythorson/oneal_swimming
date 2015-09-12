@@ -2,7 +2,7 @@ class TimeSlot < ActiveRecord::Base
   belongs_to :instructor, class_name: 'User'
   belongs_to :student
   belongs_to :user
-  has_one :lesson
+  belongs_to :lesson
   validates :instructor_id, presence: true
 
   scope :for_time, -> (t) { where('"time_slots"."start_at" = ?', t) }
@@ -10,7 +10,7 @@ class TimeSlot < ActiveRecord::Base
     where('"time_slots"."start_at" >= ?', d1.beginning_of_day).
     where('"time_slots"."start_at" <= ?', d2.end_of_day) }
   scope :by_instructor, -> (id) { where(instructor_id: id) }
-  scope :scheduled, -> { where('start_at > ?', Time.now).where.not(student_id: nil) }
+  scope :scheduled, -> { where('start_at > ?', Time.current).where.not(student_id: nil) }
 
   def available?
     student_id.blank?
@@ -21,13 +21,17 @@ class TimeSlot < ActiveRecord::Base
   end
 
   def assign_student(student, lesson)
-    update_attribute(:student_id, student.id)
-    lesson.update_attribute(:time_slot_id, self.id)
+    update_attributes({
+        student_id: student.id,
+        lesson_id: lesson.id
+      })
   end
 
   def unassign_student!
-    Lesson.where(time_slot_id: self.id).update_all('time_slot_id = NULL')
-    update_attribute(:student_id, nil)
+    update_attributes({
+        student_id: nil,
+        lesson_id: nil
+      })
   end
 
   def td_class(current_user_id)
@@ -43,7 +47,7 @@ class TimeSlot < ActiveRecord::Base
   end
 
   def cancelable?
-    start_at >= Time.now + 24.hours
+    start_at >= Time.current + 24.hours
   end
 
   def to_react_event

@@ -6,11 +6,11 @@ class Student < ActiveRecord::Base
   validates :first_name, presence: true
 
   def future_time_slots
-    time_slots.where('start_at >= ?', Time.now)
+    time_slots.where('start_at >= ?', Time.current)
   end
 
   def past_time_slots
-    time_slots.where('start_at < ?', Time.now)
+    time_slots.where('start_at < ?', Time.current)
   end
 
   def to_simple_json

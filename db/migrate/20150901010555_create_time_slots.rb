@@ -5,11 +5,13 @@ class CreateTimeSlots < ActiveRecord::Migration
       t.integer :duration, null: false
       t.integer :instructor_id, null: false
       t.integer :student_id
+      t.integer :lesson_id
 
       t.timestamps null: false
     end
 
     add_index :time_slots, :instructor_id
     add_index :time_slots, :student_id
+    add_index :time_slots, :lesson_id
   end
 end

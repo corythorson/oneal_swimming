@@ -6,7 +6,7 @@ class Order < ActiveRecord::Base
   end
 
   def self.create_from_paypal_response!(data)
-    t = Time.now
+    t = Time.current
     user_id, quantity = data['custom'].split(',')
     user = User.find(user_id)
 

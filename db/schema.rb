@@ -23,11 +23,9 @@ ActiveRecord::Schema.define(version: 20150908172031) do
     t.datetime "expires_at"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.integer  "time_slot_id"
   end
 
   add_index "lessons", ["order_id"], name: "index_lessons_on_order_id", using: :btree
-  add_index "lessons", ["time_slot_id"], name: "index_lessons_on_time_slot_id", using: :btree
   add_index "lessons", ["user_id"], name: "index_lessons_on_user_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
@@ -75,12 +73,14 @@ ActiveRecord::Schema.define(version: 20150908172031) do
     t.integer  "duration",      null: false
     t.integer  "instructor_id", null: false
     t.integer  "student_id"
+    t.integer  "lesson_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "legacy_id"
   end
 
   add_index "time_slots", ["instructor_id"], name: "index_time_slots_on_instructor_id", using: :btree
+  add_index "time_slots", ["lesson_id"], name: "index_time_slots_on_lesson_id", using: :btree
   add_index "time_slots", ["student_id"], name: "index_time_slots_on_student_id", using: :btree
 
   create_table "users", force: :cascade do |t|
