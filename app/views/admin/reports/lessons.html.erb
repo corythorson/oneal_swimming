@@ -7,6 +7,21 @@
     </div>
 
     <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Lessons Purchased by Date (last 30 days)
+          </div>
+          <div class="panel-body">
+            <div class="chart-responsive">
+              <%= line_chart @order_data, { height: '100px', responsive: true } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -30,18 +45,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            Lessons Purchased by Date (last 30 days)
-          </div>
-          <div class="panel-body">
-            <div class="chart-responsive">
-              <%= line_chart @order_data, { responsive: true } %>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
+
   </div>
 </section>
