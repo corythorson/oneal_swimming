@@ -23,6 +23,7 @@ def import_time_slots!
         legacy_id: row['legacy_id']
       })
     print "."
+    nil
   end
 end
 
@@ -46,6 +47,7 @@ def import_lessons!
     else
       print '.'
     end
+    nil
   end
 end
 

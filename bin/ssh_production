@@ -1,0 +1,2 @@
+#!/bin/bash
+cx ssh -s 'aquatics-academy' -e production Porpoise

@@ -1,0 +1,2 @@
+#!/bin/bash
+cx tail -s 'aquatics-academy' -e production Porpoise production.log
