@@ -29,7 +29,7 @@
               <% if current_user.admin? && current_user.id != @user.id %>
                 <tr>
                   <th>Login</th>
-                  <td><%= link_to "Login as #{user.full_name}", login_as_admin_user_path(@user), class: 'btn btn-xs btn-warning' %></td>
+                  <td><%= link_to "Login as #{@user.full_name}", login_as_admin_user_path(@user), class: 'btn btn-xs btn-warning' %></td>
                 </tr>
               <% end %>
             </table>
@@ -123,7 +123,9 @@
                 <th>Service</th>
                 <th class="text-center">Quantity</th>
                 <th class="text-right">Cost</th>
+                <% if current_user.admin? %>
                 <th>&nbsp;</th>
+                <% end %>
               </tr>
               </thead>
               <tbody>
@@ -133,12 +135,14 @@
                   <td>Swimming Lesson</td>
                   <td class="text-center"><%= order.quantity %></td>
                   <td class="text-right"><%= number_to_currency order.total %></td>
-                  <td class="text-right">
-                    <a href="#"
-                       data-trigger="remote-modal"
-                       data-url="<%= order_details_admin_user_path(@user, order_id: order.id) %>"
-                       data-title="Order Details" data-toggle="modal"><i class="fa fa-info-circle"></i></a>
-                  </td>
+                  <% if current_user.admin? %>
+                    <td class="text-right">
+                      <a href="#"
+                         data-trigger="remote-modal"
+                         data-url="<%= order_details_admin_user_path(@user, order_id: order.id) %>"
+                         data-title="Order Details" data-toggle="modal"><i class="fa fa-info-circle"></i></a>
+                    </td>
+                  <% end %>
                 </tr>
               <% end %>
               </tbody>

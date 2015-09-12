@@ -7,8 +7,8 @@ class ProfileController < ApplicationController
     end
 
     @user = current_user
-    if params[:user_id] && current_user.admin?
-      @user = user.find(params[:user_id])
+    if params[:id] && current_user.admin?
+      @user = User.find(params[:id])
     end
 
     respond_to do |format|
