@@ -22,7 +22,7 @@
           <div id="instructor-<%= instructor.id %>" class="panel-collapse collapse" role="tabpanel">
             <div class="panel-body">
               <% (@t1.to_datetime.to_i..(@t2.to_datetime.to_i - (20 * 60))).step(20.minutes).each do |i|
-                d = Time.at(i).utc
+                d = Time.at(i)
                 ts = TimeSlot.where(start_at: d).by_instructor(instructor.id).first
               %>
                 <label class="btn btn-xs">

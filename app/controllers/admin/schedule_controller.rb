@@ -2,7 +2,7 @@ class Admin::ScheduleController < ApplicationController
   before_action :require_administrator
 
   def index
-    @date = params[:date].present? ? Chronic.parse(params[:date]).in_time_zone : Date.today
+    @date = params[:date].present? ? Date.strptime(params[:date], '%m/%d/%Y') : Date.current
     @t1 = @date.beginning_of_day + 8.hours
     @t2 = @date.beginning_of_day + 19.hours
   end
@@ -25,7 +25,7 @@ class Admin::ScheduleController < ApplicationController
         end
       end
     end
-    redirect_to admin_schedule_path(params: { date: @date })
+    redirect_to admin_schedule_path(params: { date: @date.strftime('%m/%d/%Y') })
   end
 
 end

@@ -23,4 +23,12 @@ namespace :fix do
 
     puts "Finished"
   end
+
+  task :reset_sequences => :environment do
+    %w[ users products orders lessons students testimonials time_slots ].each do |table|
+      cnt = ActiveRecord::Base.connection.query("SELECT MAX(id) FROM #{table}").flatten.first
+      ActiveRecord::Base.connection.execute("SELECT setval('#{table}_id_seq', #{cnt})")
+    end
+    puts "DONE"
+  end
 end
