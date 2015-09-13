@@ -1,5 +1,5 @@
 class ScheduleController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:assign, :unassign]
+  skip_before_action :verify_authenticity_token, except: [:index, :scheduler]
 
   def index
     @show_scheduler = true
