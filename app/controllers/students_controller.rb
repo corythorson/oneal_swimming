@@ -1,4 +1,6 @@
 class StudentsController < ApplicationController
+  before_filter :authenticate_user!
+  
   def index
     @students = current_user.students.order('first_name')
   end
