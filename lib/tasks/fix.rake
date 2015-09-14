@@ -31,4 +31,17 @@ namespace :fix do
     end
     puts "DONE"
   end
+
+  task :expiration_dates => :environment do
+    Order.all.includes(:lessons).find_each do |order|
+      order.lessons.each do |lesson|
+        lesson.purchased_at = order.created_at
+        lesson.expires_at = order.created_at + 1.year
+        lesson.save
+      end
+      print "."
+    end
+    puts "DONE!"
+    nil
+  end
 end
