@@ -62,7 +62,7 @@
                 <% if time_slot %>
                   <% if time_slot.available? %>
                     <div class="status-bar">
-                      <% if current_user.try(:admin?) || time_slot.deleteable? %>
+                      <% if current_user.try(:admin?) && time_slot.deleteable? %>
                         <%= link_to admin_delete_time_slot_path(time_slot.id), method: :delete, data: { confirm: 'Are you sure you want to delete this time slot?' } do %>
                           <i class="cancel-btn fa fa-trash"></i>
                         <% end %>
