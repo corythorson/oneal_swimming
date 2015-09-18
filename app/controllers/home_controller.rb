@@ -3,6 +3,12 @@ class HomeController < ApplicationController
   end
 
   def our_lessons
+    @products = []
+    Product.active.order('price asc').each do |product|
+      if product.offer_code == params[:offer_code].try(:strip) || product.offer_code.blank?
+        @products << product
+      end
+    end
   end
 
   def instructors

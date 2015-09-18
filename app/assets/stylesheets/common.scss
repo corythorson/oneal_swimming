@@ -8,7 +8,12 @@
   height: 150px;
 }
 
-
+.has-offer {
+  h4 {
+    padding-left: 35px;
+  }
+  background: transparent asset-url("offer.png") 5px 10px no-repeat;
+}
 
 .btn-box {
   margin-right: 15px;

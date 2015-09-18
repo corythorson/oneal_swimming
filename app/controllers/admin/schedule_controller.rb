@@ -28,4 +28,15 @@ class Admin::ScheduleController < ApplicationController
     redirect_to admin_schedule_path(params: { date: @date.strftime('%m/%d/%Y') })
   end
 
+  def destroy_time_slot
+    time_slot = TimeSlot.find(params[:id])
+    d = time_slot.start_at.strftime('%F')
+    if time_slot.deleteable?
+      time_slot.destroy
+      redirect_to root_path(params: { date: d }), notice: 'Time slot was deleted'
+    else
+      redirect_to root_path(params: { date: d }), alert: 'Cannot delete time slot'
+    end
+  end
+
 end

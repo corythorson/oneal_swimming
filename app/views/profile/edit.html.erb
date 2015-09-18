@@ -1,2 +1,91 @@
-<h1>Profile#edit</h1>
-<p>Find me in app/views/profile/edit.html.erb</p>
+<section class="admin-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>Edit Profile</h3>
+      </div>
+      <div class="col-sm-6">
+        <%= link_to 'Back to Dashboard', profile_path, class: 'btn btn-link header-button pull-right' %>
+      </div>
+    </div>
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <span class="panel-title">Fill out the form below</span>
+        <ul class="nav nav-tabs nav-tabs-xs">
+          <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
+          <li><a href="#password" data-toggle="tab">Update Password</a></li>
+        </ul>
+      </div>
+      <div class="panel-body">
+        <%= render '/shared/flash_messages' unless flash.empty? %>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="details">
+            <%= form_for @user, url: update_profile_path, html: { class: 'form-horizontal' } do |f| %>
+              <input type="hidden" name="id" value="<%= @user.id %>" />
+              <div class="form-group">
+                <%= f.label :first_name, class: 'col-sm-2 control-label' %>
+                <div class="col-sm-10">
+                  <%= f.text_field :first_name, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :last_name, class: 'col-sm-2 control-label' %>
+                <div class="col-sm-10">
+                  <%= f.text_field :last_name, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :phone, class: 'col-sm-2 control-label' %>
+                <div class="col-sm-10">
+                  <%= f.text_field :phone, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :email, class: 'col-sm-2 control-label' %>
+                <div class="col-sm-10">
+                  <%= f.text_field :email, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :avatar, class: 'col-sm-2 control-label' %>
+                <div class="col-sm-10">
+                  <%= f.file_field :avatar, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                  <%= link_to 'Cancel', profile_path, class: 'btn btn-link' %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="password">
+            <%= form_for @user, url: update_profile_path, html: { class: 'form-horizontal' } do |f| %>
+              <input type="hidden" name="id" value="<%= @user.id %>" />
+              <div class="form-group">
+                <%= f.label :password, class: 'col-sm-2 control-label' %>
+                <div class="col-sm-10">
+                  <%= f.password_field :password, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :password_confirmation, 'Confirm Password', class: 'col-sm-2 control-label' %>
+                <div class="col-sm-10">
+                  <%= f.password_field :password_confirmation, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                  <%= link_to 'Cancel', profile_path, class: 'btn btn-link' %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+  </div>
+</section>

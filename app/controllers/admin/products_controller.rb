@@ -38,6 +38,6 @@ class Admin::ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name, :quantity, :price, :active, :paypal_button_code)
+    params.require(:product).permit(:name, :quantity, :price, :active, :paypal_button_code, :offer_code)
   end
 end

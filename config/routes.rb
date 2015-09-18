@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
 
   namespace :admin do
-  get 'reports/lessons'
+    get 'reports/lessons'
   end
 
   get 'schedule/index'
 
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
-  root 'home#index'
+  root 'schedule#scheduler'
   get '/our_lessons' => 'home#our_lessons', as: :our_lessons
   get '/instructors' => 'home#instructors', as: :instructors
   get '/contact' => 'home#contact', as: :contact
@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   get '/profile/show/:id' => 'profile#show', as: :view_profile
   get '/profile/edit' => 'profile#edit', as: :edit_profile
   match '/profile/edit' => 'profile#update', as: :update_profile, via: [:put, :patch]
+  get '/profile/export_ical' => 'profile#export_ical', as: :export_ical
 
   post '/merchant/ipn' => 'merchant#ipn'
 
@@ -65,6 +66,7 @@ Rails.application.routes.draw do
     resources :testimonials
     get 'schedule' => 'schedule#index'
     post 'update_schedule' => 'schedule#update', as: :update_schedule
+    delete 'delete_time_slot/:id' => 'schedule#destroy_time_slot', as: :delete_time_slot
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

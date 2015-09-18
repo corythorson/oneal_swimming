@@ -50,6 +50,10 @@ class TimeSlot < ActiveRecord::Base
     start_at >= Time.current + 24.hours
   end
 
+  def deleteable?
+    student_id.blank?
+  end
+
   def to_react_event
     if student
       if student.first_name == 'Break'

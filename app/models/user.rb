@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   ROLES = %w[ admin instructor customer ]
 
   scope :instructor, -> { where("role = 'instructor' OR is_instructor = true") }
+  scope :customer, -> { where("role = 'customer'") }
 
   validates :first_name, presence: true
   # validates :last_name, presence: true

@@ -6,6 +6,11 @@
       <div class="col-sm-6">
         <div class="panel panel-primary">
           <div class="panel-heading">
+            <% if current_user.admin? %>
+              <%= link_to 'Edit Profile', edit_profile_path(id: @user), class: 'btn btn-xs btn-default pull-right' %>
+            <% else %>
+              <%= link_to 'Edit Profile', edit_profile_path, class: 'btn btn-xs btn-default pull-right' %>
+            <% end %>
             My Information
           </div>
           <div class="panel-body" style="padding: 0;">
@@ -37,12 +42,18 @@
         </div>
         <div class="panel panel-default">
           <div class="panel-heading">
+            <% if current_user.admin? %>
+              <%= link_to '<i class="fa fa-download"></i> Download'.html_safe, export_ical_path(id: @user.id), class: 'btn btn-xs btn-primary pull-right' %>
+            <% else %>
+              <%= link_to '<i class="fa fa-download"></i> Download'.html_safe, export_ical_path, class: 'btn btn-xs btn-primary pull-right' %>
+            <% end %>
             You have <strong><%= @user.time_slots.scheduled.count %></strong> scheduled lessons
           </div>
           <div class="panel-body">
             <table class="table">
               <thead>
               <tr>
+                <th>&nbsp;</th>
                 <th>Date/Time</th>
                 <th>Learner</th>
                 <th>Teacher</th>
@@ -52,6 +63,7 @@
               <tbody>
               <% @user.time_slots.order('start_at asc').each do |ts| %>
                 <tr>
+                  <td><% if ts.start_at < Time.current %><i class="fa fa-check text-success"></i><% end %></td>
                   <td><%= ts.start_at.strftime('%a %m/%d/%Y %I:%M %p') %></td>
                   <td><%= ts.student.first_name %></td>
                   <td><%= ts.instructor.first_name %></td>
