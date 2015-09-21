@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+
+require 'typhoeus'
+require 'json'
+
+STATUSES = {
+  0 => 'Pending',
+  1 => 'Deployed',
+  2 => 'Deployment failed',
+  3 => 'Analyzing',
+  4 => 'Analyzed',
+  5 => 'Queued for deployment',
+  6 => 'Deploying',
+  7 => 'Unable to analyze'
+}
+
+NAME = 'aquatics-academy'
+TOKEN = File.read("/Users/eberry/.cloud66/token")
+current_status = 0
+
+while current_status != 1
+  request = Typhoeus::Request.new(
+    "https://app.cloud66.com/api/3/stacks.json",
+    method: :get,
+    headers: { Authorization: "Bearer #{TOKEN}" }
+  )
+
+  request.run
+  response = request.response
+  begin
+    resp = JSON.parse(response.body)
+    resp['response'].each do |data|
+      if data['name'] == NAME
+        if current_status == data['status']
+          print "."
+        else
+          print STATUSES[data['status']]
+        end
+        current_status = data['status']
+      end
+    end
+  rescue
+    print "E"
+  end
+  sleep 5 unless current_status == 1
+end

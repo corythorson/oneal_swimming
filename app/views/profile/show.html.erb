@@ -43,9 +43,9 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <% if current_user.admin? %>
-              <%= link_to '<i class="fa fa-download"></i> Download'.html_safe, export_ical_path(id: @user.id), class: 'btn btn-xs btn-primary pull-right' %>
+              <%#= link_to '<i class="fa fa-download"></i> Download'.html_safe, export_ical_path(id: @user.id), class: 'btn btn-xs btn-primary pull-right' %>
             <% else %>
-              <%= link_to '<i class="fa fa-download"></i> Download'.html_safe, export_ical_path, class: 'btn btn-xs btn-primary pull-right' %>
+              <%#= link_to '<i class="fa fa-download"></i> Download'.html_safe, export_ical_path, class: 'btn btn-xs btn-primary pull-right' %>
             <% end %>
             You have <strong><%= @user.time_slots.scheduled.count %></strong> scheduled lessons
           </div>
