@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
-  root 'schedule#scheduler'
+  root 'home#index'
   get '/our_lessons' => 'home#our_lessons', as: :our_lessons
   get '/instructors' => 'home#instructors', as: :instructors
   get '/contact' => 'home#contact', as: :contact

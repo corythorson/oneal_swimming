@@ -1,30 +1,17 @@
-body, html { 
-  background-color: #efefef;
-}
-
-.alert-info {
-  color: #FFFFFF !important;
-  background-color: #0072AB !important;
-  border-color: #00687D !important;
-}
-
 .navbar {
-  margin: 0 !important;
-  background-color: #fff !important;
+  margin: 36px 0px;
+  background-color: transparent !important;
   border: none !important;
-}
+  .nav li a.top {
+    margin: 0 3px;
+    text-transform: uppercase;
+    background-color: transparent !important;
+    border-bottom: solid 1px transparent;
 
-.panel-heading {
-  position: relative;
-  .nav-tabs {
-    border-bottom-color: transparent;
-    bottom: -2px;
-    position: absolute;
-    right: 9px;
-    li {
-      a {
-        padding: 8px 15px;
-      }
+    &:hover, &.active {
+      box-shadow: 0 0px 0px rgba(0, 0, 0, 0.067);
+      border-bottom: solid 1px #428bca;
+      color: #333333;
     }
   }
 }

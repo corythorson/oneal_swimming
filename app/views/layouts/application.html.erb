@@ -12,75 +12,92 @@
 </head>
 <body>
 
-<div style="padding: 0 20px; background-color: #fff; border-top: 1px solid #efefef;">
-  <nav class="navbar navbar-default" style="margin: 0 !important;">
-    <div class="container-fluid" style="margin-bottom: 0px;">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=1622083224714510";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-          <% if current_user %>
-            <li><%= link_to 'Dashboard', profile_path %></li>
-          <% end %>
-          <li>
-            <%= link_to root_path, class: (controller_name == 'schedule') ? 'active top' : 'top' do %>
-              <% if current_user && current_user.future_time_slots > 0 %>
-                Schedule <span class="badge badge-sm"><%= current_user.future_time_slots %></span>
-              <% else %>
-                Schedule
-              <% end %>
+<!-- Static navbar -->
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to image_tag('logo.png', style: 'max-height: 67px; margin-top: -5px;', class: 'img-responsive'), root_path %>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to 'Our Lessons', our_lessons_path, class: (controller_name == 'home' && action_name == 'our_lessons') ? 'active top' : 'top' %></li>
+        <li><%= link_to 'Instructors', instructors_path, class: (controller_name == 'home' && action_name == 'instructors') ? 'active top' : 'top' %></li>
+        <li>
+          <%= link_to scheduler_path, class: (controller_name == 'schedule') ? 'active top' : 'top' do %>
+            <% if current_user && current_user.future_time_slots > 0 %>
+              Schedule <span class="badge badge-sm"><%= current_user.future_time_slots %></span>
+            <% else %>
+              Schedule
             <% end %>
-          </li>
-          <li><%= link_to 'Buy Lessons', our_lessons_path %></li>
-          <% if current_user %>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle top" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <%= image_tag(current_user.avatar.url, class: 'img-circle img-xs') if current_user.avatar? %>
-                <%= current_user.full_name %> <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><%= link_to 'Dashboard', profile_path %></li>
-                <li><%= link_to 'My Learners', students_path %></li>
-                <li><%= link_to 'Add Learner', new_student_path %></li>
-                <% if current_user.admin? %>
-                  <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Admin Tools</li>
-                  <li><%= link_to 'Statistics', admin_reports_lessons_path %></li>
-                  <li><%= link_to 'Manage Users', admin_users_path %></li>
-                  <li><%= link_to 'Manage Products', admin_products_path %></li>
-                  <li><%= link_to 'Manage Testimonials', admin_testimonials_path %></li>
-                  <li><%= link_to 'Manage Schedule', admin_schedule_path %></li>
-                <% end %>
-                <% if session[:original_user_id].present? %>
-                  <li role="separator" class="divider"></li>
-                  <li><%= link_to raw("&laquo; Back to Admin"), return_to_admin_path %></li>
-                <% end %>
-                <li role="separator" class="divider"></li>
-                <li><%= link_to 'Edit Profile', edit_profile_path %></li>
-                <li role="separator" class="divider"></li>
-                <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
-              </ul>
-            </li>
-          <% else %>
-            <li>
-              <%= link_to 'Login/Signup', new_user_session_path, class: %w[ registrations sessions ].include?(controller_name) ? 'active top' : 'top' %>
-            </li>
           <% end %>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-</div>
+        </li>
+        <% if current_user %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle top" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <%= image_tag(current_user.avatar.url, class: 'img-circle img-xs') if current_user.avatar? %>
+              <%= current_user.full_name %> <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'My Dashboard', profile_path %></li>
+              <li><%= link_to 'My Learners', students_path %></li>
+              <li><%= link_to 'Add Learner', new_student_path %></li>
+              <% if current_user.admin? %>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Admin Tools</li>
+                <li><%= link_to 'Statistics', admin_reports_lessons_path %></li>
+                <li><%= link_to 'Manage Users', admin_users_path %></li>
+                <li><%= link_to 'Manage Products', admin_products_path %></li>
+                <li><%= link_to 'Manage Testimonials', admin_testimonials_path %></li>
+                <li><%= link_to 'Manage Schedule', admin_schedule_path %></li>
+              <% end %>
+              <% if session[:original_user_id].present? %>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to raw("&laquo; Back to Admin"), return_to_admin_path %></li>
+              <% end %>
+              <li role="separator" class="divider"></li>
+              <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+            </ul>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to 'Login/Signup', new_user_session_path, class: %w[ registrations sessions ].include?(controller_name) ? 'active top' : 'top' %>
+          </li>
+        <% end %>
+        <li><%= link_to contact_path do %><i class="fa fa-lg fa-phone-square" style="color: #57A4CC;"></i><% end %></li>
+        <li><%= link_to 'https://www.facebook.com/Oneal.Aquatics.Utah', target: '_blank' do %><i class="fa fa-lg fa-facebook-square" style="color: #415f9b;"></i><% end %></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
 
 <%= yield %>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        Copyright &copy; <%= Time.current.year %> Aquatics Academy. All rights reserved.
+      </div>
+      <div class="col-sm-6 text-right">
+        Developed with <i class="fa fa-heart"></i> by Adisyn's dad
+      </div>
+    </div>
+  </div>
+</footer>
 
 <script>
   for (var i = 0; i < init.length; i++) { init[i](); }

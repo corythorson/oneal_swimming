@@ -1,43 +1,44 @@
 <% content_for(:title) do %>Meet Our Instructors<% end %>
 
-<section class="title-bar">
+<section class="title-bar" style="background-color: rgba(84, 187, 223, 1) !important;">
   <h1>Meet Our Instructors</h1>
   <h4 style="color: #fff; font-weight: 300;">We think they're the best in the biz!</h4>
 </section>
 
 <div class="container">
+  <div class="row">
   <% @instructors.each do |instructor| %>
-    <div class="row">
-      <div class="col-sm-3">
-        <%= image_tag instructor.avatar.medium.url, class: 'img-responsive img-thumbnail' %>
-        <h4 class="text-center"><%= instructor.full_name %></h4>
-      </div>
-      <div class="col-sm-9">
-        <div class="instructor-tabs">
-          <!-- Nav tabs -->
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#profile-<%= instructor.id %>" aria-controls="home" role="tab" data-toggle="tab">About</a></li>
-            <li role="presentation"><a href="#schedule-<%= instructor.id %>" aria-controls="profile" role="tab" data-toggle="tab">Schedule</a></li>
-          </ul>
 
-          <!-- Tab panes -->
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="profile-<%= instructor.id %>">
-              <div style="padding-top: 15px;">
-                <%= simple_format instructor.profile %>
-              </div>
+    <div class="col-lg-3 col-sm-4">
+      <div class="info-card">
+        <%= image_tag instructor.avatar.medium.url, class: 'img-responsive', style: 'width: 100%;' %>
+        <div class="info-card-details animate">
+          <div class="info-card-header">
+            <h1><%= instructor.full_name %></h1>
+            <h3><!-- foo --></h3>
+          </div>
+          <div class="info-card-detail">
+            <!-- Description -->
+            <p><%= simple_format instructor.profile %></p>
+            <!--
+            <div class="social">
+              <a href="https://www.facebook.com/rem.mcintosh" class="[ social-icon facebook ] animate"><span class="fa fa-facebook"></span></a>
+
+              <a href="https://twitter.com/Mouse0270" class="[ social-icon twitter ] animate"><span class="fa fa-twitter"></span></a>
+
+              <a href="https://github.com/mouse0270" class="[ social-icon github ] animate"><span class="fa fa-github-alt"></span></a>
+
+              <a href="https://plus.google.com/u/0/115077481218689845626/posts" class="[ social-icon google-plus ] animate"><span class="fa fa-google-plus"></span></a>
+
+              <a href="www.linkedin.com/in/remcintosh/" class="[ social-icon linkedin ] animate"><span class="fa fa-linkedin"></span></a>
             </div>
-            <div role="tabpanel" class="tab-pane" id="schedule-<%= instructor.id %>">
-              <div style="padding-top: 15px;">
-                Coming soon...
-              </div>
-            </div>
+            -->
           </div>
         </div>
       </div>
     </div>
-    <hr>
   <% end %>
+  </div>
 </div>
 
 <script type="text/javascript">
