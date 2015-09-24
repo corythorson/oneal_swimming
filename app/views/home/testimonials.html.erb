@@ -1,0 +1,15 @@
+<% content_for(:title) do %>Testimonials<% end %>
+
+<section class="title-bar" style="background-color: rgba(84, 187, 223, 1) !important;">
+  <h1>Hear what our customers have to say</h1>
+  <h4 style="color: #fff; font-weight: 300;">Here's a hint: all of them are satisfied!</h4>
+</section>
+
+<div class="container">
+  <% @testimonials.each do |testimonial| %>
+    <blockquote>
+      <p><%= testimonial.body %></p>
+      <cite title="Source Title"><%= testimonial.name %></cite>
+    </blockquote>
+  <% end %>
+</div>

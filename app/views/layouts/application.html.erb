@@ -46,6 +46,7 @@
             <% end %>
           <% end %>
         </li>
+        <li><%= link_to 'Testimonials', testimonials_path, class: (controller_name == 'home' && action_name == 'testimonials') ? 'active top' : 'top' %></li>
         <% if current_user %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle top" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

@@ -11,6 +11,10 @@ class HomeController < ApplicationController
     end
   end
 
+  def testimonials
+    @testimonials = Testimonial.all
+  end
+
   def instructors
     @instructors = User.instructor.order('last_name asc')
   end

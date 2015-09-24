@@ -33,4 +33,7 @@
  *= require schedule
  *= require scheduler
  *= require info-card
+ *= require owl.carousel
+ *= require owl.theme
+ *= require owl.transitions
  */

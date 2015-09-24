@@ -1,14 +1,10 @@
 <% content_for(:title) do %>Offering year-round private swimming lessons<% end %>
 
-<div class="full-page-photo" style="background-image: url(<%= asset_path("floating-hero.jpg") %>">
-  <div class="container">
-    <div class="flexslider-container">
-      <div class="carousel-caption show">
-        <h1 class="skincolored">it's <strong>never too early</strong>
-          to <strong>learn</strong> to <strong>swim</strong>!</h1>
-        <p class="lead">Year-round private lessons starting at $15</p>
-      </div>
-    </div>
+<div class="container">
+  <div class="owl-carousel owl-theme">
+    <% (1..9).each do |i| %>
+      <div class="item"><img class="lazyOwl" data-src="<%= asset_path("slide-#{i}.jpg") %>" /></div>
+    <% end %>
   </div>
 </div>
 
@@ -54,35 +50,34 @@
   </div>
 </section>
 
-<section class="testimonials_wrapper">
+<section id="instructor_wrapper">
   <div class="container">
-    <h2 class="section_header elegant centered">Testimonials<small>all of them are satisfied</small></h2>
-    <div class="flexslider">
-      <ul class="slides">
-        <% Testimonial.all.order('RANDOM()').each do |testimonial| %>
-        <li>
-          <blockquote>
-            <%= testimonial.body %>
-            <cite>&mdash; <%= testimonial.name %></cite>
-          </blockquote>
-        </li>
-        <% end %>
-      </ul>
-    </div>
-    <div class="custom-navigation">
-      <a href="#" class="flex-prev">Prev</a>
-      <div class="custom-controls-container"></div>
-      <a href="#" class="flex-next">Next</a>
+    <div class="row">
+      <div class="col-sm-4">
+        <%= image_tag "instructor.jpg", class: "img-thumbnail img-responsive" %>
+      </div>
+      <div class="col-sm-8">
+        <h2 style="margin-top: 0;">A note from your instructor</h2>
+        <p>The #1 Question I get as an instructor is, "How many lessons should I sign up for?" Here is how I look at it... Would you only schedule 10 lessons for Dance class or Karate? No, Swimming is a Life Skill. It takes time to learn these skills. Each child is different in the way they learn and in their swimming experience. The beauty of Private Swimming Lessons is I, as an instructor, can see the way your child needs to be taught, and see the things we need to focus more or less on, so that they master these life saving skills. Another wonderful thing is that our program is Year Round. Once your child is safe, you cannot stop! The Maintenance program is vital for young children. They forget it so fast! If you’re going to invest in this Skill, then you should know, there is no right answer to how many lessons to sign up for. This is a life skill. Don't rush it!</p>
+        <p><em><strong>No Refunds, Lessons can be transferred or sold to others</strong></em></p>
+      </div>
     </div>
   </div>
 </section>
 
 <script type="text/javascript" charset="utf-8">
   init.push(function() {
-    $('.flexslider').flexslider({
-      animation: "slide",
-      controlsContainer: $(".custom-controls-container"),
-      customDirectionNav: $(".custom-navigation a")
+    $(".owl-carousel").owlCarousel({
+      navigation : false, // Show next and prev buttons
+      slideSpeed : 3000,
+      paginationSpeed : 1500,
+      singleItem: true,
+      lazyLoad : true,
+      autoPlay : true,
+      responsive: true,
+      responsiveRefreshRate : 200,
+      responsiveBaseWidth: window,
+      itemsScaleUp : true
     });
   });
 </script>

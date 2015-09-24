@@ -1,3 +1,14 @@
+.owl-carousel .item img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+#instructor_wrapper {
+    background: rgba(148, 235, 237, 1);
+    padding: 20px 0;
+}
+
 #social_media_wrapper {
   background: #428bca;
   border-bottom-right-radius: 4px;
@@ -266,4 +277,3 @@ blockquote cite {
     }
   }
 }
-

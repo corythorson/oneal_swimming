@@ -28,3 +28,4 @@
 //= require global
 //= require Chart
 //= require excanvas
+//= require owl.carousel.min

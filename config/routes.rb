@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get '/contact' => 'home#contact', as: :contact
   post '/contact' => 'home#submit_contact', as: :submit_contact
   get '/schedule' => 'schedule#index', as: :schedule
+  get '/testimonials' => 'home#testimonials', as: :testimonials
   get '/schedule/events.json' => 'schedule#events'
   get '/schedule/time_slots.json' => 'schedule#time_slots'
   get '/schedule/instructors.json' => 'schedule#instructors'
