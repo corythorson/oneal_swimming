@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="owl-carousel owl-theme">
-    <% (1..9).each do |i| %>
+    <% [1,2,3,4,6,7,8,9].shuffle.each do |i| %>
       <div class="item"><img class="lazyOwl" data-src="<%= asset_path("slide-#{i}.jpg") %>" /></div>
     <% end %>
   </div>
