@@ -59,7 +59,7 @@ class Admin::ReportsController < ApplicationController
     load_dates
     @data = {}
     User.instructor.order(:first_name).each do |instructor|
-      time_slots = TimeSlot.by_time_range(@date_from, @date_to).by_instructor(instructor.id)
+      time_slots = TimeSlot.by_time_range(@date_from, @date_to).by_instructor(instructor.id).where.not(student_id: nil)
       if time_slots.count > 0
         @data[instructor.full_name] = time_slots.count
       end
