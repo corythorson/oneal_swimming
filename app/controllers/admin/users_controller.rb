@@ -101,8 +101,13 @@ class Admin::UsersController < ApplicationController
 
   def delete_lessons
     user = User.find(params[:id])
-    lesson_ids = params[:lesson_id]
-    user.lessons.where(id: lesson_ids).destroy_all
+    lesson_ids = [params[:lesson_id]].flatten
+    lessons = user.lessons.where(id: lesson_ids)
+    lessons.each do |lesson|
+      TimeSlot.where(lesson_id: lesson.id).map(&:unassign_student!)
+    end
+
+    lessons.destroy_all
     redirect_to admin_user_path(user), notice: 'Removed lessons successfully!'
   end
 

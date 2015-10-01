@@ -60,7 +60,7 @@ Rails.application.routes.draw do
         get :add_lessons
         post :create_lessons
         delete :delete_order
-        post :delete_lessons
+        match :delete_lessons, via: [:delete, :post]
       end
     end
     resources :products

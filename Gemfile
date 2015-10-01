@@ -73,6 +73,7 @@ end
 
 group :development do
   gem 'quiet_assets'
+  gem 'pry'
 end
 
 source 'https://rails-assets.org' do
