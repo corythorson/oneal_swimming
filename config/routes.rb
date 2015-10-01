@@ -49,6 +49,7 @@ Rails.application.routes.draw do
   namespace :admin do
     namespace :reports do
       get :lessons
+      get :instructor_lessons
     end
     resources :users do
       collection do

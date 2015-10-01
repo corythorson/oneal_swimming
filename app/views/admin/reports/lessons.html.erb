@@ -4,6 +4,14 @@
       <div class="col-sm-6">
         <h3>Statistics</h3>
       </div>
+      <div class="col-sm-6">
+        <div class="input-group" style="margin-top: 12px;">
+          <input type="text" name="date_range" class="form-control" id="dtpicker">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="button">Go!</button>
+          </span>
+        </div>
+      </div>
     </div>
 
     <div class="row">
@@ -49,3 +57,23 @@
 
   </div>
 </section>
+
+
+<script type="text/javascript">
+  init.push(function() {
+    $('#dtpicker').daterangepicker({
+      "startDate": "<%= @date_from.strftime('%m/%d/%Y') %>",
+      "endDate": "<%= @date_to.strftime('%m/%d/%Y') %>",
+      ranges: {
+        'Today': [moment(), moment()],
+        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+        'This Month': [moment().startOf('month'), moment().endOf('month')],
+        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+      }
+    }, function(start, end, label) {
+      window.location = '/admin/reports/lessons?date_from=' + start.format('YYYY-MM-DD') + '&date_to=' + end.format('YYYY-MM-DD');
+    });
+  });
+</script>

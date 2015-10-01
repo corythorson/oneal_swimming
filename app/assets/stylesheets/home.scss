@@ -1,12 +1,12 @@
 .owl-carousel .item img {
-    display: block;
-    width: 100%;
-    height: auto;
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 #instructor_wrapper {
-    background: rgba(148, 235, 237, 1);
-    padding: 20px 0;
+  background: rgba(148, 235, 237, 1);
+  padding: 20px 0;
 }
 
 #social_media_wrapper {
@@ -75,9 +75,10 @@
 }
 
 .cta-blue {
-  background-color: #54bbdf;
+  //background-color: #54bbdf;
+  background-color: #94EBED;
   padding: 15px 0;
-  color: white;
+  color: #000;
   text-align: center;
   h2 {
     font-size: 26px;
@@ -93,8 +94,9 @@
 
 .what_we_do {
   padding: 45px 0;
-  background-color: #52BAE0;
-  color: #fff;
+  background-color: #94EBED;
+  //background-color: #52BAE0;
+  color: #000;
   font-weight: 300;
   font-size: 18px;
   line-height: 26px;
@@ -237,7 +239,8 @@ blockquote cite {
 }
 
 .title-bar {
-  background-color: #428bca;
+  //background-color: #428bca;
+  background-color: #94EBED;
   text-align: center;
   padding: 25px 0;
   margin-bottom: 25px;
@@ -245,7 +248,7 @@ blockquote cite {
     margin: 0;
     font-size: 35px;
     font-weight: 300;
-    color: #fff;
+    color: rgba(0,0,0,0.8);
   }
 }
 
@@ -255,6 +258,7 @@ blockquote cite {
   height: 0;
   overflow: hidden;
 }
+
 .google-maps iframe {
   position: absolute;
   top: 0;

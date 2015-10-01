@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="owl-carousel owl-theme">
-    <% [1,2,3,4,6,7,8,9].shuffle.each do |i| %>
+    <% [1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24].shuffle[0..9].each do |i| %>
       <div class="item"><img class="lazyOwl" data-src="<%= asset_path("slide-#{i}.jpg") %>" /></div>
     <% end %>
   </div>
@@ -42,7 +42,7 @@
         <p>Toddler lessons are great for little swimmers who are just starting out and need to get adjusted to water. We will work pretty quickly in getting them adjusted and comfortable with the water. <a href="/our_lessons#toddler">more&#8230</a></p>
       </div>
       <div class="feature_teaser col-sm-4 col-md-4">
-        <%= image_tag '350x150-3.jpg', class: 'img-responsive' %>
+        <%= image_tag '350x150-5.jpg', class: 'img-responsive' %>
         <h3>Regular Lessons</h3>
         <p>Regular lessons are for those who are comfortable in the water and can blow bubbles. In this level, we focus on freestyle and backstroke. We will teach drills for front and backstroke. <a href="/our_lessons#regular">more&#8230</a></p>
       </div>

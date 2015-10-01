@@ -6,6 +6,9 @@ class TimeSlot < ActiveRecord::Base
   validates :instructor_id, presence: true
 
   scope :for_time, -> (t) { where('"time_slots"."start_at" = ?', t) }
+  scope :by_time_range, -> (t1, t2) {
+    where('"time_slots"."start_at" >= ?', t1).
+    where('"time_slots"."start_at" <= ?', t2) }
   scope :by_date_range, -> (d1, d2) {
     where('"time_slots"."start_at" >= ?', d1.beginning_of_day).
     where('"time_slots"."start_at" <= ?', d2.end_of_day) }

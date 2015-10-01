@@ -24,7 +24,7 @@
 //= require picker
 //= require picker.time
 //= require moment
-//= require bootstrap-datetimepicker
+//= require bootstrap-daterangepicker
 //= require global
 //= require Chart
 //= require excanvas

@@ -24,6 +24,7 @@
  *= require admin
  *= require responsive-calendar
  *= require bootstrap-datetimepicker
+ *= require bootstrap-daterangepicker
  *= require rtl
  *= require default
  *= require default.date

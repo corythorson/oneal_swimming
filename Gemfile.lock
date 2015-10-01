@@ -290,6 +290,9 @@ GEM
     rails-assets-axios (0.5.4)
     rails-assets-bootstrap (3.3.5)
       rails-assets-jquery (>= 1.9.1)
+    rails-assets-bootstrap-daterangepicker (2.1.11)
+      rails-assets-jquery (>= 1.10)
+      rails-assets-moment (>= 2.9.0)
     rails-assets-flexslider (2.5.0)
       rails-assets-jquery (>= 1.11.3)
     rails-assets-font-awesome (4.3.0)
@@ -423,6 +426,7 @@ DEPENDENCIES
   rails (= 4.2.4)
   rails-assets-axios!
   rails-assets-bootstrap!
+  rails-assets-bootstrap-daterangepicker!
   rails-assets-flexslider!
   rails-assets-font-awesome!
   rails-assets-fullcalendar!

@@ -71,7 +71,7 @@
                   <td><%= ts.instructor.first_name %></td>
                   <td class="text-right">
                     <%= link_to '<i class="fa fa-calendar"></i>'.html_safe, scheduler_path(date: ts.start_at.strftime('%F')), class: 'btn btn-xs btn-info' %>
-                    <% if current_user.admin? %>
+                    <% if false # current_user.admin? %>
                       <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, "#{delete_lessons_admin_user_path(@user)}?lesson_id=#{ts.lesson_id}", method: :delete, class: 'btn btn-xs btn-danger', data: { confirm: 'Are you sure you want to delete this lesson? This cannot be undone.'} %>
                     <% end %>
                   </td>

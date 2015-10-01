@@ -2,8 +2,7 @@ class Admin::ReportsController < ApplicationController
   before_action :require_administrator
 
   def lessons
-    @date_from = Time.current.beginning_of_day - 30.days
-    @date_to = Time.current.end_of_day
+    load_dates
 
     @lesson_data = []
     @lesson_data << {
@@ -55,4 +54,48 @@ class Admin::ReportsController < ApplicationController
       ]
     }
   end
+
+  def instructor_lessons
+    load_dates
+    @data = {}
+    User.instructor.order(:first_name).each do |instructor|
+      time_slots = TimeSlot.by_time_range(@date_from, @date_to).by_instructor(instructor.id)
+      if time_slots.count > 0
+        @data[instructor.full_name] = time_slots.count
+      end
+    end
+  end
+
+  private
+
+  def load_dates
+    fmt = '%m/%d/%Y'
+    if params[:date_from].present? && params[:date_from] =~ /\d{4}-\d{2}-\d{2}/
+      fmt = '%F'
+    end
+
+    begin
+      if params[:date_from].present?
+        params[:date_from] = DateTime.strptime(params[:date_from], fmt).strftime('%F')
+      else
+        params[:date_from] = Date.current.strftime('%F')
+      end
+    rescue
+      params[:date_from] = Date.current.strftime('%F')
+    end
+
+    begin
+      if params[:date_to].present?
+        params[:date_to] = DateTime.strptime(params[:date_to], fmt).strftime('%F')
+      else
+        params[:date_to] = Date.current.strftime('%F')
+      end
+    rescue
+      params[:date_to] = Date.current.strftime('%F')
+    end
+
+    @date_from = DateTime.strptime("#{params[:date_from]}T00:00:00#{Time.zone.now.formatted_offset}") || Time.current.beginning_of_day
+    @date_to = DateTime.strptime("#{params[:date_to]}T23:59:59#{Time.zone.now.formatted_offset}") || Time.current.end_of_day
+  end
+
 end

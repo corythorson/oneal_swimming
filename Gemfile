@@ -51,6 +51,7 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.15.35'
 gem 'icalendar'
 gem 'twilio-ruby'
 
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -88,4 +89,5 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-moment'
   gem 'rails-assets-axios'
   gem 'rails-assets-lodash'
+  gem 'rails-assets-bootstrap-daterangepicker'
 end
