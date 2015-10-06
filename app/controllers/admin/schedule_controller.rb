@@ -33,9 +33,9 @@ class Admin::ScheduleController < ApplicationController
     d = time_slot.start_at.strftime('%F')
     if time_slot.deleteable?
       time_slot.destroy
-      redirect_to root_path(params: { date: d }), notice: 'Time slot was deleted'
+      redirect_to scheduler_path(params: { date: d }), notice: 'Time slot was deleted'
     else
-      redirect_to root_path(params: { date: d }), alert: 'Cannot delete time slot'
+      redirect_to scheduler_path(params: { date: d }), alert: 'Cannot delete time slot'
     end
   end
 

@@ -1,5 +1,5 @@
 <div id="schedule-form-inner-wrapper">
-  <h3 class="page-header text-center-not-sm" style="margin-top: 0;"><%= date.strftime('%b %d, %Y') %></h3>
+  <h3 class="page-header text-center-not-sm" style="margin-top: 0;"><%= date.strftime('%A, %b %d, %Y') %></h3>
 
   <%= form_tag admin_update_schedule_path, id: 'schedule-form' do %>
     <input type="hidden" name="date" value="<%= date.strftime('%F') %>" />

@@ -12,7 +12,7 @@
         <div id="dateTimeField-wrapper">
           <div class="form-group">
             <div class='input-group date' id='datetimepicker'>
-              <input type='text' class="form-control" />
+              <input type='text' class="form-control" value="<%= @date.strftime('%m/%d/%Y') %>"/>
               <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
             </div>
           </div>
@@ -135,16 +135,11 @@
       }
     });
 
-    $('#datetimepicker').datetimepicker({
-      daysOfWeekDisabled: [0],
-      format: 'YYYY-MM-DD',
-      defaultDate: '<%= @date.strftime('%m/%d/%Y') %>',
-      viewMode: 'days',
-      enabledHours: false
-    });
-    $('#datetimepicker').on('dp.change', function (e) {
-      var newDate = e.date.format('YYYY-MM-DD');
-      window.location = '/scheduler?date=' + newDate;
+    $('#datetimepicker').daterangepicker({
+      "singleDatePicker": true,
+      "defaultDate": "<%= @date.strftime('%m/%d/%Y') %>"
+    }, function(start, end, label) {
+      window.location = '/scheduler?date=' + start.format('YYYY-MM-DD');
     });
   });
 </script>
