@@ -4,8 +4,8 @@ class Notification < ApplicationMailer
   def contact(name, email, message)
     mail(
       from: "#{name} <#{email}>",
-      to: ['info@utaquaticsacademy.com', 'alliesha_oneal@yahoo.com'],
-      bcc: ['amberry202@gmail.com'],
+      to: ['alliesha_oneal@yahoo.com'],
+      bcc: ['amberry202@gmail.com', 'cavneb@gmail.com'],
       subject: 'Email from Contact Page',
       body: message)
   end
