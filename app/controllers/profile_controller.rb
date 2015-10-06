@@ -1,3 +1,5 @@
+require 'icalendar/tzinfo'
+
 class ProfileController < ApplicationController
   before_filter :authenticate_user!
 
@@ -53,11 +55,17 @@ class ProfileController < ApplicationController
     end
     cal = Icalendar::Calendar.new
     @user.time_slots.each do |ts|
-      event = Icalendar::Event.new
-      event.dtstart = Icalendar::Values::DateTime.new(ts.start_at, tzid: 'MST')
-      event.dtend = Icalendar::Values::DateTime.new(ts.start_at + ts.duration.minutes, tzid: 'MST')
-      event.summary = "#{ts.student.first_name} swimming lesson with #{ts.instructor.first_name}"
-      cal.add_event(event)
+      event_start = ts.start_at
+      event_end = ts.start_at + ts.duration.minutes
+      tzid = "America/Denver"
+      tz = TZInfo::Timezone.get tzid
+      timezone = tz.ical_timezone event_start
+      cal.add_timezone timezone
+      cal.event do |e|
+        e.dtstart = Icalendar::Values::DateTime.new event_start, 'tzid' => tzid
+        e.dtend   = Icalendar::Values::DateTime.new event_end, 'tzid' => tzid
+        e.summary = "#{ts.student.first_name} swimming lesson with #{ts.instructor.first_name}"
+      end
     end
     cal.publish
     headers['Content-Type'] = "text/calendar; charset=UTF-8"

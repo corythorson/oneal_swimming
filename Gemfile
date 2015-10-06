@@ -50,6 +50,8 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.15.35'
 
 gem 'icalendar'
 gem 'twilio-ruby'
+gem 'tzinfo'
+gem 'tzinfo-data'
 
 
 # Use ActiveModel has_secure_password
