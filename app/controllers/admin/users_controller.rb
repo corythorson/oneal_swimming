@@ -5,7 +5,7 @@ class Admin::UsersController < ApplicationController
   def index
     @users = User.where("1 = 1")
     if params[:q]
-      @users = @users.where("LOWER(first_name) LIKE ? OR LOWER(last_name) LIKE ? OR LOWER(email) LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%")
+      @users = @users.where("LOWER(first_name) LIKE ? OR LOWER(last_name) LIKE ? OR LOWER(email) LIKE ?", "%#{params[:q].downcase}%", "%#{params[:q].downcase}%", "%#{params[:q].downcase}%")
     end
     @users = @users.order("last_name asc").page(params[:page])
   end
