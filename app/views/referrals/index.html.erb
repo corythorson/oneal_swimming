@@ -4,13 +4,51 @@
   <h1>Get FREE lessons for you and your friends!</h1>
 </section>
 
-<div class="container">
-  <p class="lead">
-    For every friend who joins through your referral link and purchases lessons, we'll give you 1 free lesson and your friend 1 free lesson.
-  </p>
+<div class="container" style="min-height: 400px;">
+  <div class="row">
+    <p class="lead col-sm-8 col-sm-offset-2 text-center">
+      For every friend who joins through your referral link and purchases 10 lessons or more, we'll give you 1 free lesson and your friend 1 free lesson.
+    </p>
+  </div>
+
+  <div class="text-center">
+    <p>Share Using Your Referral Code:</p>
+    <a style="margin-bottom: 5px;" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.utaquaticsacademy.com%2Fjoin%3Freferral%3D<%= @referral_code %>&t=Buy%2010%20swimming%20lessons%20and%20get%20one%20free%20for%20you%20and%20me!" title="Share on Facebook" target="_blank" class="btn btn-lg btn-facebook"><i class="fa fa-facebook"></i> Facebook</a>
+    <a style="margin-bottom: 5px;" href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fwww.utaquaticsacademy.com%2Fjoin%3Freferral%3D<%= @referral_code %>&text=Buy%2010%20swimming%20lessons%20and%20get%20one%20free%20for%20you%20and%20me!:%20http%3A%2F%2Fwww.utaquaticsacademy.com%2Fjoin%3Freferral%3D<%= @referral_code %>" target="_blank" title="Tweet" class="btn btn-lg btn-twitter"><i class="fa fa-twitter"></i> Twitter</a>
+    <a style="margin-bottom: 5px;" href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.utaquaticsacademy.com%2Fjoin%3Freferral%3D<%= @referral_code %>&media=http://www.utaquaticsacademy.com/assets/slide-22-f032789d892b106b921b0117efed856c20b1babac5816e9dc5962984dc589850.jpg&description=When%20you%20buy%2010%20swimming%20lessons%20from%20Aquatics%20Academy%2C%20you%20can%20get%20one%20free%20lesson%20and%20I%20will%20get%20a%20free%20lesson%20as%20well!" target="_blank" title="Pin it" class="btn btn-lg btn-pinterest"><i class="fa fa-pinterest"></i> Pinterest</a>
+    <a style="margin-bottom: 5px;" href="mailto:?subject=Buy%2010%20swimming%20lessons%20and%20get%20one%20free%20for%20you%20and%20me!&body=When%20you%20buy%2010%20swimming%20lessons%20from%20Aquatics%20Academy%2C%20you%20can%20get%20one%20free%20lesson%20and%20I%20will%20get%20a%20free%20lesson%20as%20well!:%20http%3A%2F%2Fwww.utaquaticsacademy.com%2Fjoin%3Freferral%3D<%= @referral_code %>" title="Email" class="btn btn-lg btn-email"><i class="fa fa-envelope-o"></i> Email</a>
+  </div>
+
+  <div class="text-center" style="margin-top: 25px;">
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-2">
+        <p>Or copy and share with this URL:</p>
+        <div class="input-group input-group-lg">
+          <input type="text" class="form-control" value="<%= join_url(params: { referral: @referral_code }) %>">
+          <span class="input-group-btn">
+            <button class="btn btn-info" type="button"
+                    data-clipboard-target='fe_text'
+                    data-clipboard-text='<%= join_url(params: { referral: @referral_code }) %>'
+                    id='d_clip_button'
+                    title='Click me to copy to clipboard.'>
+              Copy to Clipboard</button>
+          </span>
+        </div><!-- /input-group -->
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<div class="fb-share-button"
-     data-href="<%= join_url(params: { referral: '12345' }) %>"
-     data-layout="button_count">
-</div>
+
+<script type="text/javascript" charset="utf-8">
+init.push(function() {
+  var clip = new ZeroClipboard($("#d_clip_button"));
+
+  clip.on( "ready", function( readyEvent ) {
+    clip.on( "aftercopy", function( event ) {
+      alert("Copied text to clipboard: " + event.data["text/plain"] );
+    });
+  });
+});
+</script>

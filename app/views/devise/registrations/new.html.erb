@@ -4,6 +4,8 @@
 
     <%= devise_error_messages! %>
 
+    <input type="hidden" name="user[referer_id]" id="user_referer_id" value="<%= cookies[:referral] %>" />
+
     <!--
     <div class="row">
       <div class="col-sm-12">

@@ -28,3 +28,24 @@
   height: 220px;
   float: left;
 }
+
+//.navbar {
+//  font-size: 12px;
+//  li a {
+//    padding: 10px 10px;
+//    margin: 0 !important;
+//    &.top {
+//      margin: 0 !important;
+//    }
+//  }
+//}
+
+.navbar .navbar-nav {
+  display: inline-block;
+  float: none;
+  vertical-align: top;
+}
+
+.navbar .navbar-collapse {
+  text-align: center;
+}

@@ -5,19 +5,13 @@ class MerchantController < ApplicationController
     parms = { cmd: '_notify-validate' }
     params.each { |k, v| parms[k] = v }
 
-    puts params.inspect
-
     paypal_url = Rails.env.production? ? "https://www.paypal.com/cgi-bin/webscr" : "https://www.sandbox.paypal.com/cgi-bin/webscr"
     response = RestClient.post paypal_url, parms
 
-    puts response.body
-
     if response.body == 'VERIFIED'
-      Order.create_from_paypal_response!(params)
-      puts 'ACCEPTED'
+      OrderService.new.create_order_from_paypal_response(params)
       render json: { accepted: true }
     else
-      puts 'REJECTED'
       render json: { accepted: false, error: 'NOT A VALID REQUEST' }
     end
   end

@@ -1,3 +1,46 @@
 <% content_for :meta do %>
-<meta property="og:url"         content="<%= join_url(params: { referral: params[:referral] }) %>" />
+  <meta property="og:url" content="<%= join_url(params: {referral: params[:referral]}) %>"/>
 <% end %>
+<div style="background-color: #f3f3f3; border-top: 1px solid #ddd">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6" style="padding-top: 25px;">
+        <p class="lead">If you join and purchase 10 lessons, <strong>both you and <%= @referer.first_name %> will receive 1 free lesson!</strong></p>
+        <%= image_tag("instructor.jpg", class: "img-thumbnail img-responsive") %>
+      </div>
+      <div class="col-sm-6">
+        <div class="panel" style="margin-top: 20px;">
+          <%= form_for(@user, url: registration_path(@user), html: {class: 'form-signin chunky-form', style: 'margin: 0;'}) do |f| %>
+            <%= f.hidden_field :referer_id %>
+            <h2 class="form-signin-heading">You've been invited to join Aquatics Academy!</h2>
+            <p>
+              <div class="row">
+                <div class="col-sm-6">
+                  <%= f.text_field :first_name, autofocus: true, class: 'form-control input-lg', placeholder: 'First Name' %>
+                </div>
+                <div class="col-sm-6">
+                  <%= f.text_field :last_name, class: 'form-control input-lg', placeholder: 'Last Name' %>
+                </div>
+              </div>
+            </p>
+            <p>
+              <%= f.email_field :email, class: 'form-control input-lg', placeholder: 'Email Address' %>
+            </p>
+            <p>
+              <%= f.text_field :phone, class: 'form-control input-lg mask-phone', placeholder: 'Phone Number' %>
+            </p>
+            <p>
+              <%= f.password_field :password, autocomplete: 'off', class: 'form-control input-lg', placeholder: 'Password' %>
+            </p>
+            <p>
+              <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control input-lg', placeholder: 'Confirm Password' %>
+            </p>
+            <p>
+              <%= f.submit 'Register', class: 'btn btn-lg btn-info btn-block' %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

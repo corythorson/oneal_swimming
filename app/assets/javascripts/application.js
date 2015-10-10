@@ -29,3 +29,4 @@
 //= require Chart
 //= require excanvas
 //= require owl.carousel.min
+//= require zeroclipboard

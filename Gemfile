@@ -52,6 +52,7 @@ gem 'icalendar'
 gem 'twilio-ruby'
 gem 'tzinfo'
 gem 'tzinfo-data'
+gem 'zeroclipboard-rails'
 
 
 # Use ActiveModel has_secure_password
