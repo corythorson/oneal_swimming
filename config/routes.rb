@@ -1,11 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :admin do
-    get 'reports/lessons'
-  end
-
-  get 'schedule/index'
-
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
   root 'home#index'
@@ -19,6 +13,8 @@ Rails.application.routes.draw do
   get '/schedule/time_slots.json' => 'schedule#time_slots'
   get '/schedule/instructors.json' => 'schedule#instructors'
 
+  get '/referrals' => 'referrals#index', as: :referrals
+  get '/join' => 'referrals#join', as: :join
 
   get '/scheduler' => 'schedule#scheduler', as: :scheduler
   get '/scheduler/:id/assign' => 'schedule#assign_time_slot', as: :assign_time_slot

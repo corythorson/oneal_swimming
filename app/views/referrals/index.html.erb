@@ -1,0 +1,16 @@
+<% content_for(:title) do %>Referral Program<% end %>
+
+<section class="title-bar">
+  <h1>Get FREE lessons for you and your friends!</h1>
+</section>
+
+<div class="container">
+  <p class="lead">
+    For every friend who joins through your referral link and purchases lessons, we'll give you 1 free lesson and your friend 1 free lesson.
+  </p>
+</div>
+
+<div class="fb-share-button"
+     data-href="<%= join_url(params: { referral: '12345' }) %>"
+     data-layout="button_count">
+</div>

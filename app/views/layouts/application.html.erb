@@ -4,6 +4,11 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <meta property="og:type"        content="website" />
+  <meta property="og:title"       content="Aquatics Academy" />
+  <meta property="og:description" content="Offering year-round private swimming lessons" />
+  <meta property="og:image"       content="<%= asset_url("slide-22.jpg") %>" />
+  <%= yield :meta %>
   <title>Aquatics Academy | <%= yield(:title).present? ? yield(:title) : 'Welcome' %></title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
