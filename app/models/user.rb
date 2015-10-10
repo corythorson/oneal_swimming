@@ -30,6 +30,10 @@ class User < ActiveRecord::Base
     User.where(id: instructor_ids).order('first_name asc')
   end
 
+  def self.stale_customers
+    User.customer.includes(:lessons).where(:lessons => { id: nil }).where(sign_in_count: 0)
+  end
+
   def full_name
     [first_name, last_name].join(' ')
   end
