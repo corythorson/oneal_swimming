@@ -53,6 +53,8 @@ class Admin::ReportsController < ApplicationController
         }
       ]
     }
+
+    @referred_users = User.where.not(referer_id: nil).order('created_at desc')
   end
 
   def instructor_lessons

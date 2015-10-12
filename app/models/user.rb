@@ -62,6 +62,10 @@ class User < ActiveRecord::Base
     lessons.count != orders.sum(:quantity)
   end
 
+  def referer
+    User.where(id: referer_id).first
+  end
+
   def to_scheduler
     {
       id: id,

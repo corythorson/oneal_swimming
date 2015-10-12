@@ -53,6 +53,36 @@
           </div>
         </div>
       </div>
+      <div class="col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            # Referred Users
+          </div>
+          <div class="panel-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Referred By</th>
+                  <th>Free Lesson?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @referred_users.each do |referred_user| %>
+                <tr>
+                  <td><%= referred_user.created_at.strftime('%m/%d/%Y') %></td>
+                  <td><%= link_to referred_user.full_name, profile_path(referred_user) %></td>
+                  <td><%= link_to referred_user.referer.full_name, profile_path(referred_user.referer) %></td>
+                  <td><%= referred_user.referral_free_lesson_order_id.present? ? 'Yes' : 'No' %></td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <%= @referral_count %>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
