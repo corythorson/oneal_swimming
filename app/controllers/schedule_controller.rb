@@ -11,8 +11,8 @@ class ScheduleController < ApplicationController
     else
       @date = Date.current
     end
-    @start_time = @date.beginning_of_day + 9.hours
-    @end_time = @date.beginning_of_day + 18.hours - 20.minutes
+    @start_time = @date.beginning_of_day + 8.hours
+    @end_time = @date.beginning_of_day + 19.hours - 20.minutes
     puts "------------------------------------------------------------------"
     puts "#{@start_time} - #{@end_time}"
     puts "------------------------------------------------------------------"
