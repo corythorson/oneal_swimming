@@ -304,6 +304,9 @@ GEM
       rails-assets-jquery (>= 1.7.1)
       rails-assets-moment (>= 2.5.0)
     rails-assets-jquery (2.1.4)
+    rails-assets-jquery-confirm (2.5.0)
+      rails-assets-bootstrap (~> 3.0)
+      rails-assets-jquery (>= 1.6)
     rails-assets-jquery-ui (1.11.4)
       rails-assets-jquery (>= 1.6)
     rails-assets-jquery.maskedinput (1.4.1)
@@ -435,6 +438,7 @@ DEPENDENCIES
   rails-assets-font-awesome!
   rails-assets-fullcalendar!
   rails-assets-fullcalendar-scheduler!
+  rails-assets-jquery-confirm!
   rails-assets-jquery-ui!
   rails-assets-jquery.maskedinput!
   rails-assets-lodash!

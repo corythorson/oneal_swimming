@@ -57,6 +57,17 @@ class TimeSlot < ActiveRecord::Base
     student_id.blank?
   end
 
+  def as_json
+    {
+      id: id,
+      resourceId: instructor.id,
+      instructor_id: instructor.id,
+      title: instructor.full_name,
+      start: start_at.strftime('%FT%T'),
+      end: (start_at + duration.minutes).strftime('%FT%T')
+    }
+  end
+
   def to_react_event
     if student
       if student.first_name == 'Break'

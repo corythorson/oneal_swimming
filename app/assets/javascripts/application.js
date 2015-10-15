@@ -30,3 +30,6 @@
 //= require excanvas
 //= require owl.carousel.min
 //= require zeroclipboard
+//= require fullcalendar
+//= require fullcalendar-scheduler
+//= require jquery-confirm

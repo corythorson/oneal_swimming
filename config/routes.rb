@@ -63,8 +63,13 @@ Rails.application.routes.draw do
     resources :products
     resources :testimonials
     get 'schedule' => 'schedule#index'
+    get 'schedule/builder' => 'schedule#schedule_builder', as: :schedule_builder
+    post 'schedule/builder' => 'schedule#process_schedule_builder', as: :process_schedule_builder
+    get 'schedule/resources' => 'schedule#resources', as: :schedule_resources
+    post 'schedule/create_time_slot' => 'schedule#create_time_slot', as: :create_time_slot
     post 'update_schedule' => 'schedule#update', as: :update_schedule
-    delete 'delete_time_slot/:id' => 'schedule#destroy_time_slot', as: :delete_time_slot
+    match 'delete_time_slot/:id' => 'schedule#destroy_time_slot', as: :delete_time_slot, via: [:delete, :get]
+    match 'unassign_time_slot/:id' => 'schedule#unassign_time_slot', as: :unassign_time_slot, via: [:post, :get]
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

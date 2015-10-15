@@ -93,4 +93,5 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-axios'
   gem 'rails-assets-lodash'
   gem 'rails-assets-bootstrap-daterangepicker'
+  gem 'rails-assets-jquery-confirm'
 end
