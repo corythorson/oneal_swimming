@@ -43,11 +43,11 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              'smtp.mandrillapp.com',
+    address:              'smtp.mailgun.org',
     port:                 587,
     domain:               'utaquaticsacademy.com',
-    user_name:            'cavneb@gmail.com',
-    password:             '6KlIYRCwxGpYcfd7O8pT0A',
+    user_name:            'postmaster@utaquaticsacademy.com',
+    password:             '9c918b14d76be98ca6cb3eb200f62a94',
     authentication:       'plain',
     enable_starttls_auto: true  }
 end

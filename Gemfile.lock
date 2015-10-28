@@ -104,6 +104,10 @@ GEM
       warden (~> 1.2.3)
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.0.2)
+    dotenv-rails (2.0.2)
+      dotenv (= 2.0.2)
+      railties (~> 4.0)
     erubis (2.7.0)
     excon (0.45.4)
     execjs (2.6.0)
@@ -235,6 +239,9 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    mailgun-ruby (1.0.3)
+      json (~> 1.8)
+      rest-client (~> 1.6)
     method_source (0.8.2)
     mime-types (2.6.1)
     mini_portile (0.6.2)
@@ -419,11 +426,13 @@ DEPENDENCIES
   chronic
   coffee-rails (~> 4.1.0)
   devise
+  dotenv-rails
   fog
   font-kit-rails (~> 1.2.0)
   icalendar
   jbuilder (~> 2.0)
   jquery-rails
+  mailgun-ruby (~> 1.0.3)
   momentjs-rails (>= 2.9.0)
   omniauth-facebook
   pg
