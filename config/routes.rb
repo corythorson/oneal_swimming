@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     namespace :reports do
       get :lessons
       get :instructor_lessons
+      get :export_csv
     end
     resources :users do
       collection do

@@ -68,6 +68,10 @@ class Admin::ReportsController < ApplicationController
     end
   end
 
+  def export_csv
+    send_data User.customer.order('last_name asc').to_csv, filename: "customers-#{Date.today}.csv"
+  end
+
   private
 
   def load_dates

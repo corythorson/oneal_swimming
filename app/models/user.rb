@@ -1,3 +1,5 @@
+require 'csv'
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -73,5 +75,17 @@ class User < ActiveRecord::Base
       last_name: last_name,
       avatar: avatar.thumb.url
     }
+  end
+
+  def self.to_csv
+    attributes = %w{id email sign_in_count first_name last_name phone created_at lessons_count }
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.each do |user|
+        csv << attributes.map{ |attr| user.send(attr) }
+      end
+    end
   end
 end

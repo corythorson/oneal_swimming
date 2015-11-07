@@ -5,6 +5,7 @@
         <h3>Users</h3>
       </div>
       <div class="col-sm-6">
+        <%= link_to 'Export to CSV', admin_reports_export_csv_path, class: 'btn btn-default header-button pull-right', style: 'margin-left: 5px;' %>
         <%= link_to 'Add User', new_admin_user_path, class: 'btn btn-primary header-button pull-right' %>
       </div>
     </div>
