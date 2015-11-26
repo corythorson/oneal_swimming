@@ -55,6 +55,7 @@ gem 'tzinfo-data'
 gem 'zeroclipboard-rails'
 
 gem 'mailgun-ruby', '~>1.0.3', require: 'mailgun'
+gem 'mailchimp-api', require: 'mailchimp'
 
 
 # Use ActiveModel has_secure_password

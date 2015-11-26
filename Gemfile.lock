@@ -239,6 +239,9 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    mailchimp-api (2.0.6)
+      excon (>= 0.16.0)
+      json (>= 1.7.7)
     mailgun-ruby (1.0.3)
       json (~> 1.8)
       rest-client (~> 1.6)
@@ -432,6 +435,7 @@ DEPENDENCIES
   icalendar
   jbuilder (~> 2.0)
   jquery-rails
+  mailchimp-api
   mailgun-ruby (~> 1.0.3)
   momentjs-rails (>= 2.9.0)
   omniauth-facebook
