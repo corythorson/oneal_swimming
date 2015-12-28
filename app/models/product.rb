@@ -5,9 +5,14 @@ class Product < ActiveRecord::Base
 
   scope :active, -> { where(active: true) }
 
-  def paypal_button(user_id)
+  def paypal_button(user)
     if paypal_button_code.present?
-      paypal_button_code.gsub('CURRENT_USER_ID', user_id.to_s).html_safe
+      paypal_button_code
+        .gsub('CURRENT_USER_ID', user.id.to_s)
+        .gsub('CURRENT_USER_FIRST_NAME', user.first_name.to_s)
+        .gsub('CURRENT_USER_LAST_NAME', user.last_name.to_s)
+        .gsub('CURRENT_USER_EMAIL', user.email.to_s)
+        .html_safe
     end
   end
 end

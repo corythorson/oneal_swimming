@@ -15,6 +15,16 @@ class MerchantController < ApplicationController
       render json: { accepted: false, error: 'NOT A VALID REQUEST' }
     end
   end
+
+  def vertex
+    order = OrderService.new.create_order_from_vertex_response(params)
+    if order
+      redirect_to our_lessons_path, notice: 'Your order has been successfully processed'
+    else
+      flash[:error] = 'There was an error processing your order'
+      redirect_to our_lessons_path
+    end
+  end
 end
 
 # IPN Response

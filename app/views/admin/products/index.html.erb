@@ -33,7 +33,7 @@
                 <td><%= product.name %></td>
                 <td><%= number_to_currency product.price %></td>
                 <td><%= product.quantity %></td>
-                <td><%= product.paypal_button(current_user.id) %></td>
+                <td><%= product.paypal_button(current_user) %></td>
                 <td><%= product.active? ? 'Yes' : 'No' %></td>
                 <td><%= product.offer_code %></td>
                 <td class="text-right"><%= link_to 'Edit', edit_admin_product_path(product) %></td>

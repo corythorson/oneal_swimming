@@ -1,5 +1,21 @@
 class OrderService
 
+  def create_order_from_vertex_response(data)
+    begin
+      user_id = data['merchant_defined_field_1'].to_i
+      quantity = data['merchant_defined_field_2'].to_i
+
+      puts data.to_json
+      puts "USER ID: #{user_id}"
+      user = User.find(user_id)
+      amount = data['amount'].to_f
+      create_orders_and_lessons(user, amount, quantity, data)
+    rescue => ex
+      Rails.logger.error(ex.message)
+      nil
+    end
+  end
+
   def create_order_from_paypal_response(data)
     t = Time.current
     user_id, quantity = data['custom'].split(',')
@@ -16,6 +32,13 @@ class OrderService
       lessons = quantity.to_i
     end
 
+    order = create_orders_and_lessons(user, amount, lessons, data)
+    order
+  end
+
+  def create_orders_and_lessons(user, amount, lessons, data)
+    t = Time.current
+
     order = Order.create!(
       user_id: user.id,
       total: amount,
@@ -25,7 +48,7 @@ class OrderService
 
     lessons.times do
       if Lesson.where(order_id: order.id).count < lessons
-        Lesson.create!(order_id: order.id, user_id: user_id, purchased_at: t, expires_at: t + 1.year)
+        Lesson.create!(order_id: order.id, user_id: user.id, purchased_at: t, expires_at: t + 1.year)
       end
     end
 
