@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   has_many :orders
   has_many :time_slots, through: :students
 
-  ROLES = %w[ admin instructor customer ]
+  ROLES = %w[ admin instructor customer disabled ]
 
   scope :instructor, -> { where("role = 'instructor' OR is_instructor = true") }
   scope :customer, -> { where("role = 'customer'") }
