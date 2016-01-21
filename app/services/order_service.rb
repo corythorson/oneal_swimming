@@ -3,7 +3,7 @@ class OrderService
   def create_order_from_vertex_response(data)
     begin
       user_id = data['merchant_defined_field_1'].to_i
-      quantity = data['merchant_defined_field_2'].to_i
+      quantity = data['product_quantity_1'].to_i
 
       puts data.to_json
       puts "USER ID: #{user_id}"

@@ -20,7 +20,8 @@
                   <td style="border-top: 0; color: #333;" class="text-right hidden-xs"><h4><%= number_to_currency product.price %></h4></td>
                   <td style="border-top: 0; vertical-align: middle;">
                     <% if current_user %>
-                      <%= product.paypal_button(current_user) %>
+                      <%= vertex_cart_button(current_user, product) %>
+                      <%#= product.paypal_button(current_user) %>
                     <% else %>
                       <%= link_to 'Login to Purchase', '/users/sign_in', class: 'btn btn-sm btn-primary' %>
                     <% end %>

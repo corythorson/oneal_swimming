@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   get '/profile/export_ical' => 'profile#export_ical', as: :export_ical
 
   post '/merchant/ipn' => 'merchant#ipn'
-  get '/merchant/vertex' => 'merchant#vertex'
+  get '/merchant/vertex' => 'merchant#vertex', as: :merchant_vertex
 
   get '/return_to_admin' => 'home#return_to_admin', as: :return_to_admin
 
