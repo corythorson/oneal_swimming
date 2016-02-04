@@ -70,12 +70,15 @@ class Admin::UsersController < ApplicationController
 
   def create_lessons
     @user = User.find(params[:id])
+    order_id = params[:paypal].present? ? params[:paypal] : SecureRandom.uuid
     order = Order.new({
       user_id: @user.id,
       quantity: params[:quantity],
       total: params[:total],
+      remote_order_id: order_id,
       merchant_response: {
-        paypal_transaction: params[:paypal],
+        paypal_transaction: order_id,
+        orderid: order_id,
         notes: params[:notes]
       }
     })
