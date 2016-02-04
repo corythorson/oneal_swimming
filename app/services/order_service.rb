@@ -43,7 +43,7 @@ class OrderService
       user_id: user.id,
       total: amount,
       quantity: lessons,
-      remote_order_id: data['orderid']
+      remote_order_id: data['orderid'],
       merchant_response: data
     )
 
