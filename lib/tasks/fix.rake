@@ -44,4 +44,11 @@ namespace :fix do
     puts "DONE!"
     nil
   end
+
+  task :apply_order_id_to_orders => :environment do
+    Order.where.not(merchant_response: nil).each do |order|
+      order_id = order.merchant_response["receipt_id"] || order.merchant_response["orderid"]
+      order.update_attribute(:remote_order_id, order_id)
+    end
+  end
 end
