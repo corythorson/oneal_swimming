@@ -5,6 +5,10 @@
     <td><%= @order.id %></td>
   </tr>
   <tr>
+    <th>Merchant Order ID</th>
+    <td><%= @order.remote_order_id %></td>
+  </tr>
+  <tr>
     <th>Date/Time</th>
     <td><%= @order.created_at.strftime('%m/%d/%Y at %I:%M %p') %></td>
   </tr>
@@ -16,6 +20,12 @@
     <th>Cost</th>
     <td><%= number_to_currency @order.total %></td>
   </tr>
+  <% if current_user.admin? %>
+  <tr>
+    <th>Merchant Response</th>
+    <td><input class="form-control" type="text" value="<%= @order.merchant_response.to_json %>" /></td>
+  </tr>
+  <% end %>
   </tbody>
 </table>
 

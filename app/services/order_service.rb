@@ -36,15 +36,15 @@ class OrderService
     order
   end
 
-  def create_orders_and_lessons(user, amount, lessons, data)
+  def create_orders_and_lessons(user, amount, lessons, charge)
     t = Time.current
 
     order = Order.create!(
       user_id: user.id,
       total: amount,
       quantity: lessons,
-      remote_order_id: data['orderid'],
-      merchant_response: data
+      remote_order_id: charge['id'],
+      merchant_response: charge.as_json
     )
 
     lessons.times do

@@ -5,6 +5,10 @@ class Product < ActiveRecord::Base
 
   scope :active, -> { where(active: true) }
 
+  def stripe_amount
+    (price * 100).to_i
+  end
+
   def paypal_button(user)
     if paypal_button_code.present?
       paypal_button_code

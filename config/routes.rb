@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   root 'home#index'
   get '/our_lessons' => 'home#our_lessons', as: :our_lessons
+  post '/process_purchase/:id' => 'home#process_purchase', as: :process_purchase
   get '/instructors' => 'home#instructors', as: :instructors
   get '/contact' => 'home#contact', as: :contact
   post '/contact' => 'home#submit_contact', as: :submit_contact

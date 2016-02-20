@@ -25,7 +25,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'active_link_to'
 gem 'font-kit-rails', '~> 1.2.0'
-gem 'puma'
+gem 'puma', '~> 2.16.0'
 gem 'devise'
 gem 'omniauth-facebook'
 gem 'carrierwave'
@@ -56,6 +56,7 @@ gem 'zeroclipboard-rails'
 
 gem 'mailgun-ruby', '~>1.0.3', require: 'mailgun'
 gem 'mailchimp-api', require: 'mailchimp'
+gem 'stripe', '1.31.0'
 
 
 # Use ActiveModel has_secure_password

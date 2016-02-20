@@ -20,7 +20,16 @@
                   <td style="border-top: 0; color: #333;" class="text-right hidden-xs"><h4><%= number_to_currency product.price %></h4></td>
                   <td style="border-top: 0; vertical-align: middle;">
                     <% if current_user %>
-                      <%= product.paypal_button(current_user) %>
+                      <%= form_tag process_purchase_path(product) do %>
+                        <script
+                          src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                          data-key="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
+                          data-amount="<%= product.stripe_amount %>"
+                          data-name="<%= product.name %>"
+                          data-description="<%= pluralize(product.quantity, 'Lesson') %>"
+                          data-locale="auto">
+                        </script>
+                      <% end %>
                     <% else %>
                       <%= link_to 'Login to Purchase', '/users/sign_in', class: 'btn btn-sm btn-primary' %>
                     <% end %>
