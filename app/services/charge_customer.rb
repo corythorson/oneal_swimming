@@ -20,6 +20,7 @@ class ChargeCustomer
           amount: amount,
           currency: "usd",
           customer: customer_id,
+          receipt_email: user.email,
           metadata: {
             user_id: user.id,
             product_name: product.name,
