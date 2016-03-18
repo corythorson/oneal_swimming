@@ -3,6 +3,9 @@ class HomeController < ApplicationController
   end
 
   def our_lessons
+    if params.has_key?(:success)
+      flash.now[:notice] = 'Your purchase was successful!'
+    end
     @products = []
     Product.active.order('price asc').each do |product|
       if product.offer_code == params[:offer_code].try(:strip) || product.offer_code.blank?
@@ -34,13 +37,23 @@ class HomeController < ApplicationController
   #   "p"=>0 # index of product in Product.options
   # }
   def process_purchase
-    product = Product.find(params[:id])
-    order, error = ChargeCustomer.call(current_user, product, params)
+    product = Product.find(params[:order][:productId])
+    tokenData = {
+      stripeToken: params[:token][:id],
+      stripeTokenType: params[:token][:type],
+      stripeEmail: params[:token][:email],
+      p: 0,
+      amount: params[:order][:amount],
+      quantity: params[:order][:quantity]
+    }
+    order, error = ChargeCustomer.call(current_user, product, tokenData)
     if order
-      redirect_to our_lessons_path, notice: 'Your purchase was successful!'
+      render json: { success: true }
+      # redirect_to our_lessons_path, notice: 'Your purchase was successful!'
     else
-      flash[:error] = error.message
-      redirect_to our_lessons_path
+      # flash[:error] = error.message
+      render json: { success: false, error: error.message }, status: 404
+      # redirect_to our_lessons_path
     end
   end
 

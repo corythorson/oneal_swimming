@@ -20,16 +20,22 @@
                   <td style="border-top: 0; color: #333;" class="text-right hidden-xs"><h4><%= number_to_currency product.price %></h4></td>
                   <td style="border-top: 0; vertical-align: middle;">
                     <% if current_user %>
-                      <%= form_tag process_purchase_path(product) do %>
-                        <script
-                          src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                          data-key="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
-                          data-amount="<%= product.stripe_amount %>"
-                          data-name="<%= product.name %>"
-                          data-description="<%= pluralize(product.quantity, 'Lesson') %>"
-                          data-locale="auto">
-                        </script>
-                      <% end %>
+                      <div class="input-group" style="max-width: 180px; float: right;">
+                        <input class="form-control" type="text"
+                               data-product-id="<%= product.id %>"
+                               name="quantity[<%= product.id %>]"
+                               id="quantity_<%= product.id %>"
+                               placeholder="Quantity" />
+                        <span class="input-group-btn">
+                          <button type="button"
+                            data-amount="<%= product.stripe_amount %>"
+                            data-name="<%= product.name %>"
+                            data-description="<%= pluralize(product.quantity, 'Lesson') %>"
+                            data-trigger="purchase"
+                            data-product-id="<%= product.id %>"
+                            class="btn btn-primary">Buy Now</button>
+                        </span>
+                      </div>
                     <% else %>
                       <%= link_to 'Login to Purchase', '/users/sign_in', class: 'btn btn-sm btn-primary' %>
                     <% end %>
@@ -40,7 +46,7 @@
             </table>
           </div>
           <div class="panel-footer text-center">
-            <em style="color: #333; font-weight: bold;">Please note: lessons expire 1 year from purchase.</em>
+            <em style="color: #333; font-weight: bold;">Terms: Lessons expire 1 year from purchase. To cancel a scheduled swimming lesson, you must do so at least 24 hours in advance. By purchasing lessons, you agree to these terms.</em>
           </div>
         </div>
       </div>
@@ -107,3 +113,67 @@
     </div>
   </div>
 </div>
+
+<script>
+  init.push(function() {
+    window.currentProduct = {};
+
+    var handler = StripeCheckout.configure({
+      key: '<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>',
+      image: '<%= asset_path('icon-add.png') %>',
+      locale: 'auto',
+      token: function(token) {
+        var request = $.ajax({
+          method: 'POST',
+          url: '/process_purchase/' + currentProduct.productId,
+          data: { token: token, order: currentProduct },
+          dataType: 'json'
+        });
+
+        request.done(function( data ) {
+          window.location = '/our_lessons?success';
+        });
+
+        request.fail(function( jqXHR, textStatus ) {
+          console.log(arguments);
+          alert( "Request failed: " + textStatus );
+        });
+      }
+    });
+
+    $(window).on('popstate', function() {
+      window.currentProduct = {};
+      handler.close();
+    });
+
+    $('*[data-trigger="purchase"]').on('click', function(evt) {
+      evt.preventDefault();
+      var productId   = $(this).data('product-id');
+      var quantity    = parseInt($('#quantity_' + productId).val());
+
+      if (isNaN(quantity)) {
+        $('#quantity_' + productId).focus();
+        return alert('You must enter a quantity');
+      }
+
+      var name        = $(this).data('name');
+      var description = $(this).data('description');
+      var amount      = $(this).data('amount');
+      var totalAmount = quantity * amount;
+      var totalDesc   = quantity + ' Lessons';
+      if (quantity === 1) {
+        totalDesc = '1 Lesson';
+      }
+
+      window.currentProduct = {
+        productId: productId,
+        quantity: quantity,
+        name: totalDesc,
+        description: name,
+        amount: totalAmount
+      };
+
+      handler.open(currentProduct);
+    });
+  });
+</script>

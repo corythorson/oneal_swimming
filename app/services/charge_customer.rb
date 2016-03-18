@@ -12,8 +12,8 @@ class ChargeCustomer
       # Create the charge on Stripe's servers - this will charge the user's card
       begin
 
-        amount = product.stripe_amount
-        quantity = product.quantity
+        amount = params[:amount].to_i
+        quantity = params[:quantity].to_i
 
         # Charge the Customer instead of the card
         charge = Stripe::Charge.create(
