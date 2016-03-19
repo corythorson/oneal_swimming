@@ -30,6 +30,7 @@
                           <button type="button"
                             data-amount="<%= product.stripe_amount %>"
                             data-name="<%= product.name %>"
+                            data-lesson-count="<%= product.quantity %>"
                             data-description="<%= pluralize(product.quantity, 'Lesson') %>"
                             data-trigger="purchase"
                             data-product-id="<%= product.id %>"
@@ -148,8 +149,10 @@
 
     $('*[data-trigger="purchase"]').on('click', function(evt) {
       evt.preventDefault();
-      var productId   = $(this).data('product-id');
-      var quantity    = parseInt($('#quantity_' + productId).val());
+      var productId     = $(this).data('product-id');
+      var multiplier    = parseInt($('#quantity_' + productId).val());
+      var qtyPerProduct = $(this).data('lesson-count');
+      var quantity      = multiplier * qtyPerProduct;
 
       if (isNaN(quantity)) {
         $('#quantity_' + productId).focus();
@@ -159,7 +162,7 @@
       var name        = $(this).data('name');
       var description = $(this).data('description');
       var amount      = $(this).data('amount');
-      var totalAmount = quantity * amount;
+      var totalAmount = multiplier * amount;
       var totalDesc   = quantity + ' Lessons';
       if (quantity === 1) {
         totalDesc = '1 Lesson';
