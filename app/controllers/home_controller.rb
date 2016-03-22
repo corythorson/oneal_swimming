@@ -30,6 +30,17 @@ class HomeController < ApplicationController
     redirect_to contact_path, notice: 'Your message has been received!'
   end
 
+  def terms_agreement
+  end
+
+  def terms_i_agree
+    current_user.update_attribute(:i_agree, true)
+    redirect_to profile_path, notice: "Thank you. You may now schedule your lessons."
+  end
+
+  def terms
+  end
+
   # params == {
   #   "stripeToken"=>"tok_177JxWAxb7nsh6KmuOM2Qsrk",
   #   "stripeTokenType"=>"card",

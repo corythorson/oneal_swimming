@@ -1,5 +1,6 @@
 class ScheduleController < ApplicationController
   skip_before_action :verify_authenticity_token, except: [:index, :scheduler]
+  before_action :confirm_i_agree
 
   def index
     @show_scheduler = true

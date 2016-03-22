@@ -39,11 +39,11 @@
             <thead>
             <tr>
               <th class="text-center">Avatar</th>
-              <th>Name</th>
-              <th>Phone</th>
+              <th>Name/Phone</th>
               <th>Email</th>
               <th># Lessons</th>
               <th>Last Sign In</th>
+              <th>Terms?</th>
               <th>&nbsp;</th>
             </tr>
             </thead>
@@ -51,11 +51,19 @@
             <% @users.each do |user| %>
               <tr>
                 <td class="text-center"><%= image_tag(user.avatar.url, class: 'img-xs img-circle') if user.avatar? %></td>
-                <td><%= user.first_name %> <strong><%= user.last_name %></strong></td>
-                <td nowrap="nowrap"><%= number_to_phone user.phone, area_code: true %></td>
+                <td>
+                  <%= user.first_name %> <strong><%= user.last_name %></strong>
+                  <br/>
+                  <%= number_to_phone user.phone, area_code: true %>
+                </td>
                 <td><%= user.email %></td>
                 <td><%= user.lessons_count %></td>
-                <td><%= user.last_sign_in_at.try(:strftime, '%b %d, %Y at %I:%M %p') %></td>
+                <td>
+                  <%= user.last_sign_in_at.try(:strftime, '%b %d, %Y') %>
+                  <br/>
+                  <%= user.last_sign_in_at.try(:strftime, '%I:%M %p') %>
+                </td>
+                <td><%= user.i_agree? ? '<i class="fa fa-check"></i>'.html_safe : '' %></td>
                 <td class="text-right">
                   <%= link_to 'View', view_profile_path(user), class: 'btn btn-xs btn-default' %>
                   <%= link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-xs btn-default' %>

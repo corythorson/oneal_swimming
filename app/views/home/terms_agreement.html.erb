@@ -1,0 +1,30 @@
+<% content_for(:title) do %>Terms &amp; Policies<% end %>
+
+<section class="title-bar">
+  <h1>Our Terms &amp; Policies have been updated.</h1>
+</section>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <p>
+        Our <%= link_to "Terms & Policies", terms_path, target: "_blank" %> have been updated.
+        For you to continue using the website, please <%= link_to "read the Terms & Policies", terms_path, target: "_blank" %>
+        and sign and date the <%= link_to "PARENTAL RELEASE AND CONSENT FORM", "/parental-consent-form.pdf", target: "_blank" %> on the back and leave it in the bin.
+      </p>
+
+      <p>
+        I hope we can fulfill your expectations in teaching either you or your child to swim and be safe in and around water.
+      </p>
+
+      <div class="text-center" style="padding: 20px 20px 40px 20px;">
+        <%= link_to "I agree to the Terms & Policies", i_agree_path, method: :post, data: { confirm: "By clicking 'OK', I am stating that I have read the Terms & Policies outlined on this website and agree to them." }, class: "btn btn-lg btn-success" %>
+        <br/>
+        <%= link_to "/parental-consent-form.pdf", class: "btn btn-link", target: "_blank" do %>
+          <i class="fa fa-download"></i> Parental Release &amp; Consent Form
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>

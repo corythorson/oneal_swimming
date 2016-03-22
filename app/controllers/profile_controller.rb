@@ -2,6 +2,7 @@ require 'icalendar/tzinfo'
 
 class ProfileController < ApplicationController
   before_filter :authenticate_user!
+  before_action :confirm_i_agree
 
   def show
     if params[:paypal] == '1'

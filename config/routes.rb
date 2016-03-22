@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
   root 'home#index'
+  get '/terms' => 'home#terms', as: :terms
+  get '/terms_agreement' => 'home#terms_agreement', as: :terms_agreement
+  post '/terms_agreement/i_agree' => 'home#terms_i_agree', as: :i_agree
   get '/our_lessons' => 'home#our_lessons', as: :our_lessons
   post '/process_purchase/:id' => 'home#process_purchase', as: :process_purchase
   get '/instructors' => 'home#instructors', as: :instructors

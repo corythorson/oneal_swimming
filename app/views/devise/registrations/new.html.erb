@@ -1,3 +1,9 @@
+<style>
+  .i-accept-wrapper + .field_with_errors {
+    display: inline-block;
+  }
+</style>
+
 <div class="container">
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-signin chunky-form' }) do |f| %>
     <h2 class="form-signin-heading">Sign Up</h2>
@@ -39,6 +45,11 @@
     <p>
       <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control input-lg', placeholder: 'Confirm Password' %>
     </p>
+    <p class="i-accept-wrapper">
+      <%= f.check_box :i_agree, class: "foo" %>&nbsp;&nbsp;
+      I agree to the <%= link_to "Terms & Policies", terms_path %>
+    </p>
+    <hr>
     <p>
       <%= f.submit 'Register', class: 'btn btn-lg btn-info pull-right' %>
       <%= render "devise/shared/links" %>

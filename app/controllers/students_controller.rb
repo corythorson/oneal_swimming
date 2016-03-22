@@ -1,6 +1,7 @@
 class StudentsController < ApplicationController
   before_filter :authenticate_user!
-  
+  before_action :confirm_i_agree
+
   def index
     @students = current_user.students.order('first_name')
   end

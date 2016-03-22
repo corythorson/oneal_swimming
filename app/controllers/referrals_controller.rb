@@ -1,5 +1,6 @@
 class ReferralsController < ApplicationController
   before_filter :authenticate_user!, only: [:index]
+  before_action :confirm_i_agree, only: [:index]
 
   def index
     @referral_code = current_user.try(:id)
