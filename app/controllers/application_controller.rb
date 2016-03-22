@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def confirm_i_agree
-    if !current_user.i_agree
+    if current_user && !current_user.i_agree
       redirect_to terms_agreement_path
       return
     end
