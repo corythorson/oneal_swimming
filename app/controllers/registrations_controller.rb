@@ -12,7 +12,6 @@ class RegistrationsController < Devise::RegistrationsController
       # Inject Mailchimp Integration
       begin
         mailchimp = Mailchimp::API.new(ENV['MAILCHIMP_API_KEY'])
-        binding.pry
         results = mailchimp.lists.subscribe(ENV['MAILCHIMP_LIST_ID'], { email: resource.email })
         Rails.logger.info("Subscribed user to mailchimp: #{results.inspect}")
       rescue => ex
@@ -38,6 +37,6 @@ class RegistrationsController < Devise::RegistrationsController
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:email, :password, :first_name, :last_name, :phone, :referer_id) }
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:email, :password, :password_confirmation, :first_name, :last_name, :phone, :referer_id, :i_agree) }
   end
 end

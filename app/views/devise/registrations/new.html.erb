@@ -46,7 +46,7 @@
       <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control input-lg', placeholder: 'Confirm Password' %>
     </p>
     <p class="i-accept-wrapper">
-      <%= f.check_box :i_agree, class: "foo" %>&nbsp;&nbsp;
+      <%= f.check_box :i_agree, { class: "foo" }, true, false %>&nbsp;&nbsp;
       I agree to the <%= link_to "Terms & Policies", terms_path %>
     </p>
     <hr>

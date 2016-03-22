@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   # validates :last_name, presence: true
   validates :role, inclusion: { in: ROLES }
-  validates :i_agree, acceptance: { message: 'must be checked prior to registering.' }
+  validates :i_agree, acceptance: { accept: true, message: 'must be checked prior to registering.' }
 
   before_validation do
     self.phone = phone.gsub(/[^0-9]/, "") if attribute_present?('phone')
