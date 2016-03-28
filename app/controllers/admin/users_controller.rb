@@ -21,7 +21,7 @@ class Admin::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.i_agree = true
+    @user.i_agree = true if @user.role != 'customer'
     if @user.save
       redirect_to admin_users_path, notice: 'Added user successfully!'
     else
@@ -36,7 +36,7 @@ class Admin::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.i_agree = true
+    @user.i_agree = true if @user.role != 'customer'
     if @user.update_attributes(user_params)
       redirect_to admin_users_path, notice: 'Updated user successfully!'
     else
