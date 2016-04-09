@@ -16,13 +16,16 @@ class User < ActiveRecord::Base
 
   ROLES = %w[ admin instructor customer disabled ]
 
+  attr_accessor :skip_i_agree
+
   scope :instructor, -> { where("role = 'instructor' OR is_instructor = true") }
   scope :customer, -> { where("role = 'customer'") }
 
   validates :first_name, presence: true
   # validates :last_name, presence: true
   validates :role, inclusion: { in: ROLES }
-  validates :i_agree, acceptance: { accept: true, message: 'must be checked prior to registering.' }
+  validates :i_agree, acceptance: { accept: true, message: 'must be checked prior to registering.' },
+                      unless: Proc.new { |u| !!u.skip_i_agree }
 
   before_validation do
     self.phone = phone.gsub(/[^0-9]/, "") if attribute_present?('phone')
@@ -76,6 +79,23 @@ class User < ActiveRecord::Base
       last_name: last_name,
       avatar: avatar.thumb.url
     }
+  end
+
+  # Update password saving the record and clearing token. Returns true if
+  # the passwords are valid and the record was saved, false otherwise.
+  def reset_password(new_password, new_password_confirmation)
+    self.password = new_password
+    self.password_confirmation = new_password_confirmation
+
+    # do not require i_agree to be checked for password resets
+    self.skip_i_agree = true
+
+    if respond_to?(:after_password_reset) && valid?
+      ActiveSupport::Deprecation.warn "after_password_reset is deprecated"
+      after_password_reset # from devise
+    end
+
+    save
   end
 
   def self.to_csv
