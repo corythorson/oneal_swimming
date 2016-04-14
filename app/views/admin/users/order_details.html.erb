@@ -18,7 +18,7 @@
   </tr>
   <tr>
     <th>Cost</th>
-    <td><%= number_to_currency @order.total %></td>
+    <td><%= number_to_currency @order.amount %></td>
   </tr>
   <% if current_user.admin? %>
   <tr>

@@ -153,7 +153,7 @@
                   <td><%= order.created_at.strftime('%m/%d/%Y') %></td>
                   <td>Swimming Lesson</td>
                   <td class="text-center"><%= order.quantity %></td>
-                  <td class="text-right"><%= number_to_currency order.total %></td>
+                  <td class="text-right"><%= number_to_currency order.amount %></td>
                   <% if current_user.admin? %>
                     <td class="text-right">
                       <a href="#"

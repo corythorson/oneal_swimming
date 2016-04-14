@@ -7,4 +7,12 @@ class Order < ActiveRecord::Base
   def deleteable?
     lessons.unassigned.count == lessons.count
   end
+
+  def amount
+    begin
+      (merchant_response['amount'] / 100).to_f
+    rescue
+      total.to_f
+    end
+  end
 end
