@@ -20,15 +20,18 @@ Rails.application.routes.draw do
   get '/referrals' => 'referrals#index', as: :referrals
   get '/join' => 'referrals#join', as: :join
 
-  get '/scheduler' => 'schedule#scheduler', as: :scheduler
-  get '/scheduler/:id/assign' => 'schedule#assign_time_slot', as: :assign_time_slot
-  post '/scheduler/assign_student' => 'schedule#assign_student_to_time_slot', as: :assign_student_to_time_slot
-  get '/scheduler/:id/unassign' => 'schedule#unassign_time_slot', as: :unassign_time_slot
-  post '/scheduler/:id/unassign' => 'schedule#perform_unassign_time_slot', as: :perform_unassign_time_slot
-  post '/scheduler/switch_time_slot_times' => 'schedule#switch_time_slot_times', as: :switch_time_slot_times
+  get '/scheduler', to: redirect('/'), as: :old_scheduler
+  scope "/:location_id" do
+    get '/scheduler' => 'schedule#scheduler', as: :scheduler
+    get '/scheduler/:id/assign' => 'schedule#assign_time_slot', as: :assign_time_slot
+    post '/scheduler/assign_student' => 'schedule#assign_student_to_time_slot', as: :assign_student_to_time_slot
+    get '/scheduler/:id/unassign' => 'schedule#unassign_time_slot', as: :unassign_time_slot
+    post '/scheduler/:id/unassign' => 'schedule#perform_unassign_time_slot', as: :perform_unassign_time_slot
+    post '/scheduler/switch_time_slot_times' => 'schedule#switch_time_slot_times', as: :switch_time_slot_times
 
-  post '/schedule/assign.json' => 'schedule#assign'
-  post '/schedule/unassign.json' => 'schedule#unassign'
+    post '/schedule/assign.json' => 'schedule#assign'
+    post '/schedule/unassign.json' => 'schedule#unassign'
+  end
 
   get '/profile' => 'profile#show', as: :profile
   get '/profile/show/:id' => 'profile#show', as: :view_profile
@@ -48,6 +51,7 @@ Rails.application.routes.draw do
   resources :students, :path => "learners"
 
   namespace :admin do
+    resources :locations
     namespace :reports do
       get :lessons
       get :instructor_lessons

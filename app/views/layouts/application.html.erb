@@ -44,13 +44,20 @@
         <li><%= link_to 'Our Lessons', our_lessons_path, class: (controller_name == 'home' && action_name == 'our_lessons') ? 'active top' : 'top' %></li>
         <li><%= link_to 'Instructors', instructors_path, class: (controller_name == 'home' && action_name == 'instructors') ? 'active top' : 'top' %></li>
         <li>
-          <%= link_to scheduler_path, class: (controller_name == 'schedule') ? 'active top' : 'top' do %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle top" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <% if current_user && current_user.future_time_slots > 0 %>
               Schedule <span class="badge badge-sm"><%= current_user.future_time_slots %></span>
             <% else %>
               Schedule
             <% end %>
-          <% end %>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <% Location.all.order(:name).each do |location| %>
+              <li><%= link_to location.name, scheduler_path(location_id: location.slug) %></li>
+            <% end %>
+          </ul>
         </li>
         <li><%= link_to 'Testimonials', testimonials_path, class: (controller_name == 'home' && action_name == 'testimonials') ? 'active top' : 'top' %></li>
         <% if current_user %>
@@ -71,6 +78,7 @@
                 <li><%= link_to 'Manage Users', admin_users_path %></li>
                 <li><%= link_to 'Manage Products', admin_products_path %></li>
                 <li><%= link_to 'Manage Testimonials', admin_testimonials_path %></li>
+                <li><%= link_to 'Manage Locations', admin_locations_path %></li>
                 <li><%= link_to 'Manage Schedule', admin_schedule_path %></li>
               <% end %>
               <% if session[:original_user_id].present? %>

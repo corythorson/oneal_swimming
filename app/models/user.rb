@@ -32,8 +32,8 @@ class User < ActiveRecord::Base
     self.phone = phone.gsub(/[^0-9]/, "") if attribute_present?('phone')
   end
 
-  def self.instructors_for_date(date)
-    instructor_ids = TimeSlot.by_date_range(date, date).map(&:instructor_id)
+  def self.instructors_for_date(date, location)
+    instructor_ids = location.time_slots.by_date_range(date, date).map(&:instructor_id)
     User.where(id: instructor_ids).order('first_name asc')
   end
 

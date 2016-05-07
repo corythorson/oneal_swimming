@@ -12,12 +12,13 @@ class ScheduleController < ApplicationController
     else
       @date = Date.current
     end
+    @location = Location.friendly.find(params[:location_id])
     @start_time = @date.beginning_of_day + 8.hours
     @end_time = @date.beginning_of_day + 19.hours - 20.minutes
     puts "------------------------------------------------------------------"
     puts "#{@start_time} - #{@end_time}"
     puts "------------------------------------------------------------------"
-    @instructors = User.instructors_for_date(@date).includes(:time_slots)
+    @instructors = User.instructors_for_date(@date, @location).includes(:time_slots)
   end
 
   def assign_time_slot
@@ -38,12 +39,12 @@ class ScheduleController < ApplicationController
     if lesson
       if time_slot.available?
         time_slot.assign_student(student, lesson)
-        redirect_to scheduler_path(date: time_slot.start_at.to_date), notice: "We have added #{student.first_name} to that time slot!"
+        redirect_to scheduler_path(date: time_slot.start_at.to_date, location_id: time_slot.location.slug), notice: "We have added #{student.first_name} to that time slot!"
       else
-        redirect_to scheduler_path(date: time_slot.start_at.to_date), alert: "Time slot is no longer available"
+        redirect_to scheduler_path(date: time_slot.start_at.to_date, location_id: time_slot.location.slug), alert: "Time slot is no longer available"
       end
     else
-      redirect_to scheduler_path(date: time_slot.start_at.to_date), alert: "You have no more lessons available"
+      redirect_to scheduler_path(date: time_slot.start_at.to_date, location_id: time_slot.location.slug), alert: "You have no more lessons available"
     end
   end
 
@@ -58,9 +59,9 @@ class ScheduleController < ApplicationController
 
     if time_slot && time_slot.can_unassign?(current_user)
       time_slot.unassign_student!
-      redirect_to scheduler_path(date: time_slot.start_at.to_date), notice: "You have been unassigned from that time slot"
+      redirect_to scheduler_path(date: time_slot.start_at.to_date, location_id: time_slot.location.slug), notice: "You have been unassigned from that time slot"
     else
-      redirect_to scheduler_path(date: time_slot.start_at.to_date), alert: "You are not allowed to unschedule this time slot"
+      redirect_to scheduler_path(date: time_slot.start_at.to_date, location_id: time_slot.location.slug), alert: "You are not allowed to unschedule this time slot"
     end
   end
 
@@ -76,9 +77,9 @@ class ScheduleController < ApplicationController
       lesson = old_time_slot.lesson
       old_time_slot.unassign_student!
       new_time_slot.assign_student(student, lesson)
-      redirect_to scheduler_path(date: new_time_slot.start_at.to_date), notice: "Time slot changed successfully!"
+      redirect_to scheduler_path(date: new_time_slot.start_at.to_date, location_id: old_time_slot.location.slug), notice: "Time slot changed successfully!"
     else
-      redirect_to scheduler_path(date: new_time_slot.start_at.to_date), alert: "Time slot is no longer available"
+      redirect_to scheduler_path(date: new_time_slot.start_at.to_date, location_id: old_time_slot.location.slug), alert: "Time slot is no longer available"
     end
   end
 

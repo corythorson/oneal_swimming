@@ -3,7 +3,9 @@ class TimeSlot < ActiveRecord::Base
   belongs_to :student
   belongs_to :user
   belongs_to :lesson
+  belongs_to :location
   validates :instructor_id, presence: true
+  validates :location_id, presence: true
 
   scope :for_time, -> (t) { where('"time_slots"."start_at" = ?', t) }
   scope :by_time_range, -> (t1, t2) {

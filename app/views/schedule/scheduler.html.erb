@@ -26,8 +26,8 @@
   </div>
 
   <div style="text-align: center; font-weight: bold; margin-bottom: 10px;">
-    <em style="font-weight: normal;">New pool address:</em><br/>
-    <a target="_blank" href="https://www.google.com/maps/place/10196+Hidden+Pond+Dr,+Highland,+UT+84003/data=!4m2!3m1!1s0x874d805f005f1e8f:0xb4e01ef458da4f5b?sa=X&ved=0ahUKEwiq9aOQ14bMAhXKuoMKHatwBmoQ8gEIHDAA">10196 Hidden Pond Dr, Highland, UT 84003</a>
+    <h3 style="margin-bottom: 0;"><%= @location.name %></h3>
+    <a target="_blank" href="https://www.google.com/maps/place/<%= @location.full_address.split(' ').join('+') %>/data=!4m2!3m1!1s0x874d805f005f1e8f:0xb4e01ef458da4f5b?sa=X&ved=0ahUKEwiq9aOQ14bMAhXKuoMKHatwBmoQ8gEIHDAA"><%= @location.full_address %></a>
   </div>
 
   <div style="text-align: center; font-style: italic;">
@@ -80,7 +80,7 @@
                     </div>
                     <a data-trigger="remote-modal"
                        class="btn btn-info btn-block btn-sm"
-                       data-url="<%= assign_time_slot_path(time_slot.id) %>"
+                       data-url="<%= assign_time_slot_path(time_slot.id, location_id: current_location.slug) %>"
                        data-title="Assign Time Slot">
                       <i class="fa fa-plus"></i>&nbsp;&nbsp;Schedule
                     </a>
@@ -90,7 +90,7 @@
                       <div class="status-bar">
                         <% if current_user.try(:admin?) || time_slot.cancelable? %>
                           <a data-trigger="remote-modal"
-                             data-url="<%= unassign_time_slot_path(time_slot.id) %>"
+                             data-url="<%= unassign_time_slot_path(time_slot.id, location_id: current_location.slug) %>"
                              data-title="Cancel Time Slot"
                              data-toggle="tooltip"
                              data-placement="top"

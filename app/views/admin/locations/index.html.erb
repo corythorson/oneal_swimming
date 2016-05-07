@@ -1,0 +1,46 @@
+<section class="admin-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>Locations</h3>
+      </div>
+      <div class="col-sm-6">
+        <%= link_to 'Add Location', new_admin_location_path, class: 'btn btn-primary header-button pull-right' %>
+      </div>
+    </div>
+
+    <%= render '/shared/flash_messages' unless flash.empty? %>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Found <%= pluralize(@locations.count, 'location') %></div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Zip Code</th>
+              <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @locations.each do |location| %>
+              <tr>
+                <td><%= location.name %></td>
+                <td><%= location.street_address %></td>
+                <td><%= location.city %></td>
+                <td><%= location.state %></td>
+                <td><%= location.zip_code %></td>
+                <td class="text-right"><%= link_to 'Edit', edit_admin_location_path(location) %></td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

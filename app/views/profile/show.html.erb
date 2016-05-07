@@ -71,7 +71,7 @@
                     <td><%= ts.student.first_name %></td>
                     <td><%= ts.instructor.first_name %></td>
                     <td class="text-right">
-                      <%= link_to '<i class="fa fa-calendar"></i>'.html_safe, scheduler_path(date: ts.start_at.strftime('%F')), class: 'btn btn-xs btn-info' %>
+                      <%= link_to '<i class="fa fa-calendar"></i>'.html_safe, scheduler_path(date: ts.start_at.strftime('%F'), location_id: ts.location.slug), class: 'btn btn-xs btn-info' %>
                       <% if false # current_user.admin? %>
                         <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, "#{delete_lessons_admin_user_path(@user)}?lesson_id=#{ts.lesson_id}", method: :delete, class: 'btn btn-xs btn-danger', data: { confirm: 'Are you sure you want to delete this lesson? This cannot be undone.'} %>
                       <% end %>
@@ -90,7 +90,7 @@
                  data-url="<%= transfer_lessons_admin_user_path(@user) %>"
                  data-title="Transfer Lessons" data-toggle="modal"
                  class="btn btn-xs btn-info pull-right" style="margin-left: 5px;">Transfer Lessons</a>
-            You have participated in <%= @user.transfers.count %> lesson transfers
+            You have participated in <strong><%= @user.transfers.count %></strong> lesson transfers
           </div>
           <div class="panel-body">
             <table class="table table-striped">

@@ -13,7 +13,7 @@ class Admin::ScheduleController < ApplicationController
     @time_slots.includes(:user).each do |time_slot|
       events << {
         id: time_slot.id,
-        resourceId: time_slot.instructor_id,
+        resourceId: "#{time_slot.location_id}-#{time_slot.instructor_id}",
         title: ' ',
         start: time_slot.start_at.strftime('%FT%T'),
         end: (time_slot.start_at + time_slot.duration.minutes).strftime('%FT%T'),
@@ -42,13 +42,14 @@ class Admin::ScheduleController < ApplicationController
     date_from = Chronic.parse(df).to_date
     date_to = Chronic.parse(dt).to_date
     cnt = 0
+    location = Location.find(params[:location_id])
     date_from.upto(date_to).each do |date|
       if params[:dow].include? date.strftime('%w')
         params[:time_slot_time].each do |tst|
           time = Time.at(tst.to_i)
           dstring = "#{date.strftime('%F')}T#{time.strftime('%T')}"
           d = Chronic.parse(dstring)
-          ts = TimeSlot.for_time(d).by_instructor(params[:instructor_id]).first_or_create({
+          ts = location.time_slots.for_time(d).by_instructor(params[:instructor_id]).first_or_create({
             start_at: d,
             duration: 20,
             instructor_id: params[:instructor_id]
@@ -93,32 +94,39 @@ class Admin::ScheduleController < ApplicationController
 
   def create_time_slot
     d = Chronic.parse(params[:date])
-    ts = TimeSlot.for_time(d).by_instructor(params[:instructor_id]).first_or_create({
+    location_id, instructor_id = params[:instructor_id].split('-')
+    location = Location.find(location_id)
+    ts = location.time_slots.for_time(d).by_instructor(instructor_id).first_or_create({
       start_at: d,
       duration: 20,
-      instructor_id: params[:instructor_id]
+      instructor_id: instructor_id
     })
     render json: { ok: true }
   end
 
   def destroy_time_slot
     time_slot = TimeSlot.find(params[:id])
+    location = time_slot.location
     d = time_slot.start_at.strftime('%F')
     if time_slot.deleteable?
       time_slot.destroy
-      redirect_to scheduler_path(params: { date: d }), notice: 'Time slot was deleted'
+      redirect_to scheduler_path(params: { date: d }, location_id: location.slug), notice: 'Time slot was deleted'
     else
-      redirect_to scheduler_path(params: { date: d }), alert: 'Cannot delete time slot'
+      redirect_to scheduler_path(params: { date: d}, location_id: location.slug), alert: 'Cannot delete time slot'
     end
   end
 
   def resources
     resources = []
-    User.instructor.each do |instructor|
-      resources << {
-        id: instructor.id,
-        title: instructor.full_name
-      }
+
+    Location.all.each do |location|
+      User.instructor.each do |instructor|
+        resources << {
+          id: "#{location.id}-#{instructor.id}",
+          title: instructor.full_name,
+          location: location.name,
+        }
+      end
     end
     render json: resources
   end

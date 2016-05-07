@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :allow_iframe_requests
+  before_action :allow_iframe_requests
 
   def require_administrator
     unless current_user.try(:admin?)
@@ -21,5 +21,19 @@ class ApplicationController < ActionController::Base
       return
     end
   end
+
+  def current_location
+    if session[:current_location_id].present?
+      @location = Location.find(session[:current_location_id])
+    elsif params[:location_id]
+      session[:current_location_id] = params[:location_id]
+      @location = Location.find(params[:location_id])
+    else
+      @location = Location.first
+      session[:current_location_id] = @location.id
+    end
+    @location
+  end
+  helper_method :current_location
 
 end
