@@ -21,11 +21,11 @@ class Admin::LocationsController < ApplicationController
   end
 
   def edit
-    @location = Location.find(params[:id])
+    @location = Location.friendly.find(params[:id])
   end
 
   def update
-    @location = Location.find(params[:id])
+    @location = Location.friendly.find(params[:id])
     if @location.update_attributes(location_params)
       redirect_to admin_locations_path, notice: 'Updated location successfully!'
     else
