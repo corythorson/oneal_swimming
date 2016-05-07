@@ -24,10 +24,10 @@ class ApplicationController < ActionController::Base
 
   def current_location
     if session[:current_location_id].present?
-      @location = Location.find(session[:current_location_id])
+      @location = Location.friendly.find(session[:current_location_id])
     elsif params[:location_id]
       session[:current_location_id] = params[:location_id]
-      @location = Location.find(params[:location_id])
+      @location = Location.friendly.find(params[:location_id])
     else
       @location = Location.first
       session[:current_location_id] = @location.id
