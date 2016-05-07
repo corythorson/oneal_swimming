@@ -4,7 +4,7 @@ class SetLocationToAllTimeSlots < ActiveRecord::Migration
       street_address: '10196 Hidden Pond Dr',
       city: 'Highland',
       state: 'UT',
-      zip_code: '84003'
+      zip_code: '84003',
     })
     TimeSlot.update_all(location_id: location.id)
   end
