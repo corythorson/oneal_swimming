@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :lessons
   has_many :orders
   has_many :time_slots, through: :students
+  has_many :lesson_transfers
 
   ROLES = %w[ admin instructor customer disabled ]
 
@@ -38,6 +39,10 @@ class User < ActiveRecord::Base
 
   def self.stale_customers
     User.customer.includes(:lessons).where(:lessons => { id: nil }).where(sign_in_count: 0)
+  end
+
+  def transfers
+    LessonTransfer.where("user_id = ? OR recipient_id = ?", id, id)
   end
 
   def full_name

@@ -18,6 +18,7 @@
 //= require turbolinks
 //= require bootstrap
 //= require flexslider
+//= require bootstrap-slider.min
 //= require jquery.maskedinput
 //= require date
 //= require responsive-calendar

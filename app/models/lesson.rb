@@ -1,6 +1,7 @@
 class Lesson < ActiveRecord::Base
   belongs_to :user, counter_cache: true
   belongs_to :order
+  belongs_to :lesson_transfer
   has_one :time_slot
 
   scope :expired, -> { where('expires_at < ?', Time.current) }

@@ -68,6 +68,12 @@ class Admin::UsersController < ApplicationController
     render layout: false
   end
 
+  def lesson_transfer_details
+    @user = User.find(params[:id])
+    @lesson_transfer = LessonTransfer.find(params[:lesson_transfer_id])
+    render layout: false
+  end
+
   def add_lessons
     @user = User.find(params[:id])
     render layout: false
@@ -97,6 +103,56 @@ class Admin::UsersController < ApplicationController
       redirect_to admin_user_path(@user), notice: 'Added lessons successfully!'
     else
       redirect_to admin_user_path(@user), alert: 'Unable to save lessons'
+    end
+  end
+
+  def transfer_lessons
+    @user = User.find(params[:id])
+    render layout: false
+  end
+
+  def perform_transfer
+    quantity = params[:quantity].to_i
+    recipient = User.find_by(email: params[:recipient_email])
+    notes = params[:notes]
+
+    if recipient.blank?
+      render({
+        json: {
+          message: "There are no members with the email provided in our system. Please make sure they sign up for Aquatics Academy prior to transferring lessons to them."
+        },
+        status: :unprocessible_entity
+      })
+      return
+    end
+
+    lessons = current_user.lessons.unassigned.order(expires_at: :desc).limit(quantity)
+    if lessons.count == quantity
+      lesson_transfer = LessonTransfer.create!(
+        quantity: quantity,
+        user_id: current_user.id,
+        recipient_id: recipient.id,
+        notes: notes
+      )
+
+      lessons.each do |lesson|
+        lesson.update_attributes({
+          user_id: recipient.id,
+          lesson_transfer_id: lesson_transfer.id
+        })
+      end
+
+      Notification.lesson_transferred(lesson_transfer).deliver_now
+
+      flash[:notice] = "You successfully transferred #{params[:quantity]} lessons to #{recipient.full_name}"
+      render json: { ok: true }
+    else
+      render({
+        json: {
+          message: "You have selected to transfer more lessons than are available for transfer."
+        },
+        status: :unprocessible_entity
+      })
     end
   end
 

@@ -1,0 +1,67 @@
+<form id="transfer-lessons-form" class="form-horizontal">
+  <div class="alert alert-info text-center" role="alert">
+    You can transfer <strong>up to <%= @user.lessons.unassigned.count %> lessons</strong> to another person.<br/><br/>
+    The person must already have an account with Aquatics Academy.<br/>
+    You must use their email address that they used to sign up below.
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label" style="padding-top: 2px;">Quantity</label>
+    <div class="col-sm-7">
+      <input type="text"
+        style="width: 100%;"
+        name="quantity"
+        class="slider"
+        data-slider-min="1"
+        data-slider-max="<%= @user.lessons.unassigned.count %>"
+        data-slider-step="1"
+        data-slider-value="1">
+    </div>
+    <div class="col-sm-2">
+      <span id="quantity-label">1</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Recipient Email</label>
+    <div class="col-sm-9">
+      <input type="email" class="form-control" name="recipient_email" placeholder="Email address of recipient (must have account)" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Reason</label>
+    <div class="col-sm-9">
+      <textarea name="notes" rows="5" class="form-control" placeholder="Why are you giving this person the lessons?"></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+      <button type="submit" class="btn btn-primary">Transfer Lessons</button>
+      <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</form>
+
+<script type="text/javascript">
+  $('#transfer-lessons-form').on('submit', function (e) {
+    e.preventDefault();
+
+    var data = {
+      quantity: $("#transfer-lessons-form input[name=quantity]").val(),
+      recipient_email: $("#transfer-lessons-form input[name=recipient_email]").val(),
+      notes: $("#transfer-lessons-form textarea[name=notes]").val()
+    }
+
+    var request = $.ajax({
+      method: 'POST',
+      url: '<%= perform_transfer_admin_user_path(@user) %>',
+      data: data
+    });
+
+    request.done(function(msg) {
+      window.location = '<%= admin_user_path(@user) %>';
+    });
+
+    request.fail(function( jqXHR, textStatus ) {
+      alert(jqXHR.responseJSON.message);
+    });
+  })
+</script>

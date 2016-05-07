@@ -11,18 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160322010439) do
+ActiveRecord::Schema.define(version: 20160507143006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "lesson_transfers", force: :cascade do |t|
+    t.integer  "quantity",     null: false
+    t.integer  "user_id"
+    t.integer  "recipient_id", null: false
+    t.text     "notes"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "lesson_transfers", ["user_id"], name: "index_lesson_transfers_on_user_id", using: :btree
 
   create_table "lessons", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "order_id"
     t.datetime "purchased_at"
     t.datetime "expires_at"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "lesson_transfer_id"
   end
 
   add_index "lessons", ["order_id"], name: "index_lessons_on_order_id", using: :btree
@@ -122,4 +134,5 @@ ActiveRecord::Schema.define(version: 20160322010439) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["uid"], name: "index_users_on_uid", using: :btree
 
+  add_foreign_key "lesson_transfers", "users"
 end

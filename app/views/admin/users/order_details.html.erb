@@ -45,17 +45,22 @@
     <tbody>
     <% @lessons.each do |lesson| %>
       <tr>
-        <td>
-          <% if current_user.admin? && lesson.status == 'unscheduled' %>
-            <input type="checkbox" name="lesson_id[]" value="<%= lesson.id %>" />
-          <% else %>
-            <%= lesson.id %>
-          <% end %>
-        </td>
-        <td><%= lesson.status.humanize.titleize %></td>
-        <td><%= lesson.time_slot ? lesson.time_slot.start_at.strftime('%m/%d/%Y at %I:%M %p') : '-' %></td>
-        <td><%= lesson.status == 'completed' ? '' : lesson.expires_at.strftime('%m/%d/%Y at %I:%M %p') %></td>
-        <td><%= lesson.id %></td>
+        <% if lesson.user_id != @user.id %>
+          <td><%= lesson.id %></td>
+          <td colspan="2">Transferred to <%= lesson.user.full_name %></td>
+          <td>N/A</td>
+        <% else %>
+          <td>
+            <% if current_user.admin? && lesson.status == 'unscheduled' %>
+              <input type="checkbox" name="lesson_id[]" value="<%= lesson.id %>" />
+            <% else %>
+              <%= lesson.id %>
+            <% end %>
+          </td>
+          <td><%= lesson.user_id == @user.id ? lesson.status.humanize.titleize : "Transferred" %></td>
+          <td><%= lesson.time_slot ? lesson.time_slot.start_at.strftime('%m/%d/%Y at %I:%M %p') : '-' %></td>
+          <td><%= lesson.status == 'completed' ? '' : lesson.expires_at.strftime('%m/%d/%Y at %I:%M %p') %></td>
+        <% end %>
       </tr>
     <% end %>
     </tbody>

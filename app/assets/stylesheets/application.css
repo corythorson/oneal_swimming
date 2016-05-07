@@ -14,6 +14,7 @@
  *= require bootstrap-overrides
  *= require bootstrap-mobile-text
  *= require font-awesome
+ *= require bootstrap-slider.min
  *= require fonts
  *= require flexslider
  *= require font-kit-rails/open-sans

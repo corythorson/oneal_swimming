@@ -1,0 +1,24 @@
+<table class="table table-striped">
+  <tbody>
+  <tr>
+    <th>Date/Time</th>
+    <td><%= @lesson_transfer.created_at.strftime('%m/%d/%Y at %I:%M %p') %></td>
+  </tr>
+  <tr>
+    <th>From</th>
+    <td><%= @lesson_transfer.user.full_name %> <small class="text-muted">(<%= @lesson_transfer.user.email %>)</small></td>
+  </tr>
+  <tr>
+    <th>To</th>
+    <td><%= @lesson_transfer.recipient.full_name %> <small class="text-muted">(<%= @lesson_transfer.recipient.email %>)</small></td>
+  </tr>
+  <tr>
+    <th>Quantity</th>
+    <td><%= @lesson_transfer.quantity %></td>
+  </tr>
+  <tr>
+    <th>Reason</th>
+    <td><%= @lesson_transfer.notes %></td>
+  </tr>
+  </tbody>
+</table>

@@ -52,28 +52,69 @@
             You have <strong><%= @user.time_slots.scheduled.count %></strong> scheduled lessons
           </div>
           <div class="panel-body">
-            <table class="table">
+            <div style="height: 400px; overflow-y: auto;">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>&nbsp;</th>
+                  <th>Date/Time</th>
+                  <th>Learner</th>
+                  <th>Teacher</th>
+                  <th></th>
+                </tr>
+                <thead>
+                <tbody>
+                <% @user.time_slots.order('start_at asc').each do |ts| %>
+                  <tr>
+                    <td><% if ts.start_at < Time.current %><i class="fa fa-check text-success"></i><% end %></td>
+                    <td><%= ts.start_at.strftime('%a %m/%d/%Y %I:%M %p') %></td>
+                    <td><%= ts.student.first_name %></td>
+                    <td><%= ts.instructor.first_name %></td>
+                    <td class="text-right">
+                      <%= link_to '<i class="fa fa-calendar"></i>'.html_safe, scheduler_path(date: ts.start_at.strftime('%F')), class: 'btn btn-xs btn-info' %>
+                      <% if false # current_user.admin? %>
+                        <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, "#{delete_lessons_admin_user_path(@user)}?lesson_id=#{ts.lesson_id}", method: :delete, class: 'btn btn-xs btn-danger', data: { confirm: 'Are you sure you want to delete this lesson? This cannot be undone.'} %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a href="#"
+                 data-trigger="remote-modal"
+                 data-url="<%= transfer_lessons_admin_user_path(@user) %>"
+                 data-title="Transfer Lessons" data-toggle="modal"
+                 class="btn btn-xs btn-info pull-right" style="margin-left: 5px;">Transfer Lessons</a>
+            You have participated in <%= @user.transfers.count %> lesson transfers
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped">
               <thead>
               <tr>
+                <th>Date</th>
+                <th>From</th>
+                <th>To</th>
+                <th class="text-center">Quantity</th>
                 <th>&nbsp;</th>
-                <th>Date/Time</th>
-                <th>Learner</th>
-                <th>Teacher</th>
-                <th></th>
               </tr>
-              <thead>
+              </thead>
               <tbody>
-              <% @user.time_slots.order('start_at asc').each do |ts| %>
+              <% @user.transfers.order('created_at asc').each do |transfer| %>
                 <tr>
-                  <td><% if ts.start_at < Time.current %><i class="fa fa-check text-success"></i><% end %></td>
-                  <td><%= ts.start_at.strftime('%a %m/%d/%Y %I:%M %p') %></td>
-                  <td><%= ts.student.first_name %></td>
-                  <td><%= ts.instructor.first_name %></td>
+                  <td><%= transfer.created_at.strftime('%m/%d/%Y') %></td>
+                  <td><%= transfer.user.full_name %></td>
+                  <td><%= transfer.recipient.full_name %></td>
+                  <td class="text-center"><%= transfer.quantity %></td>
                   <td class="text-right">
-                    <%= link_to '<i class="fa fa-calendar"></i>'.html_safe, scheduler_path(date: ts.start_at.strftime('%F')), class: 'btn btn-xs btn-info' %>
-                    <% if false # current_user.admin? %>
-                      <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, "#{delete_lessons_admin_user_path(@user)}?lesson_id=#{ts.lesson_id}", method: :delete, class: 'btn btn-xs btn-danger', data: { confirm: 'Are you sure you want to delete this lesson? This cannot be undone.'} %>
-                    <% end %>
+                    <a href="#"
+                       data-trigger="remote-modal"
+                       data-url="<%= lesson_transfer_details_admin_user_path(@user, lesson_transfer_id: transfer.id) %>"
+                       data-title="Lesson Transfer Details" data-toggle="modal"><i class="fa fa-info-circle"></i></a>
                   </td>
                 </tr>
               <% end %>

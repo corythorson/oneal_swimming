@@ -60,8 +60,11 @@ Rails.application.routes.draw do
       member do
         get :login_as
         get :order_details
+        get :lesson_transfer_details
         get :add_lessons
         post :create_lessons
+        get :transfer_lessons
+        post :perform_transfer
         delete :delete_order
         match :delete_lessons, via: [:delete, :post]
       end
