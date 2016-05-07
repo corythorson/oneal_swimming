@@ -7,6 +7,9 @@ class Admin::UsersController < ApplicationController
     if params[:q]
       @users = @users.where("LOWER(first_name) LIKE ? OR LOWER(last_name) LIKE ? OR LOWER(email) LIKE ?", "%#{params[:q].downcase}%", "%#{params[:q].downcase}%", "%#{params[:q].downcase}%")
     end
+    @users = @users.customer if params[:role] == "customers"
+    @users = @users.instructor if params[:role] == "instructors"
+
     @users = @users.order("last_name asc").page(params[:page])
   end
 
