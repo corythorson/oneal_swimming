@@ -41,6 +41,11 @@
 </form>
 
 <script type="text/javascript">
+  var slider = $(".slider").bootstrapSlider();
+  slider.on("change", function (event) {
+    $('#quantity-label').html(event.value.newValue);
+  });
+
   $('#transfer-lessons-form').on('submit', function (e) {
     e.preventDefault();
 

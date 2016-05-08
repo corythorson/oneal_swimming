@@ -85,11 +85,13 @@
         </div>
         <div class="panel panel-default">
           <div class="panel-heading">
-            <a href="#"
-                 data-trigger="remote-modal"
-                 data-url="<%= transfer_lessons_admin_user_path(@user) %>"
-                 data-title="Transfer Lessons" data-toggle="modal"
-                 class="btn btn-xs btn-info pull-right" style="margin-left: 5px;">Transfer Lessons</a>
+            <% if @user.transfers.count > 0 %>
+              <a href="#"
+                   data-trigger="remote-modal"
+                   data-url="<%= transfer_lessons_admin_user_path(@user) %>"
+                   data-title="Transfer Lessons" data-toggle="modal"
+                   class="btn btn-xs btn-info pull-right" style="margin-left: 5px;">Transfer Lessons</a>
+              <% end %>
             You have participated in <strong><%= @user.transfers.count %></strong> lesson transfers
           </div>
           <div class="panel-body">
