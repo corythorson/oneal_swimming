@@ -85,7 +85,7 @@
         </div>
         <div class="panel panel-default">
           <div class="panel-heading">
-            <% if @user.transfers.count > 0 %>
+            <% if @user.lessons.unassigned.count > 0 %>
               <a href="#"
                    data-trigger="remote-modal"
                    data-url="<%= transfer_lessons_admin_user_path(@user) %>"
