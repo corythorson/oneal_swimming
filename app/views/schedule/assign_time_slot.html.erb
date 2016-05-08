@@ -7,7 +7,7 @@
       <div class="StudentButtonContainer">
         <% @students.each do |student| %>
           <div class="StudentButton">
-            <%= link_to student.first_name, assign_student_to_time_slot_path(params: { time_slot_id: @time_slot.id, student_id: student.id }), method: :post, class: 'btn btn-primary btn-lg btn-block' %>
+            <%= link_to student.first_name, assign_student_to_time_slot_path(params: { time_slot_id: @time_slot.id, student_id: student.id }, location_id: @time_slot.location.slug), method: :post, class: 'btn btn-primary btn-lg btn-block' %>
           </div>
         <% end %>
       </div>

@@ -148,7 +148,7 @@
       "singleDatePicker": true,
       "defaultDate": "<%= @date.strftime('%m/%d/%Y') %>"
     }, function(start, end, label) {
-      window.location = '/scheduler?date=' + start.format('YYYY-MM-DD');
+      window.location = '/<%= @location.slug %>/scheduler?date=' + start.format('YYYY-MM-DD');
     });
   });
 </script>
