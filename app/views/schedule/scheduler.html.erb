@@ -27,7 +27,7 @@
 
   <div style="text-align: center; font-weight: bold; margin-bottom: 10px;">
     <h3 style="margin-bottom: 0;"><%= @location.name %></h3>
-    <a target="_blank" href="https://www.google.com/maps/place/<%= @location.full_address.split(' ').join('+') %>/data=!4m2!3m1!1s0x874d805f005f1e8f:0xb4e01ef458da4f5b?sa=X&ved=0ahUKEwiq9aOQ14bMAhXKuoMKHatwBmoQ8gEIHDAA"><%= @location.full_address %></a>
+    <a target="_blank" href="https://www.google.com/maps/place/<%= @location.full_address.split(' ').join('+') %>"><%= @location.full_address %></a>
   </div>
 
   <div style="text-align: center; font-style: italic;">
