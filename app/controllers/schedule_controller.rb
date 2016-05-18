@@ -50,7 +50,9 @@ class ScheduleController < ApplicationController
 
   def unassign_time_slot
     @time_slot = TimeSlot.find(params[:id])
-    @remaining_lessons = current_user.lessons.unassigned
+    if current_user
+      @remaining_lessons = current_user.lessons.unassigned
+    end
     render layout: false
   end
 

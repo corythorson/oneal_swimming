@@ -56,10 +56,11 @@ class OrderService
     # Create free lesson if qualified
     if user.referral_free_lesson_order_id.blank? && user.referer_id.present? && lessons >= 10
       order_2 = Order.create!(
-          user_id: user.id,
-          total: 0.0,
-          quantity: 1,
-          merchant_response: { notes: 'Free lesson from referer signup' }
+        remote_order_id: SecureRandom.uuid,
+        user_id: user.id,
+        total: 0.0,
+        quantity: 1,
+        merchant_response: { notes: 'Free lesson from referer signup' }
       )
       Lesson.create!(order_id: order_2.id, user_id: user.id, purchased_at: t, expires_at: t + 1.year)
 
@@ -69,6 +70,7 @@ class OrderService
       referer = User.where(id: user.referer_id).first
       if referer
         order_3 = Order.create!(
+          remote_order_id: SecureRandom.uuid,
           user_id: referer.id,
           total: 0.0,
           quantity: 1,

@@ -1,5 +1,7 @@
 <div>
-  <h4 class="text-center">You have <%= @remaining_lessons.count %> lessons remaining</h4>
+  <% if @remaining_lessons.present? %>
+    <h4 class="text-center">You have <%= @remaining_lessons.count %> lessons remaining</h4>
+  <% end %>
 
   <p class="text-center">The following time slot is assigned to <strong><%= @time_slot.student.first_name %></strong></p>
   <div class="alert alert-warning text-center" role="alert"><%= @time_slot.start_at.strftime('%b %d, %Y at %I:%M %p') %></div>
