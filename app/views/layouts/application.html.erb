@@ -55,7 +55,7 @@
           </a>
           <ul class="dropdown-menu">
             <% Location.all.order(:name).each do |location| %>
-              <li><%= link_to location.name, scheduler_path(location_id: location.slug) %></li>
+              <li><%= link_to location.name, scheduler_path(location_id: location.slug, date: params[:date]) %></li>
             <% end %>
           </ul>
         </li>

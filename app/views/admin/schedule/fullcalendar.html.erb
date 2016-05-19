@@ -36,6 +36,9 @@
         }
       },
       dayClick: function(date, jsEvent, view, resourceObj) {
+        var position = $(jsEvent.target).position();
+        console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+        var actualTop = position.top - 25;
         var url = '<%= admin_create_time_slot_path %>';
         var data = {
           instructor_id: resourceObj.id,
@@ -43,6 +46,7 @@
         }
         $.post(url, data, function(result) {
           $('#calendar').fullCalendar('refetchEvents');
+          $('.fc-scrollpane div:first-child').scrollTop(actualTop);
         });
       },
       eventClick: function(calEvent, jsEvent, view) {
