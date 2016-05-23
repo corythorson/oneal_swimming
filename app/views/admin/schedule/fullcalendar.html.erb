@@ -37,7 +37,6 @@
       },
       dayClick: function(date, jsEvent, view, resourceObj) {
         var position = $(jsEvent.target).position();
-        console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
         var actualTop = position.top - 25;
         var url = '<%= admin_create_time_slot_path %>';
         var data = {

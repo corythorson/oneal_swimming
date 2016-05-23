@@ -62,7 +62,7 @@
     });
 
     request.done(function(msg) {
-      window.location = '<%= admin_user_path(@user) %>';
+      window.location = '<%= current_user.admin? ? admin_user_path(@user) : profile_path %>';
     });
 
     request.fail(function( jqXHR, textStatus ) {

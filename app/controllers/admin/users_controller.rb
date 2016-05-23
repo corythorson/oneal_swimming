@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :require_administrator
+  before_action :require_administrator, except: [:lesson_transfer_details, :transfer_lessons, :perform_transfer]
   helper_method :sort_column, :sort_direction
 
   def index
