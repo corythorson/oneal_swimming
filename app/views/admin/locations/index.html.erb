@@ -23,6 +23,7 @@
               <th>City</th>
               <th>State</th>
               <th>Zip Code</th>
+              <th>Visible?</th>
               <th>&nbsp;</th>
             </tr>
             </thead>
@@ -34,6 +35,7 @@
                 <td><%= location.city %></td>
                 <td><%= location.state %></td>
                 <td><%= location.zip_code %></td>
+                <td><%= location.is_active? ? 'Yes' : 'No' %></td>
                 <td class="text-right"><%= link_to 'Edit', edit_admin_location_path(location) %></td>
               </tr>
             <% end %>

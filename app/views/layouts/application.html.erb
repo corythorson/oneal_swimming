@@ -54,7 +54,7 @@
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <% Location.all.order(:name).each do |location| %>
+            <% Location.where(is_active: true).order(:name).each do |location| %>
               <li><%= link_to location.name, scheduler_path(location_id: location.slug, date: params[:date]) %></li>
             <% end %>
           </ul>
