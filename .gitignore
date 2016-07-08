@@ -18,3 +18,5 @@ new_data
 
 *.sql
 *.tar.gz
+.DS_Store
+.idea

@@ -18,7 +18,7 @@ class TimeSlot < ActiveRecord::Base
   scope :scheduled, -> { where('start_at > ?', Time.current).where.not(student_id: nil) }
 
   def available?
-    student_id.blank?
+    student_id.blank? && start_at > Time.current
   end
 
   def can_unassign?(current_user)

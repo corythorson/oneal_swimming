@@ -84,6 +84,8 @@
                        data-title="Assign Time Slot">
                       <i class="fa fa-plus"></i>&nbsp;&nbsp;Schedule
                     </a>
+                  <% elsif time_slot.student_id.blank? %>
+                    -
                   <% else %>
                     <% student = time_slot.student %>
                     <% if student.present? && (current_user.try(:admin?) || (student.user_id == current_user.try(:id))) %>
