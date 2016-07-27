@@ -12,17 +12,20 @@
   <div class="container">
     <h3>AQUATICS ACADEMY</h3>
     <h4>Offering year-round private swimming lessons</h4>
+
     <%= link_to 'Buy Lessons!', our_lessons_path, class: 'btn btn-primary btn-lg' %>
+    &nbsp;&nbsp;
+    <%= link_to 'Contact Us', contact_path, class: 'btn btn-default btn-lg' %>
 
     <br/><br/>
 
-    <div class="fb-like" data-href="https://www.facebook.com/Oneal.Aquatics.Utah" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+    <div class="fb-like" data-href="https://www.facebook.com/Utah.AquaticsAcademy" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
   </div>
 </section>
 
 <section class="what_we_do">
   <div class="container">
-    <p class="text-left">Aquatics Academy offers year-round private swimming lessons in Highland, Utah. We teach children, teens, and adults in a private setting. We work with all ages and skill levels, from beginners to advanced swimmers, and from 3-month-old infants to adults.</p>
+    <p class="text-left">Aquatics Academy offers year-round private swimming lessons in Cedar Hills &amp; Riverton, with an American Fork location coming soon. We teach children, teens, and adults in a private setting. We work with all ages and skill levels, from beginners to advanced swimmers, and from 3-month-old infants to adults.</p>
     <p class="text-left">Each lesson is $18 for 20 minutes of one-on-one instruction. We start with survival skills and build to competitive swimming strokes.</p>
     <p class="text-left">Triathletes, boy scouts, or adults can also do a group lesson for $18 for the whole group. We offer Swimming and Lifesaving merit badge pass offs, as well as thorough explanations of workout techniques.</p>
   </div>
@@ -65,6 +68,10 @@
   </div>
 </section>
 
+<section>
+  <div id="section-map" style="height: 350px;"></div>
+</section>
+
 <script type="text/javascript" charset="utf-8">
   init.push(function() {
     $(".owl-carousel").owlCarousel({
@@ -79,5 +86,23 @@
       responsiveBaseWidth: window,
       itemsScaleUp : true
     });
+
+    var mymap = L.map('section-map', {
+      scrollWheelZoom: false
+    }).setView([40.48641, -111.83395], 10);
+
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
+      maxZoom: 18,
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      id: 'mapbox.streets'
+    }).addTo(mymap);
+
+    L.marker([40.402355,-111.743243], { title: 'Cedar Hills' }).addTo(mymap)
+      .bindPopup("<b>Cedar Hills</b>").openPopup();
+
+    L.marker([40.530502,-111.951200], { title: 'Riverton Private Pool' }).addTo(mymap)
+      .bindPopup("<b>Riverton Private Pool</b>").openPopup();
   });
 </script>
