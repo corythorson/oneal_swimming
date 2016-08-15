@@ -15,7 +15,6 @@
 //= require jquery-ui
 //= require jquery.dragcheck.min
 //= require axios
-//= require turbolinks
 //= require bootstrap
 //= require flexslider
 //= require bootstrap-slider.min

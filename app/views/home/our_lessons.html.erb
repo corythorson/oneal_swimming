@@ -1,4 +1,7 @@
 <% content_for(:title) do %>Our Lessons<% end %>
+<% content_for(:scripts) do %>
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<% end %>
 
 <section class="cta-blue" style="padding-bottom: 3%;">
   <div class="container">
@@ -128,6 +131,9 @@
       key: '<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>',
       image: '<%= asset_path('icon-add.png') %>',
       locale: 'auto',
+      allowRememberMe: false,
+      zipCode: false,
+      billingAddress: false,
       token: function(token) {
         var request = $.ajax({
           method: 'POST',

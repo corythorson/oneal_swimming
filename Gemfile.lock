@@ -387,8 +387,6 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
-    turbolinks (2.5.3)
-      coffee-rails
     twilio-ruby (4.2.1)
       builder (>= 2.1.2)
       jwt (~> 1.0)
@@ -471,7 +469,6 @@ DEPENDENCIES
   sentry-raven
   spring
   stripe (= 1.31.0)
-  turbolinks
   twilio-ruby
   tzinfo
   tzinfo-data
@@ -481,4 +478,4 @@ DEPENDENCIES
   zeroclipboard-rails
 
 BUNDLED WITH
-   1.11.2
+   1.12.5
