@@ -16,17 +16,17 @@
 			},
       resourceGroupField: 'location',
       resourceLabelText: 'Instructors',
-			resources: '<%= admin_schedule_resources_path(format: :json) %>',
+			resources: '<%= admin_schedule_resources_url(format: :json) %>',
 			editable: true,
       slotWidth: 50,
       slotDuration: moment.duration(20, 'minutes'),
 			eventLimit: true, // allow "more" link when too many events
-      events: '<%= admin_schedule_path(format: :json) %>',
+      events: '<%= admin_schedule_url(format: :json) %>',
       customButtons: {
         myCustomButton: {
           text: 'Schedule Builder',
           click: function() {
-            $.get('<%= admin_schedule_builder_path %>', function(html) {
+            $.get('<%= admin_schedule_builder_url %>', function(html) {
               var modal = $('#global-modal');
               modal.find('.modal-title').html('Schedule Builder');
               modal.find('.modal-body').html(html);
@@ -38,7 +38,7 @@
       dayClick: function(date, jsEvent, view, resourceObj) {
         var position = $(jsEvent.target).position();
         var actualTop = position.top - 25;
-        var url = '<%= admin_create_time_slot_path %>';
+        var url = '<%= admin_create_time_slot_url %>';
         var data = {
           instructor_id: resourceObj.id,
           date: date.format()
