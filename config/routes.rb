@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-  # letsencrypt TLS challenge for app.skipio.com
-  get "/.well-known/acme-challenge/vcRpIiOirhQPXCEpIJuVSJ8PCJ2HNzbXoZuUikeelII", to: proc { |env|
-    [200, {}, ["vcRpIiOirhQPXCEpIJuVSJ8PCJ2HNzbXoZuUikeelII.RJWxhM9SKCNUB92rNrb-0X5gnhroieoPTfc7yFuLfzQ"]]
+  # letsencrypt TLS challenge
+  get "/.well-known/acme-challenge/#{ENV['ACME_CHALLENGE_WELL_KNOWN']}", to: proc { |env|
+    [200, {}, [ENV["ACME_CHALLENGE_KEY"]]]
   }
 
   devise_for :users, :controllers => { :registrations => 'registrations' }
