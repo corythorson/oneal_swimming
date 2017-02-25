@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
   def index
+    return redirect_to params[:redir] if params[:redir].present?
+    redirect_to scheduler_path(location_id: "sandy-pool")
   end
 
   def our_lessons

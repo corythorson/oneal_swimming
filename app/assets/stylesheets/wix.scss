@@ -1,0 +1,29 @@
+body {
+  padding-top: 40px;
+}
+.container {
+  width: 100%;
+}
+.wix-nav {
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #3a6c6c;
+  margin-bottom: 15px;
+  li.active a {
+    background-color: #4f9192 !important;
+  }
+  a {
+    color: #ffffff;
+    border-radius: 0px !important;
+    &:hover {
+      background-color: #4f9192 !important;
+      cursor: pointer;
+    }
+    &:active, &:focus {
+      background-color: #4f9192 !important;
+    }
+  }
+}
