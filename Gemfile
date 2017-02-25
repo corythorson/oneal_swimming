@@ -57,6 +57,8 @@ gem 'mailgun-ruby', '~>1.0.3', require: 'mailgun'
 gem 'mailchimp-api', require: 'mailchimp'
 gem 'stripe', '1.31.0'
 
+gem 'rails_12factor'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
