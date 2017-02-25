@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
+  # protect_from_forgery with: :exception
 
-  before_action :allow_iframe_requests
+  # before_action :allow_iframe_requests
 
   def require_administrator
     unless current_user.try(:admin?)
