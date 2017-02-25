@@ -16,6 +16,10 @@ class HomeController < ApplicationController
     end
   end
 
+  def set_cookie
+    render layout: false
+  end
+
   def testimonials
     @testimonials = Testimonial.all
   end

@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require jquery.dragcheck.min
+//= require js-cookie
 //= require axios
 //= require bootstrap
 //= require flexslider

@@ -18,6 +18,25 @@
 </head>
 <body>
 
+<script type="text/javascript">
+$(function() {
+  $('#allow_cookies').on('click', function(e) {
+    $('#cookieless').addClass('loading');
+    e.preventDefault();
+    window.open('/set_cookie', 'Aquatics Academy', 'height=200,width=150');
+  });
+
+  var is_safari = navigator.userAgent.indexOf("Safari") > -1; // safari detection
+  if (is_safari) {
+    if (!Cookies.get('fixed')) {
+      $('#main-content').addClass('hidden');
+      $('#cookieless').removeClass('hidden');
+    }
+  }
+});
+</script>
+
+
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -68,7 +87,14 @@
   </ul>
 </section>
 
-<%= yield %>
+<div id="main-content">
+  <%= yield %>
+</div>
+
+<div id="cookieless" class="text-center" style="margin-top: 25px;">
+  <p style="font-size: 18px;">Because you are using Safari, you must manually enable cookies for this site</p>
+  <button type="button" class="btn btn-default" id="allow_cookies">Enable Cookies</button>
+</div>
 
 <script>
   for (var i = 0; i < init.length; i++) { init[i](); }

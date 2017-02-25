@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get '/schedule/events.json' => 'schedule#events'
   get '/schedule/time_slots.json' => 'schedule#time_slots'
   get '/schedule/instructors.json' => 'schedule#instructors'
+  get '/set_cookie' => 'home#set_cookie', as: :set_cookie
 
   get '/referrals' => 'referrals#index', as: :referrals
   get '/join' => 'referrals#join', as: :join
