@@ -78,6 +78,7 @@ class HomeController < ApplicationController
     if session[:original_user_id].present?
       new_user = User.find(session[:original_user_id])
       warden.set_user(new_user, :scope => :user)
+      session[:original_user_id] = nil
       redirect_to root_url
     else
       render status: 404

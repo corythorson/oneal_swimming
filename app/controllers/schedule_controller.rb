@@ -7,6 +7,7 @@ class ScheduleController < ApplicationController
   end
 
   def scheduler
+    return redirect_to new_user_session_path unless current_user
     if params[:date].present?
       @date = Time.parse(params[:date]).to_datetime || Date.current
     else
@@ -18,7 +19,7 @@ class ScheduleController < ApplicationController
     puts "------------------------------------------------------------------"
     puts "#{@start_time} - #{@end_time}"
     puts "------------------------------------------------------------------"
-    @instructors = User.instructors_for_date(@date, @location).includes(:time_slots)
+    @instructors = current_user.instructors_for_date(@date, @location).includes(:time_slots).order('first_name asc')
   end
 
   def assign_time_slot
@@ -82,6 +83,23 @@ class ScheduleController < ApplicationController
       redirect_to scheduler_path(date: new_time_slot.start_at.to_date, location_id: old_time_slot.location.slug), notice: "Time slot changed successfully!"
     else
       redirect_to scheduler_path(date: new_time_slot.start_at.to_date, location_id: old_time_slot.location.slug), alert: "Time slot is no longer available"
+    end
+  end
+
+  def private_instructor_invite_form
+    render layout: false
+  end
+
+  def add_private_instructor_to_user
+    invite_code = params[:invite_code]
+    instructor = ::User.instructor.private_instructor.where("LOWER(instructor_invite_code) = ?", invite_code.downcase).first
+    if instructor
+      current_private_instructor_ids = current_user.private_instructor_ids || []
+      current_private_instructor_ids << instructor.id.to_s
+      current_user.update(private_instructor_ids: current_private_instructor_ids.flatten.sort)
+      redirect_to root_path, notice: "Congratulations! #{instructor.full_name} is now available on your scheduler"
+    else
+      redirect_to root_path, alert: "We're sorry but you entered an invalid invite code"
     end
   end
 

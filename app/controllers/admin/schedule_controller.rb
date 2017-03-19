@@ -119,8 +119,8 @@ class Admin::ScheduleController < ApplicationController
   def resources
     resources = []
 
-    Location.all.each do |location|
-      User.instructor.each do |instructor|
+    Location.active.order(name: :asc).each do |location|
+      ::User.instructor.order(last_name: :asc).each do |instructor|
         resources << {
           id: "#{location.id}-#{instructor.id}",
           title: instructor.full_name,

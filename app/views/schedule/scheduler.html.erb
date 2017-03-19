@@ -30,8 +30,15 @@
     <a target="_blank" href="https://www.google.com/maps/place/<%= @location.full_address.split(' ').join('+') %>"><%= @location.full_address %></a>
   </div>
 
-  <div style="text-align: center; font-style: italic;">
-    To cancel a scheduled swimming lesson, you must do so at least 24 hours in advance.
+  <div class="row">
+    <div class="col-sm-8">
+      <em>To cancel a scheduled swimming lesson, you must do so at least 24 hours in advance.</em>
+    </div>
+    <div class="col-sm-4 text-right">
+      <a href="#" data-behavior="show-private-instructor-invite-form" style="font-style: italic;">
+        Do you have an invite code?
+      </a>
+    </div>
   </div>
 
   <div id="scheduler-content" class="table-responsive" style="background-color: #fff; margin-top: 5px;">
@@ -151,6 +158,16 @@
       "defaultDate": "<%= @date.strftime('%m/%d/%Y') %>"
     }, function(start, end, label) {
       window.location = '/<%= @location.slug %>/scheduler?date=' + start.format('YYYY-MM-DD');
+    });
+
+    $(document).on("click", "[data-behavior~=show-private-instructor-invite-form]", function(event) {
+      event.preventDefault();
+      $.get('<%= private_instructor_invite_form_url %>', function(html) {
+        var modal = $('#global-modal');
+        modal.find('.modal-title').html('Add Private Instructor');
+        modal.find('.modal-body').html(html);
+        modal.modal();
+      }.bind(this));
     });
   });
 </script>

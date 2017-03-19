@@ -9,6 +9,8 @@ class Location < ActiveRecord::Base
   validates :state, presence: true
   validates :zip_code, presence: true
 
+  scope :active, -> { where(is_active: true) }
+
   def full_address
     [street_address, city, state, zip_code].join(', ')
   end

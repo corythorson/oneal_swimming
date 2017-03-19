@@ -1,0 +1,8 @@
+<p class="lead text-center" style="font-size: 15px;">Enter your private instructor invite code</p>
+
+<%= form_tag url: process_private_instructor_invite_form_path do %>
+  <input type="text" name="invite_code" class="form-control"
+         placeholder="Enter invite code" autofocus />
+  <br/>
+  <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+<% end %>

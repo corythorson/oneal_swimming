@@ -1,0 +1,46 @@
+<section class="admin-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>Instructors</h3>
+      </div>
+      <div class="col-sm-6">
+        <%= link_to 'Add Instructor', new_admin_instructor_path, class: 'btn btn-primary header-button pull-right' %>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th class="text-center">Private?</th>
+              <th class="text-center">Invite Code</th>
+              <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @instructors.each do |instructor| %>
+              <tr>
+                <td><%= instructor.first_name %> <strong><%= instructor.last_name %></strong></td>
+                <td><%= number_to_phone instructor.phone, area_code: true %></td>
+                <td><%= instructor.email %></td>
+                <td class="text-center"><%= instructor.is_private_instructor? ? 'Yes' : '-' %></td>
+                <td class="text-center"><%= instructor.instructor_invite_code %></td>
+                <td class="text-right">
+                  <%= link_to 'View', view_profile_path(instructor), class: 'btn btn-xs btn-default' %>
+                  <%= link_to 'Edit', edit_admin_instructor_path(instructor), class: 'btn btn-xs btn-default' %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

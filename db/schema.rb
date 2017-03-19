@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160609121451) do
+ActiveRecord::Schema.define(version: 20170319161347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,6 +156,10 @@ ActiveRecord::Schema.define(version: 20160609121451) do
     t.integer  "referral_free_lesson_order_id"
     t.string   "stripe_customer_id"
     t.boolean  "i_agree",                       default: false
+    t.string   "braintree_customer_id"
+    t.boolean  "is_private_instructor",         default: false
+    t.string   "instructor_invite_code"
+    t.text     "private_instructor_ids",        default: [],                      array: true
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

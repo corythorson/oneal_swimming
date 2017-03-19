@@ -50,34 +50,36 @@ $(function() {
   <ul class="nav nav-pills">
     <% if current_user %>
       <li class="dropdown">
-        <%= active_link_to 'Schedule', scheduler_path(location_id: "sandy-pool"), wrap_tag: :li %>
-        <%= active_link_to 'Buy Lessons', our_lessons_path, wrap_tag: :li %>
         <%= active_link_to 'Dashboard', profile_path, wrap_tag: :li %>
+        <% ::Location.active.each do |location| %>
+          <%= active_link_to location.name, scheduler_path(location_id: location.slug), wrap_tag: :li %>
+        <% end %>
+        <%= active_link_to 'Buy Lessons', our_lessons_path, wrap_tag: :li %>
         <%= active_link_to 'Learners', students_path, wrap_tag: :li %>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle top" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            Admin <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <% if current_user.admin? %>
-              <li><%= link_to 'Statistics', admin_reports_lessons_path %></li>
-              <li><%= link_to 'Instructor Report', admin_reports_instructor_lessons_path %></li>
-              <li><%= link_to 'Manage Users', admin_users_path %></li>
-              <li><%= link_to 'Manage Products', admin_products_path %></li>
-              <li><%= link_to 'Manage Testimonials', admin_testimonials_path %></li>
-              <li><%= link_to 'Manage Locations', admin_locations_path %></li>
-              <li><%= link_to 'Manage Schedule', admin_schedule_path %></li>
-            <% end %>
-            <% if session[:original_user_id].present? %>
-              <li role="separator" class="divider"></li>
-              <li><%= link_to raw("&laquo; Back to Admin"), return_to_admin_path %></li>
-            <% end %>
-          </ul>
-        </li>
-        <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
-      </li>
+        <li class="pull-right"><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+        <% if current_user.admin? %>
+          <li class="dropdown pull-right">
+            <a href="#" class="dropdown-toggle top" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Admin <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><%= link_to 'Statistics', admin_reports_lessons_path %></li>
+                <li><%= link_to 'Instructor Report', admin_reports_instructor_lessons_path %></li>
+                <li><%= link_to 'Manage Instructors', admin_instructors_path %></li>
+                <li><%= link_to 'Manage Users', admin_users_path %></li>
+                <li><%= link_to 'Manage Products', admin_products_path %></li>
+                <li><%= link_to 'Manage Testimonials', admin_testimonials_path %></li>
+                <li><%= link_to 'Manage Locations', admin_locations_path %></li>
+                <li><%= link_to 'Manage Schedule', admin_schedule_path %></li>
+              <% if session[:original_user_id].present? %>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to raw("&laquo; Back to Admin"), return_to_admin_path %></li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
       <% if session[:original_user_id].present? %>
-        <li role="presentation"><%= link_to raw("&laquo; Back to Admin"), return_to_admin_path %></li>
+        <li role="presentation" class="pull-right"><%= link_to raw("&laquo; Back to Admin"), return_to_admin_path %></li>
       <% end %>
     <% else %>
       <li role="presentation">
@@ -91,10 +93,12 @@ $(function() {
   <%= yield %>
 </div>
 
-<div id="cookieless" class="text-center" style="margin-top: 25px;">
-  <p style="font-size: 18px;">Because you are using Safari, you must manually enable cookies for this site</p>
-  <button type="button" class="btn btn-default" id="allow_cookies">Enable Cookies</button>
-</div>
+<% if cookies[:fixed] != "true" %>
+  <div id="cookieless" class="text-center" style="margin-top: 25px;">
+    <p style="font-size: 18px;">Because you are using Safari, you must manually enable cookies for this site</p>
+    <button type="button" class="btn btn-default" id="allow_cookies">Enable Cookies</button>
+  </div>
+<% end %>
 
 <script>
   for (var i = 0; i < init.length; i++) { init[i](); }

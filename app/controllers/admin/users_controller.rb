@@ -26,7 +26,11 @@ class Admin::UsersController < ApplicationController
     @user = User.new(user_params)
     @user.i_agree = true if @user.role != 'customer'
     if @user.save
-      redirect_to admin_users_path, notice: 'Added user successfully!'
+      if @user.is_instructor
+        redirect_to admin_instructors_path, notice: 'Added instructor successfully!'
+      else  
+        redirect_to admin_users_path, notice: 'Added user successfully!'
+      end
     else
       flash.now[:error] = 'Please enter all required fields below'
       render :new
@@ -41,7 +45,11 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.i_agree = true if @user.role != 'customer'
     if @user.update_attributes(user_params)
-      redirect_to admin_users_path, notice: 'Updated user successfully!'
+      if @user.is_instructor
+        redirect_to admin_instructors_path, notice: 'Updated instructor successfully!'
+      else  
+        redirect_to admin_users_path, notice: 'Updated user successfully!'
+      end
     else
       flash.now[:error] = 'Please enter all required fields below'
       render :edit
@@ -178,8 +186,10 @@ class Admin::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :phone, :role, :profile, :avatar,
-      :password, :password_confirmation, :is_instructor)
+    parms = params.require(:user).permit(:first_name, :last_name, :email, :phone, :role, :profile, :avatar,
+      :password, :password_confirmation, :is_instructor, :is_private_instructor, :instructor_invite_code)
+    parms[:private_instructor_ids] = params[:user][:private_instructor_ids].try(:keys) || []
+    parms
   end
 
   def sort_column

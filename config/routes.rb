@@ -39,6 +39,9 @@ Rails.application.routes.draw do
     post '/schedule/unassign.json' => 'schedule#unassign'
   end
 
+  get '/private_instructor_invite_form' => 'schedule#private_instructor_invite_form', as: :private_instructor_invite_form
+  post '/private_instructor_invite_form' => 'schedule#add_private_instructor_to_user', as: :process_private_instructor_invite_form
+
   get '/profile' => 'profile#show', as: :profile
   get '/profile/show/:id' => 'profile#show', as: :view_profile
   get '/profile/edit' => 'profile#edit', as: :edit_profile
@@ -58,6 +61,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :locations
+    resources :instructors
     namespace :reports do
       get :lessons
       get :instructor_lessons

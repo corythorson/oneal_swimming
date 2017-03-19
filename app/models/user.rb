@@ -19,8 +19,9 @@ class User < ActiveRecord::Base
 
   attr_accessor :skip_i_agree
 
-  scope :instructor, -> { where("role = 'instructor' OR is_instructor = true") }
+  scope :instructor, -> { where("role = 'instructor' OR (is_instructor = true AND role != 'disabled')") }
   scope :customer, -> { where("role = 'customer'") }
+  scope :private_instructor, -> { where(is_private_instructor: true) }
 
   validates :first_name, presence: true
   # validates :last_name, presence: true
@@ -33,8 +34,14 @@ class User < ActiveRecord::Base
   end
 
   def self.instructors_for_date(date, location)
-    instructor_ids = location.time_slots.by_date_range(date, date).map(&:instructor_id)
+    instructor_ids = location.time_slots.by_date_range(date, date).pluck(:instructor_id)
     User.where(id: instructor_ids).order('first_name asc')
+  end
+
+  def instructors_for_date(date, location)
+    instructor_ids = location.time_slots.by_date_range(date, date).pluck(:instructor_id)
+    available_instructor_ids = instructor_ids & instructors.pluck(:id)
+    ::User.where(id: available_instructor_ids)
   end
 
   def self.stale_customers
@@ -84,6 +91,14 @@ class User < ActiveRecord::Base
       last_name: last_name,
       avatar: avatar.thumb.url
     }
+  end
+
+  def instructors
+    if private_instructor_ids.present?
+      ::User.instructor.where("is_private_instructor = false OR id IN (#{private_instructor_ids.join(',')})")
+    else
+      ::User.instructor.where(is_private_instructor: false)
+    end
   end
 
   # Update password saving the record and clearing token. Returns true if
