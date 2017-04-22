@@ -137,6 +137,13 @@ class Admin::ReportsController < ApplicationController
     end
   end
 
+  def internally_created_orders
+    params[:date_from] ||= 1.month.ago.strftime('%F')
+    params[:date_to] ||= Date.today.strftime('%F')
+    load_dates
+    @orders = Order.internally_created.by_date_range(@date_from, @date_to).order(created_at: :desc)
+  end
+
   def export_csv
     send_data User.customer.order('last_name asc').to_csv, filename: "customers-#{Date.today}.csv"
   end

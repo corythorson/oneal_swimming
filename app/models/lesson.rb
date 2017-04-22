@@ -1,4 +1,6 @@
 class Lesson < ActiveRecord::Base
+  has_paper_trail
+  
   belongs_to :user, counter_cache: true
   belongs_to :order
   belongs_to :lesson_transfer

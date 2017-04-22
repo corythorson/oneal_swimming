@@ -1,4 +1,6 @@
 class TimeSlot < ActiveRecord::Base
+  has_paper_trail
+  
   belongs_to :instructor, class_name: 'User'
   belongs_to :student
   belongs_to :user

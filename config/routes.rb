@@ -68,6 +68,7 @@ Rails.application.routes.draw do
       get :export_csv
       get :expiring_lessons
       get :expired_lessons
+      get :internally_created_orders
     end
     resources :users do
       collection do

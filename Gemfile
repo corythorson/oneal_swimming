@@ -32,6 +32,7 @@ gem 'rmagick'
 gem 'rest-client'
 gem 'fog'
 gem 'best_in_place'
+gem 'paper_trail'
 
 gem 'capistrano', '~> 3.1.0'
 gem 'capistrano-bundler', '~> 1.1.2'

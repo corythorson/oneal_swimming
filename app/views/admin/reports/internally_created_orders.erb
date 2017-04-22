@@ -1,0 +1,85 @@
+<section class="admin-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>Internally Created Orders</h3>
+      </div>
+      <div class="col-sm-6">
+        <div class="input-group" style="margin-top: 12px;">
+          <input type="text" name="date_range" class="form-control" id="dtpicker">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="button">Go!</button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Found <%= @orders.count %> orders that were created by an admin
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>User</th>
+                <th>Date</th>
+                <th>Notes</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-right">Cost</th>
+                <th>&nbsp;</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @orders.order('created_at asc').each do |order| %>
+                <tr>
+                  <td><%= order.user.full_name %></td>
+                  <td><%= order.created_at.strftime('%m/%d/%Y') %></td>
+                  <td><%= order.notes %></td>
+                  <td class="text-center"><%= order.quantity %></td>
+                  <td class="text-right"><%= number_to_currency order.amount %></td>
+                  <td class="text-right">
+                    <a href="#"
+                        data-trigger="remote-modal"
+                        data-url="<%= order_details_admin_user_path(order.user, order_id: order.id) %>"
+                        data-title="Order Details" data-toggle="modal"><i class="fa fa-info-circle"></i></a>
+                  </td>
+                  <td class="text-right">
+                    <%= link_to 'View', view_profile_path(order.user_id), class: 'btn btn-xs btn-default' %>
+                    <%= link_to 'Edit', edit_admin_user_path(order.user_id), class: 'btn btn-xs btn-default' %>
+                    <%= link_to 'Login', login_as_admin_user_path(order.user_id), class: 'btn btn-xs btn-warning' %>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script type="text/javascript">
+  init.push(function() {
+    $('#dtpicker').daterangepicker({
+      "startDate": "<%= @date_from.strftime('%m/%d/%Y') %>",
+      "endDate": "<%= @date_to.strftime('%m/%d/%Y') %>",
+      ranges: {
+        'Today': [moment(), moment()],
+        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+        'This Month': [moment().startOf('month'), moment().endOf('month')],
+        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+        'Last 6 Months': [moment().subtract(6, 'month').startOf('month'), moment()],
+        'Last Year': [moment().subtract(1, 'year').startOf('month'), moment()]
+      }
+    }, function(start, end, label) {
+      window.location = '/admin/reports/internally_created_orders?date_from=' + start.format('YYYY-MM-DD') + '&date_to=' + end.format('YYYY-MM-DD');
+    });
+  });
+</script>
