@@ -1,0 +1,66 @@
+<section class="admin-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>Expired Lessons</h3>
+      </div>
+      <div class="col-sm-6">
+        <div class="input-group" style="margin-top: 12px;">
+          <input type="text" name="date_range" class="form-control" id="dtpicker">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="button">Go!</button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <%= link_to "Export to CSV", admin_reports_expired_lessons_path(format: "csv", date_from: @date_from.strftime('%F'), date_to: @date_to.strftime('%F')), class: "pull-right" %>
+            <%= @data.keys.length %> people had lessons expire between <%= @date_from.strftime("%b %d, %Y") %> and <%= @date_to.strftime("%b %d, %Y") %>
+          </div>
+          <div class="panel-body">
+            <table class="table">
+              <thead>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th># Expired Lessons</th>
+                <th>Last Sign In</th>
+                <th></th>
+              </thead>
+              <tbody>
+              <% @data.each do |user_id, data| %>
+                <tr>
+                  <td><%= data[:name] %></td>
+                  <td><%= data[:email] %></td>
+                  <td><%= data[:phone] %></td>
+                  <td><%= data[:count] %></td>
+                  <td><%= data[:last_sign_in_at] %></td>
+                  <td class="text-right">
+                    <%= link_to 'View', view_profile_path(user_id), class: 'btn btn-xs btn-default' %>
+                    <%= link_to 'Edit', edit_admin_user_path(user_id), class: 'btn btn-xs btn-default' %>
+                    <%= link_to 'Login', login_as_admin_user_path(user_id), class: 'btn btn-xs btn-warning' %>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="text/javascript">
+  init.push(function() {
+    $('#dtpicker').daterangepicker({
+      "startDate": "<%= @date_from.strftime('%m/%d/%Y') %>",
+      "endDate": "<%= @date_to.strftime('%m/%d/%Y') %>"
+    }, function(start, end, label) {
+      window.location = '/admin/reports/expired_lessons?date_from=' + start.format('YYYY-MM-DD') + '&date_to=' + end.format('YYYY-MM-DD');
+    });
+  });
+</script>

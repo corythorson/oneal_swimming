@@ -67,6 +67,75 @@ class Admin::ReportsController < ApplicationController
       end
     end
   end
+  
+  def expiring_lessons
+    params[:date] ||= (Time.current + 1.month).strftime("%F")
+    @date = Date.parse(params[:date])
+    @data = {}
+    @lessons = Lesson.not_expired.unassigned.expires_by(@date)
+    @lessons.each do |lesson|
+      user = lesson.user
+      unless @data.has_key? lesson.user_id.to_s
+        @data[lesson.user_id.to_s] = {
+          name: user.full_name,
+          email: user.email,
+          phone: user.phone,
+          count: 1,
+          last_sign_in_at: user.last_sign_in_at.strftime("%b %d, %Y")
+        }
+      else
+        @data[lesson.user_id.to_s][:count] += 1
+      end
+    end
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        csv_string = CSV.generate(headers: true) do |csv|
+          csv << %w{name email phone expiring_lesson_count last_sign_in_at }
+          @data.each do |user_id, data|
+            csv << [ data[:name], data[:email], data[:phone], data[:count], data[:last_sign_in_at] ]
+          end
+        end
+        send_data csv_string, filename: "expiring-lessons-#{@date.strftime('%F')}.csv"
+      end
+    end
+  end
+
+  def expired_lessons
+    params[:date_from] ||= 1.month.ago.strftime('%F')
+    params[:date_to] ||= Date.today.strftime('%F')
+    load_dates
+    @data = {}
+    @lessons = Lesson.expired_within_date_range(@date_from, @date_to)
+    @lessons.each do |lesson|
+      user = lesson.user
+      unless @data.has_key? lesson.user_id.to_s
+        @data[lesson.user_id.to_s] = {
+          name: user.full_name,
+          email: user.email,
+          phone: user.phone,
+          count: 1,
+          last_sign_in_at: user.last_sign_in_at.strftime("%b %d, %Y")
+        }
+      else
+        @data[lesson.user_id.to_s][:count] += 1
+      end
+    end
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        csv_string = CSV.generate(headers: true) do |csv|
+          csv << %w{name email phone expired_lesson_count last_sign_in_at }
+          @data.each do |user_id, data|
+            csv << [ data[:name], data[:email], data[:phone], data[:count], data[:last_sign_in_at] ]
+          end
+        end
+        send_data csv_string, filename: "expired-lessons-#{@date_from.strftime('%F')}-#{@date_to.strftime('%F')}.csv"
+      end
+    end
+  end
 
   def export_csv
     send_data User.customer.order('last_name asc').to_csv, filename: "customers-#{Date.today}.csv"
