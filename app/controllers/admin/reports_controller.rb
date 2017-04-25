@@ -81,7 +81,7 @@ class Admin::ReportsController < ApplicationController
           email: user.email,
           phone: user.phone,
           count: 1,
-          last_sign_in_at: user.last_sign_in_at.strftime("%b %d, %Y")
+          last_sign_in_at: user.last_sign_in_at&.strftime("%b %d, %Y")
         }
       else
         @data[lesson.user_id.to_s][:count] += 1
@@ -116,7 +116,7 @@ class Admin::ReportsController < ApplicationController
           email: user.email,
           phone: user.phone,
           count: 1,
-          last_sign_in_at: user.last_sign_in_at.strftime("%b %d, %Y")
+          last_sign_in_at: user.last_sign_in_at&.strftime("%b %d, %Y")
         }
       else
         @data[lesson.user_id.to_s][:count] += 1
