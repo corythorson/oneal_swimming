@@ -18,7 +18,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <%= link_to "Export to CSV", admin_reports_expired_lessons_path(format: "csv", date_from: @date_from.strftime('%F'), date_to: @date_to.strftime('%F')), class: "pull-right" %>
-            <%= @data.keys.length %> people had lessons expire between <%= @date_from.strftime("%b %d, %Y") %> and <%= @date_to.strftime("%b %d, %Y") %>
+            <%= @data.keys.length %> people had lessons expire between <%= @date_from.strftime("%b %d, %Y") %> and <%= @date_to.strftime("%b %d, %Y") %> totalling <%= @lessons.count %> lessons
           </div>
           <div class="panel-body">
             <table class="table">
