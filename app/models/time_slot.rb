@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: time_slots
+#
+#  id            :integer          not null, primary key
+#  start_at      :datetime         not null
+#  duration      :integer          not null
+#  instructor_id :integer          not null
+#  student_id    :integer
+#  lesson_id     :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  legacy_id     :integer
+#  location_id   :integer
+#
+
 class TimeSlot < ActiveRecord::Base
   has_paper_trail
   

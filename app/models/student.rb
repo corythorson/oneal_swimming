@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: students
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer          not null
+#  first_name :string           not null
+#  last_name  :string
+#  avatar     :string
+#  dob        :date
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  legacy_id  :integer
+#
+
 class Student < ActiveRecord::Base
   mount_uploader :avatar, ::AvatarUploader
 

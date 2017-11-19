@@ -21,6 +21,7 @@
               <th>Name</th>
               <th>Price</th>
               <th>Quantity</th>
+              <th>Expiration</th>
               <th>Active?</th>
               <th>Offer Code</th>
               <th>&nbsp;</th>
@@ -32,6 +33,7 @@
                 <td><%= product.name %></td>
                 <td><%= number_to_currency product.price %></td>
                 <td><%= product.quantity %></td>
+                <td><%= pluralize(product.expires_after_months, "month") %></td>
                 <td><%= product.active? ? 'Yes' : 'No' %></td>
                 <td><%= product.offer_code %></td>
                 <td class="text-right"><%= link_to 'Edit', edit_admin_product_path(product) %></td>

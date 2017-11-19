@@ -36,7 +36,7 @@ class OrderService
     order
   end
 
-  def create_orders_and_lessons(user, amount, lessons, charge)
+  def create_orders_and_lessons(user, amount, lessons, charge, product=nil)
     t = Time.current
 
     order = Order.create!(
@@ -44,12 +44,15 @@ class OrderService
       total: amount,
       quantity: lessons,
       remote_order_id: charge['id'],
-      merchant_response: charge.as_json
+      merchant_response: charge.as_json,
+      product_id: product&.id
     )
+
+    expires_at = t + (product&.expires_after_months || 12).months
 
     lessons.times do
       if Lesson.where(order_id: order.id).count < lessons
-        Lesson.create!(order_id: order.id, user_id: user.id, purchased_at: t, expires_at: t + 1.year)
+        Lesson.create!(order_id: order.id, user_id: user.id, purchased_at: t, product_id: product&.id, expires_at: expires_at)
       end
     end
 

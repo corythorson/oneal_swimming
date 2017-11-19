@@ -29,7 +29,7 @@ class ChargeCustomer
           }
         )
 
-        order = OrderService.new.create_orders_and_lessons(user, product.price, quantity, charge)
+        order = OrderService.new.create_orders_and_lessons(user, product.price, quantity, charge, product)
 
         [order, nil]
       rescue Stripe::CardError => e

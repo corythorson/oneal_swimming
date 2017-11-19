@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: orders
+#
+#  id                :integer          not null, primary key
+#  user_id           :integer
+#  total             :decimal(12, 3)
+#  quantity          :integer
+#  merchant_response :json
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  legacy_id         :integer
+#  remote_order_id   :string
+#
+
 class Order < ActiveRecord::Base
   has_paper_trail
 
