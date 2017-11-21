@@ -1,3 +1,41 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                            :integer          not null, primary key
+#  email                         :string           default(""), not null
+#  encrypted_password            :string           default(""), not null
+#  reset_password_token          :string
+#  reset_password_sent_at        :datetime
+#  remember_created_at           :datetime
+#  sign_in_count                 :integer          default(0), not null
+#  current_sign_in_at            :datetime
+#  last_sign_in_at               :datetime
+#  current_sign_in_ip            :inet
+#  last_sign_in_ip               :inet
+#  first_name                    :string
+#  last_name                     :string
+#  phone                         :string
+#  role                          :string           default("customer")
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  provider                      :string
+#  uid                           :string
+#  profile                       :text
+#  avatar                        :string
+#  legacy_id                     :integer
+#  lessons_count                 :integer
+#  is_instructor                 :boolean          default(FALSE)
+#  referer_id                    :integer
+#  referral_free_lesson_order_id :integer
+#  stripe_customer_id            :string
+#  i_agree                       :boolean          default(FALSE)
+#  braintree_customer_id         :string
+#  is_private_instructor         :boolean          default(FALSE)
+#  instructor_invite_code        :string
+#  private_instructor_ids        :text             default([]), is an Array
+#
+
 require 'csv'
 
 class User < ActiveRecord::Base

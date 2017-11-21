@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: lessons
+#
+#  id                 :integer          not null, primary key
+#  user_id            :integer
+#  order_id           :integer
+#  purchased_at       :datetime
+#  expires_at         :datetime
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  lesson_transfer_id :integer
+#
+
 class Lesson < ActiveRecord::Base
   has_paper_trail
   

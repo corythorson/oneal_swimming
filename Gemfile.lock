@@ -48,6 +48,9 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    annotate (2.7.2)
+      activerecord (>= 3.2, < 6.0)
+      rake (>= 10.4, < 13.0)
     arel (6.0.3)
     babel-source (5.8.23)
     babel-transpiler (0.7.0)
@@ -350,7 +353,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
-    rdoc (4.2.0)
+    rdoc (4.3.0)
     react-rails (1.2.0)
       babel-transpiler (>= 0.7.0)
       coffee-script-source (~> 1.8)
@@ -429,6 +432,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_link_to
+  annotate
   best_in_place
   bootstrap3-datetimepicker-rails (~> 4.15.35)
   byebug
@@ -490,4 +494,4 @@ DEPENDENCIES
   zeroclipboard-rails
 
 BUNDLED WITH
-   1.14.6
+   1.16.0

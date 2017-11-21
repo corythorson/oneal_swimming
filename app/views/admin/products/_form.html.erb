@@ -35,6 +35,12 @@
         </div>
       </div>
       <div class="form-group">
+        <%= f.label :expires_after_months, "Months until expires", class: 'col-sm-2 control-label' %>
+        <div class="col-sm-3">
+          <%= f.number_field :expires_after_months, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
         <%= f.label :offer_code, 'Offer Code'.html_safe, class: 'col-sm-2 control-label' %>
         <div class="col-sm-3">
           <%= f.text_field :offer_code, class: 'form-control' %>

@@ -60,6 +60,8 @@ gem 'stripe', '1.31.0'
 
 gem 'rails_12factor'
 
+gem 'annotate'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

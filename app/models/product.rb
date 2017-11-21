@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: products
+#
+#  id                   :integer          not null, primary key
+#  name                 :string
+#  quantity             :integer
+#  price                :decimal(6, 3)
+#  active               :boolean
+#  paypal_button_code   :text
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  offer_code           :string
+#  expires_after_months :integer          default(12)
+#
+
 class Product < ActiveRecord::Base
   has_paper_trail
   
