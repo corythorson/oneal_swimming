@@ -493,5 +493,8 @@ DEPENDENCIES
   will_paginate-bootstrap
   zeroclipboard-rails
 
+RUBY VERSION
+   ruby 2.3.3p222
+
 BUNDLED WITH
    1.16.0
